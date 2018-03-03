@@ -1,0 +1,288 @@
+[
+  {
+    "Label": "Mssl.Rck.",
+    "TypeLabel": "Weapon",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_Attachable",
+        "Params": {
+          "sizeRequired": "Executor.AttachmentSize.LARGE"
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Weapon",
+        "Params": {
+          "size": "Executor.AttachmentSize.MEDIUM",
+          "toHit": 1,
+          "maxRange": 15,
+          "damage": 4,
+          "refireTicks": 100
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Attacker",
+        "Params": { }
+      }
+    ]
+  },
+  {
+    "Label": "Mn.Mssl.",
+    "TypeLabel": "Weapon",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_Attachable",
+        "Params": {
+          "sizeRequired": "Executor.AttachmentSize.SMALL"
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Weapon",
+        "Params": {
+          "size": "Executor.AttachmentSize.SMALL",
+          "toHit": 1,
+          "maxRange": 10,
+          "damage": 2,
+          "refireTicks": 75
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Attacker",
+        "Params": { }
+      }
+    ]
+  },
+  {
+    "Label": "Snpr.Rfl.",
+    "TypeLabel": "Weapon",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_Attachable",
+        "Params": {
+          "sizeRequired": "Executor.AttachmentSize.MEDIUM"
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Weapon",
+        "Params": {
+          "size": "Executor.AttachmentSize.MEDIUM",
+          "toHit": 1,
+          "maxRange": 12,
+          "damage": 3,
+          "refireTicks": 80
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Attacker",
+        "Params": { }
+      }
+    ]
+  },
+  {
+    "Label": "Rfl.",
+    "TypeLabel": "Weapon",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_Attachable",
+        "Params": {
+          "sizeRequired": "Executor.AttachmentSize.LARGE"
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Weapon",
+        "Params": {
+          "size": "Executor.AttachmentSize.LARGE",
+          "toHit": 6,
+          "maxRange": 20,
+          "damage": 8,
+          "refireTicks": 250
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Attacker",
+        "Params": { }
+      }
+    ]
+  },
+  {
+    "Label": "Mchngn.",
+    "TypeLabel": "Weapon",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_Attachable",
+        "Params": {
+          "sizeRequired": "Executor.AttachmentSize.LARGE"
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Weapon",
+        "Params": {
+          "size": "Executor.AttachmentSize.LARGE",
+          "toHit": -2,
+          "maxRange": 14,
+          "damage": 1,
+          "refireTicks": 20
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Attacker",
+        "Params": { }
+      }
+    ]
+  },
+  {
+    "Label": "Shtgn",
+    "TypeLabel": "Weapon",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_Attachable",
+        "Params": {
+          "sizeRequired": "Executor.AttachmentSize.MEDIUM"
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Weapon",
+        "Params": {
+          "size": "Executor.AttachmentSize.MEDIUM",
+          "toHit": 3,
+          "maxRange": 8,
+          "damage": 6,
+          "refireTicks": 100
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Attacker",
+        "Params": { }
+      }
+    ]
+  },
+  {
+    "Label": "Pstl.",
+    "TypeLabel": "Weapon",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_Attachable",
+        "Params": {
+          "sizeRequired": "Executor.AttachmentSize.SMALL"
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Weapon",
+        "Params": {
+          "size": "Executor.AttachmentSize.SMALL",
+          "toHit": 2,
+          "maxRange": 8,
+          "damage": 2,
+          "refireTicks": 65
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Attacker",
+        "Params": { }
+      }
+    ]
+  },
+  {
+    "Label": "Rckt.Pd.",
+    "TypeLabel": "Weapon",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_Attachable",
+        "Params": {
+          "sizeRequired": "Executor.AttachmentSize.SMALL"
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Weapon",
+        "Params": {
+          "size": "Executor.AttachmentSize.SMALL",
+          "toHit": -3,
+          "maxRange": 6,
+          "damage": 9,
+          "refireTicks": 170
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Attacker",
+        "Params": { }
+      }
+    ]
+  },
+  {
+    "Label": "Dggr.",
+    "TypeLabel": "Weapon",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_Attachable",
+        "Params": {
+          "sizeRequired": "Executor.AttachmentSize.SMALL"
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Weapon",
+        "Params": {
+          "size": "Executor.AttachmentSize.SMALL",
+          "toHit": 2,
+          "maxRange": 1,
+          "damage": 2,
+          "refireTicks": 15
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Attacker",
+        "Params": { }
+      }
+    ]
+  },
+  {
+    "Label": "Swrd.",
+    "TypeLabel": "Weapon",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_Attachable",
+        "Params": {
+          "sizeRequired": "Executor.AttachmentSize.MEDIUM"
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Weapon",
+        "Params": {
+          "size": "Executor.AttachmentSize.MEDIUM",
+          "toHit": 0,
+          "maxRange": 1,
+          "damage": 6,
+          "refireTicks": 30
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Attacker",
+        "Params": { }
+      }
+    ]
+  },
+  {
+    "Label": "Hmmr.",
+    "TypeLabel": "Weapon",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_Attachable",
+        "Params": {
+          "sizeRequired": "Executor.AttachmentSize.LARGE"
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Weapon",
+        "Params": {
+          "size": "Executor.AttachmentSize.LARGE",
+          "toHit": -1,
+          "maxRange": 1,
+          "damage": 9,
+          "refireTicks": 60
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Attacker",
+        "Params": { }
+      }
+    ]
+  }
+]

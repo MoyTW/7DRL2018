@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{F01512FA-E30C-476C-BD37-84EE722D4B6B}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <RootNamespace>Executor</RootNamespace>
+    <AssemblyName>Executor</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug</OutputPath>
+    <DefineConstants>DEBUG;</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>full</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <ConsolePause>false</ConsolePause>
+    <Prefer32Bit>false</Prefer32Bit>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+    <Reference Include="Newtonsoft.Json, Version=9.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed">
+      <HintPath>..\packages\Newtonsoft.Json.9.0.1\lib\net45\Newtonsoft.Json.dll</HintPath>
+    </Reference>
+    <Reference Include="RLNET, Version=1.0.6.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\RLNET.1.0.6\lib\RLNET.dll</HintPath>
+    </Reference>
+    <Reference Include="RogueSharp, Version=3.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>..\packages\RogueSharp.3.0.0\lib\portable-net40+sl50+win+wpa81+wp80\RogueSharp.dll</HintPath>
+    </Reference>
+    <Reference Include="System.Collections.Immutable, Version=1.2.1.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
+      <HintPath>..\packages\System.Collections.Immutable.1.3.1\lib\portable-net45+win8+wp8+wpa81\System.Collections.Immutable.dll</HintPath>
+    </Reference>
+    <Reference Include="OpenTK, Version=2.0.0.0, Culture=neutral, PublicKeyToken=bad199fe84eb3df4">
+      <HintPath>..\packages\OpenTK.2.0.0\lib\net20\OpenTK.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="AI\ActionClause_KeepMediumRange.cs" />
+    <Compile Include="AI\ActionClause_Flee.cs" />
+    <Compile Include="AI\SingleClause.cs" />
+    <Compile Include="ArenaState.cs" />
+    <Compile Include="ArenaBuilder.cs" />
+    <Compile Include="BodyPartLocation.cs" />
+    <Compile Include="Blueprint.cs" />
+    <Compile Include="BlueprintListing.cs" />
+    <Compile Include="Component_ActionExecutor.cs" />
+    <Compile Include="Component_AttachPoint.cs" />
+    <Compile Include="Component_Attachable.cs" />
+    <Compile Include="Config.cs" />
+    <Compile Include="GameEvent_Activation.cs" />
+    <Compile Include="GameEvent_EndTurn.cs" />
+    <Compile Include="GameEvent_ReceiveAttack.cs" />
+    <Compile Include="Log.cs" />
+    <Compile Include="Component.cs" />
+    <Compile Include="Component_AI.cs" />
+    <Compile Include="Component_Player.cs" />
+    <Compile Include="Component_TracksTime.cs" />
+    <Compile Include="Component_Attacker.cs" />
+    <Compile Include="Component_BodyPartLocation.cs" />
+    <Compile Include="Component_InternalStructure.cs" />
+    <Compile Include="Component_Position.cs" />
+    <Compile Include="Component_SlottedContainer.cs" />
+    <Compile Include="Component_Slottable.cs" />
+    <Compile Include="Component_SlottedStructure.cs" />
+    <Compile Include="Component_Weapon.cs" />
+    <Compile Include="Entity.cs" />
+    <Compile Include="EntityAttributeType.cs" />
+    <Compile Include="EntityBuilder.cs" />
+    <Compile Include="GameEvent.cs" />
+    <Compile Include="GameEvent_PrepareAttack.cs" />
+    <Compile Include="GameEvent_Command.cs" />
+    <Compile Include="GameEvent_Delay.cs" />
+    <Compile Include="GameEvent_MoveSingle.cs" />
+    <Compile Include="GameEvent_Slot.cs" />
+    <Compile Include="GameEvent_TakeDamage.cs" />
+    <Compile Include="GameEvent_Unslot.cs" />
+    <Compile Include="GameQuery.cs" />
+    <Compile Include="GameQuery_Command.cs" />
+    <Compile Include="GameQuery_Destroyed.cs" />
+    <Compile Include="GameQuery_EntityAttribute.cs" />
+    <Compile Include="GameQuery_Position.cs" />
+    <Compile Include="GameQuery_SubEntities.cs" />
+    <Compile Include="GameQuery_TicksCooldown.cs" />
+    <Compile Include="GameQuery_TicksToLive.cs" />
+    <Compile Include="Program.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="RS_Extensions.cs" />
+    <Compile Include="UI\Drawer_Mech.cs" />
+    <Compile Include="UI\Menu_Arena.cs" />
+    <Compile Include="UI\IDisplay.cs" />
+    <Compile Include="UI\Menu_Death.cs" />
+    <Compile Include="UI\Menu_MechDetails.cs" />
+    <Compile Include="UI\IntegerSelectionField.cs" />
+    <Compile Include="UI\Menu_Main.cs" />
+    <Compile Include="Component_Piloted.cs" />
+    <Compile Include="Component_AttributeModifier.cs" />
+    <Compile Include="Component_Skeleton.cs" />
+    <Compile Include="UI\Menu_NextLevel.cs" />
+    <Compile Include="UI\Menu_PlanFocus.cs" />
+    <Compile Include="UI\Menu_Targeting.cs" />
+    <Compile Include="GameEvent_FocusEnd.cs" />
+    <Compile Include="GameEvent_FocusBegin.cs" />
+    <Compile Include="Component_FocusUser.cs" />
+    <Compile Include="GameEvent_Destroy.cs" />
+    <Compile Include="GameEvent_ReceiveStatusEffect.cs" />
+    <Compile Include="Component_Buffable.cs" />
+    <Compile Include="StatusEffect.cs" />
+    <Compile Include="StatusEffect_Blocking.cs" />
+    <Compile Include="AI\Action_AttackEnemy.cs" />
+    <Compile Include="AI\Action_Delay.cs" />
+    <Compile Include="AI\Action_MoveAwayEnemy.cs" />
+    <Compile Include="AI\Action_MoveTowardsEnemy.cs" />
+    <Compile Include="AI\AIAction.cs" />
+    <Compile Include="AI\Condition.cs" />
+    <Compile Include="AI\Condition_CanSeeEnemy.cs" />
+    <Compile Include="AI\Condition_Distance.cs" />
+    <Compile Include="AI\Condition_Health.cs" />
+    <Compile Include="AI\Guidebook.cs" />
+    <Compile Include="AI\ActionClause.cs" />
+    <Compile Include="UI\Menu_Examine.cs" />
+    <Compile Include="AI\ActionClause_Attack.cs" />
+    <Compile Include="AI\ActionClause_Approach.cs" />
+    <Compile Include="EntityBuilderEnemies.cs" />
+    <Compile Include="EntityBuilderWeapons.cs" />
+    <Compile Include="AI\ActionClause_AvoidMelee.cs" />
+    <Compile Include="AI\ActionClause_SeekMaxWeaponRange.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="packages.config" />
+    <None Include="Resources\Blueprints\Naked.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Blueprints\Parts.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Blueprints\Weapons.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\TestBlueprints.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="OpenTK.dll.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Resources\Adjectives.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Cities.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="terminal8x8.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <ProjectExtensions>
+    <MonoDevelop>
+      <Properties>
+        <Policies>
+          <TextStylePolicy FileWidth="120" inheritsSet="VisualStudio" inheritsScope="text/plain" scope="text/x-csharp" />
+          <CSharpFormattingPolicy IndentSwitchBody="True" IndentBlocksInsideExpressions="True" AnonymousMethodBraceStyle="NextLine" PropertyBraceStyle="NextLine" PropertyGetBraceStyle="NextLine" PropertySetBraceStyle="NextLine" EventBraceStyle="NextLine" EventAddBraceStyle="NextLine" EventRemoveBraceStyle="NextLine" StatementBraceStyle="NextLine" ElseNewLinePlacement="NewLine" CatchNewLinePlacement="NewLine" FinallyNewLinePlacement="NewLine" WhileNewLinePlacement="DoNotCare" ArrayInitializerWrapping="DoNotChange" ArrayInitializerBraceStyle="NextLine" BeforeMethodDeclarationParentheses="False" BeforeMethodCallParentheses="False" BeforeConstructorDeclarationParentheses="False" NewLineBeforeConstructorInitializerColon="NewLine" NewLineAfterConstructorInitializerColon="SameLine" BeforeDelegateDeclarationParentheses="False" NewParentheses="False" SpacesBeforeBrackets="False" inheritsSet="Mono" inheritsScope="text/x-csharp" scope="text/x-csharp" />
+        </Policies>
+      </Properties>
+    </MonoDevelop>
+  </ProjectExtensions>
+</Project>

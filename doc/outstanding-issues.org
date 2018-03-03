@@ -1,0 +1,23 @@
+* very bad
+** exception on path not findable
+
+I *think* this is caused when you have a NPC blocking another one from the
+player/its destination, it will do a path not findable and the program will
+crash
+
+* silly
+** blocking takes 0 AP
+
+It should not do that
+
+* UI stuff
+** dead space
+
+whoo spooky dead space spook alert
+
+** entity scroll
+
+you should be able to use directionals to select next, not just l/r on the
+arbitrary ordering of what was added to the map when
+
+also maybe uh skip over dead things?

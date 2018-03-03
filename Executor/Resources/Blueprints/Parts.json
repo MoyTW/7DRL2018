@@ -1,0 +1,212 @@
+[
+  {
+    "Label": "Smll.Mnt.",
+    "TypeLabel": "Slottable Part",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_AttachPoint",
+        "Params": {
+          "maxSize": "Executor.AttachmentSize.SMALL",
+          "active": true,
+          "swappable": false
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Slottable",
+        "Params": {
+          "slotsRequired": 2
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_InternalStructure",
+        "Params": {
+          "structureMax": 2
+        }
+      }
+    ]
+  },
+  {
+    "Label": "Mdm.Mnt.",
+    "TypeLabel": "Slottable Part",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_AttachPoint",
+        "Params": {
+          "maxSize": "Executor.AttachmentSize.MEDIUM",
+          "active": true,
+          "swappable": false
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Slottable",
+        "Params": {
+          "slotsRequired": 4
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_InternalStructure",
+        "Params": {
+          "structureMax": 4
+        }
+      }
+    ]
+  },
+  {
+    "Label": "Lrg.Mnt.",
+    "TypeLabel": "Slottable Part",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_AttachPoint",
+        "Params": {
+          "maxSize": "Executor.AttachmentSize.LARGE",
+          "active": true,
+          "swappable": false
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Slottable",
+        "Params": {
+          "slotsRequired": 8
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_InternalStructure",
+        "Params": {
+          "structureMax": 8
+        }
+      }
+    ]
+  },
+  {
+    "Label": "Smll.Hlstr.",
+    "TypeLabel": "Slottable Part",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_AttachPoint",
+        "Params": {
+          "maxSize": "Executor.AttachmentSize.SMALL",
+          "active": false,
+          "swappable": true
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Slottable",
+        "Params": {
+          "slotsRequired": 1
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_InternalStructure",
+        "Params": {
+          "structureMax": 2
+        }
+      }
+    ]
+  },
+  {
+    "Label": "Mdm.Hlstr.",
+    "TypeLabel": "Slottable Part",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_AttachPoint",
+        "Params": {
+          "maxSize": "Executor.AttachmentSize.MEDIUM",
+          "active": false,
+          "swappable": true
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Slottable",
+        "Params": {
+          "slotsRequired": 2
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_InternalStructure",
+        "Params": {
+          "structureMax": 4
+        }
+      }
+    ]
+  },
+  {
+    "Label": "Lrg.Hlstr.",
+    "TypeLabel": "Slottable Part",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_AttachPoint",
+        "Params": {
+          "maxSize": "Executor.AttachmentSize.LARGE",
+          "active": false,
+          "swappable": true
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Slottable",
+        "Params": {
+          "slotsRequired": 4
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_InternalStructure",
+        "Params": {
+          "structureMax": 8
+        }
+      }
+    ]
+  },
+  {
+    "Label": "Acclrtr.",
+    "TypeLabel": "Slottable Part",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_Slottable",
+        "Params": {
+          "slotsRequired": 1
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_InternalStructure",
+        "Params": {
+          "structureMax": 1
+        }
+      }
+    ]
+  },
+  {
+    "Label": "Snsr.Pckg.",
+    "TypeLabel": "Slottable Part",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_Slottable",
+        "Params": {
+          "slotsRequired": 2
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_InternalStructure",
+        "Params": {
+          "structureMax": 2
+        }
+      }
+    ]
+  },
+  {
+    "Label": "Armor",
+    "TypeLabel": "Slottable Part",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_Slottable",
+        "Params": {
+          "slotsRequired": 1
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_InternalStructure",
+        "Params": {
+          "structureMax": 4
+        }
+      }
+    ]
+  }
+]

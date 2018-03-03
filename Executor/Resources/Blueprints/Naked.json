@@ -1,0 +1,64 @@
+[
+  {
+    "Label": "Pwr.Plnt.",
+    "TypeLabel": "Slottable Part",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_Slottable",
+        "Params": {
+          "slotsRequired": 5
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_InternalStructure",
+        "Params": {
+          "structureMax": 5
+        }
+      }
+    ]
+  },
+  {
+    "Label": "Hand",
+    "TypeLabel": "Slottable Part",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_AttachPoint",
+        "Params": {
+          "maxSize": "Executor.AttachmentSize.LARGE",
+          "active": true,
+          "swappable": true
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_Slottable",
+        "Params": {
+          "slotsRequired": 2
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_InternalStructure",
+        "Params": {
+          "structureMax": 2
+        }
+      }
+    ]
+  },
+  {
+    "Label": "Lg.Actr.",
+    "TypeLabel": "Slottable Part",
+    "Components": [
+      {
+        "ComponentClass": "Executor.Component_Slottable",
+        "Params": {
+          "slotsRequired": 3
+        }
+      },
+      {
+        "ComponentClass": "Executor.Component_InternalStructure",
+        "Params": {
+          "structureMax": 3
+        }
+      }
+    ]
+  }
+]

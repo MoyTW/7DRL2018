@@ -1,0 +1,6 @@
+.vs/
+bin/
+obj/
+packages/
+Executor.userprefs
+Executor/OpenTK.dll.config
