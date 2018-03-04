@@ -1,6 +1,8 @@
 ﻿using System;
 
-namespace Executor
+using Executor.Components;
+
+namespace Executor.GameEvents
 {
     public static class EntityBuilderWeapons
     {

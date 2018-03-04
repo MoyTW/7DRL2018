@@ -4,6 +4,8 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using Newtonsoft.Json;
 
+using Executor.Components;
+
 namespace ExecutorTests
 {
     [TestFixture]

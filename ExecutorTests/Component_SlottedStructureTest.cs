@@ -1,9 +1,9 @@
-﻿using RogueSharp.Random;
+﻿using Executor;
+using Executor.Components;
+using Executor.GameEvents;
 
-using Executor;
-
-using System;
 using NUnit.Framework;
+
 
 namespace ExecutorTests
 {

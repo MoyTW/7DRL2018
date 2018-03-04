@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Executor.GameEvents;
+using Executor.GameQueries;
+
+using System;
 using System.Linq;
 
 namespace Executor.AI

@@ -4,15 +4,15 @@
     "TypeLabel": "Weapon",
     "Components": [
       {
-        "ComponentClass": "Executor.Component_Attachable",
+        "ComponentClass": "Executor.Components.Component_Attachable",
         "Params": {
-          "sizeRequired": "Executor.AttachmentSize.LARGE"
+          "sizeRequired": "Executor.Components.AttachmentSize.LARGE"
         }
       },
       {
-        "ComponentClass": "Executor.Component_Weapon",
+        "ComponentClass": "Executor.Components.Component_Weapon",
         "Params": {
-          "size": "Executor.AttachmentSize.MEDIUM",
+          "size": "Executor.Components.AttachmentSize.MEDIUM",
           "toHit": 1,
           "maxRange": 15,
           "damage": 4,
@@ -20,7 +20,7 @@
         }
       },
       {
-        "ComponentClass": "Executor.Component_Attacker",
+        "ComponentClass": "Executor.Components.Component_Attacker",
         "Params": { }
       }
     ]
@@ -30,15 +30,15 @@
     "TypeLabel": "Weapon",
     "Components": [
       {
-        "ComponentClass": "Executor.Component_Attachable",
+        "ComponentClass": "Executor.Components.Component_Attachable",
         "Params": {
-          "sizeRequired": "Executor.AttachmentSize.SMALL"
+          "sizeRequired": "Executor.Components.AttachmentSize.SMALL"
         }
       },
       {
-        "ComponentClass": "Executor.Component_Weapon",
+        "ComponentClass": "Executor.Components.Component_Weapon",
         "Params": {
-          "size": "Executor.AttachmentSize.SMALL",
+          "size": "Executor.Components.AttachmentSize.SMALL",
           "toHit": 1,
           "maxRange": 10,
           "damage": 2,
@@ -46,7 +46,7 @@
         }
       },
       {
-        "ComponentClass": "Executor.Component_Attacker",
+        "ComponentClass": "Executor.Components.Component_Attacker",
         "Params": { }
       }
     ]
@@ -56,15 +56,15 @@
     "TypeLabel": "Weapon",
     "Components": [
       {
-        "ComponentClass": "Executor.Component_Attachable",
+        "ComponentClass": "Executor.Components.Component_Attachable",
         "Params": {
-          "sizeRequired": "Executor.AttachmentSize.MEDIUM"
+          "sizeRequired": "Executor.Components.AttachmentSize.MEDIUM"
         }
       },
       {
-        "ComponentClass": "Executor.Component_Weapon",
+        "ComponentClass": "Executor.Components.Component_Weapon",
         "Params": {
-          "size": "Executor.AttachmentSize.MEDIUM",
+          "size": "Executor.Components.AttachmentSize.MEDIUM",
           "toHit": 1,
           "maxRange": 12,
           "damage": 3,
@@ -72,7 +72,7 @@
         }
       },
       {
-        "ComponentClass": "Executor.Component_Attacker",
+        "ComponentClass": "Executor.Components.Component_Attacker",
         "Params": { }
       }
     ]
@@ -82,15 +82,15 @@
     "TypeLabel": "Weapon",
     "Components": [
       {
-        "ComponentClass": "Executor.Component_Attachable",
+        "ComponentClass": "Executor.Components.Component_Attachable",
         "Params": {
-          "sizeRequired": "Executor.AttachmentSize.LARGE"
+          "sizeRequired": "Executor.Components.AttachmentSize.LARGE"
         }
       },
       {
-        "ComponentClass": "Executor.Component_Weapon",
+        "ComponentClass": "Executor.Components.Component_Weapon",
         "Params": {
-          "size": "Executor.AttachmentSize.LARGE",
+          "size": "Executor.Components.AttachmentSize.LARGE",
           "toHit": 6,
           "maxRange": 20,
           "damage": 8,
@@ -98,7 +98,7 @@
         }
       },
       {
-        "ComponentClass": "Executor.Component_Attacker",
+        "ComponentClass": "Executor.Components.Component_Attacker",
         "Params": { }
       }
     ]
@@ -108,15 +108,15 @@
     "TypeLabel": "Weapon",
     "Components": [
       {
-        "ComponentClass": "Executor.Component_Attachable",
+        "ComponentClass": "Executor.Components.Component_Attachable",
         "Params": {
-          "sizeRequired": "Executor.AttachmentSize.LARGE"
+          "sizeRequired": "Executor.Components.AttachmentSize.LARGE"
         }
       },
       {
-        "ComponentClass": "Executor.Component_Weapon",
+        "ComponentClass": "Executor.Components.Component_Weapon",
         "Params": {
-          "size": "Executor.AttachmentSize.LARGE",
+          "size": "Executor.Components.AttachmentSize.LARGE",
           "toHit": -2,
           "maxRange": 14,
           "damage": 1,
@@ -124,7 +124,7 @@
         }
       },
       {
-        "ComponentClass": "Executor.Component_Attacker",
+        "ComponentClass": "Executor.Components.Component_Attacker",
         "Params": { }
       }
     ]
@@ -134,15 +134,15 @@
     "TypeLabel": "Weapon",
     "Components": [
       {
-        "ComponentClass": "Executor.Component_Attachable",
+        "ComponentClass": "Executor.Components.Component_Attachable",
         "Params": {
-          "sizeRequired": "Executor.AttachmentSize.MEDIUM"
+          "sizeRequired": "Executor.Components.AttachmentSize.MEDIUM"
         }
       },
       {
-        "ComponentClass": "Executor.Component_Weapon",
+        "ComponentClass": "Executor.Components.Component_Weapon",
         "Params": {
-          "size": "Executor.AttachmentSize.MEDIUM",
+          "size": "Executor.Components.AttachmentSize.MEDIUM",
           "toHit": 3,
           "maxRange": 8,
           "damage": 6,
@@ -150,7 +150,7 @@
         }
       },
       {
-        "ComponentClass": "Executor.Component_Attacker",
+        "ComponentClass": "Executor.Components.Component_Attacker",
         "Params": { }
       }
     ]
@@ -160,15 +160,15 @@
     "TypeLabel": "Weapon",
     "Components": [
       {
-        "ComponentClass": "Executor.Component_Attachable",
+        "ComponentClass": "Executor.Components.Component_Attachable",
         "Params": {
-          "sizeRequired": "Executor.AttachmentSize.SMALL"
+          "sizeRequired": "Executor.Components.AttachmentSize.SMALL"
         }
       },
       {
-        "ComponentClass": "Executor.Component_Weapon",
+        "ComponentClass": "Executor.Components.Component_Weapon",
         "Params": {
-          "size": "Executor.AttachmentSize.SMALL",
+          "size": "Executor.Components.AttachmentSize.SMALL",
           "toHit": 2,
           "maxRange": 8,
           "damage": 2,
@@ -176,7 +176,7 @@
         }
       },
       {
-        "ComponentClass": "Executor.Component_Attacker",
+        "ComponentClass": "Executor.Components.Component_Attacker",
         "Params": { }
       }
     ]
@@ -186,15 +186,15 @@
     "TypeLabel": "Weapon",
     "Components": [
       {
-        "ComponentClass": "Executor.Component_Attachable",
+        "ComponentClass": "Executor.Components.Component_Attachable",
         "Params": {
-          "sizeRequired": "Executor.AttachmentSize.SMALL"
+          "sizeRequired": "Executor.Components.AttachmentSize.SMALL"
         }
       },
       {
-        "ComponentClass": "Executor.Component_Weapon",
+        "ComponentClass": "Executor.Components.Component_Weapon",
         "Params": {
-          "size": "Executor.AttachmentSize.SMALL",
+          "size": "Executor.Components.AttachmentSize.SMALL",
           "toHit": -3,
           "maxRange": 6,
           "damage": 9,
@@ -202,7 +202,7 @@
         }
       },
       {
-        "ComponentClass": "Executor.Component_Attacker",
+        "ComponentClass": "Executor.Components.Component_Attacker",
         "Params": { }
       }
     ]
@@ -212,15 +212,15 @@
     "TypeLabel": "Weapon",
     "Components": [
       {
-        "ComponentClass": "Executor.Component_Attachable",
+        "ComponentClass": "Executor.Components.Component_Attachable",
         "Params": {
-          "sizeRequired": "Executor.AttachmentSize.SMALL"
+          "sizeRequired": "Executor.Components.AttachmentSize.SMALL"
         }
       },
       {
-        "ComponentClass": "Executor.Component_Weapon",
+        "ComponentClass": "Executor.Components.Component_Weapon",
         "Params": {
-          "size": "Executor.AttachmentSize.SMALL",
+          "size": "Executor.Components.AttachmentSize.SMALL",
           "toHit": 2,
           "maxRange": 1,
           "damage": 2,
@@ -228,7 +228,7 @@
         }
       },
       {
-        "ComponentClass": "Executor.Component_Attacker",
+        "ComponentClass": "Executor.Components.Component_Attacker",
         "Params": { }
       }
     ]
@@ -238,15 +238,15 @@
     "TypeLabel": "Weapon",
     "Components": [
       {
-        "ComponentClass": "Executor.Component_Attachable",
+        "ComponentClass": "Executor.Components.Component_Attachable",
         "Params": {
-          "sizeRequired": "Executor.AttachmentSize.MEDIUM"
+          "sizeRequired": "Executor.Components.AttachmentSize.MEDIUM"
         }
       },
       {
-        "ComponentClass": "Executor.Component_Weapon",
+        "ComponentClass": "Executor.Components.Component_Weapon",
         "Params": {
-          "size": "Executor.AttachmentSize.MEDIUM",
+          "size": "Executor.Components.AttachmentSize.MEDIUM",
           "toHit": 0,
           "maxRange": 1,
           "damage": 6,
@@ -254,7 +254,7 @@
         }
       },
       {
-        "ComponentClass": "Executor.Component_Attacker",
+        "ComponentClass": "Executor.Components.Component_Attacker",
         "Params": { }
       }
     ]
@@ -264,15 +264,15 @@
     "TypeLabel": "Weapon",
     "Components": [
       {
-        "ComponentClass": "Executor.Component_Attachable",
+        "ComponentClass": "Executor.Components.Component_Attachable",
         "Params": {
-          "sizeRequired": "Executor.AttachmentSize.LARGE"
+          "sizeRequired": "Executor.Components.AttachmentSize.LARGE"
         }
       },
       {
-        "ComponentClass": "Executor.Component_Weapon",
+        "ComponentClass": "Executor.Components.Component_Weapon",
         "Params": {
-          "size": "Executor.AttachmentSize.LARGE",
+          "size": "Executor.Components.AttachmentSize.LARGE",
           "toHit": -1,
           "maxRange": 1,
           "damage": 9,
@@ -280,7 +280,7 @@
         }
       },
       {
-        "ComponentClass": "Executor.Component_Attacker",
+        "ComponentClass": "Executor.Components.Component_Attacker",
         "Params": { }
       }
     ]

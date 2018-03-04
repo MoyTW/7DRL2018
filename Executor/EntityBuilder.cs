@@ -1,9 +1,12 @@
-﻿using Executor.AI;
-using RogueSharp.Random;
+﻿using Executor.GameQueries;
+
+using Executor.AI;
+using Executor.Components;
+using Executor.GameEvents;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
 namespace Executor
 {
