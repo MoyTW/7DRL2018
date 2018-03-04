@@ -75,6 +75,8 @@
     <Compile Include="Components\Component_ActionExecutor.cs" />
     <Compile Include="Components\Component_AttachPoint.cs" />
     <Compile Include="Components\Component_Attachable.cs" />
+    <Compile Include="Components\Component_Inventoriable.cs" />
+    <Compile Include="Components\Component_Inventory.cs" />
     <Compile Include="Components\StatusEffect.cs" />
     <Compile Include="Components\StatusEffect_Blocking.cs" />
     <Compile Include="Components\StatusEffect_DamageResistance.cs" />

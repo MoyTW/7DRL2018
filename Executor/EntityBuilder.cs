@@ -58,51 +58,6 @@ namespace Executor
             }
         }
 
-        private static Entity BuildMountForWeapon(Entity mech, BodyPartLocation location, Entity weapon)
-        {
-            Entity mount;
-            switch (weapon.GetComponentOfType<Component_Attachable>().SizeRequired)
-            {
-                case AttachmentSize.SMALL:
-                    mount = BlueprintListing.BuildForLabel(Blueprints.SMALL_MOUNT);
-                    break;
-                case AttachmentSize.MEDIUM:
-                    mount = BlueprintListing.BuildForLabel(Blueprints.MEDIUM_MOUNT);
-                    break;
-                case AttachmentSize.LARGE:
-                    mount = BlueprintListing.BuildForLabel(Blueprints.LARGE_MOUNT);
-                    break;
-                default:
-                    throw new ArgumentException("BuildMountForWeapon can't handle size: not SMALL, MEDIUM, LARGE");
-            }
-
-            SlotAt(mech, location, mount);
-            mount.HandleEvent(new GameEvent_Slot(mech, mount, weapon));
-            return mount;
-        }
-
-        private static Entity SlotHolsterForWeapon(Entity mech, BodyPartLocation location, Entity weapon)
-        {
-            Entity holster;
-            switch (weapon.GetComponentOfType<Component_Attachable>().SizeRequired)
-            {
-                case AttachmentSize.SMALL:
-                    holster = BlueprintListing.BuildForLabel(Blueprints.SMALL_HOLSTER);
-                    break;
-                case AttachmentSize.MEDIUM:
-                    holster = BlueprintListing.BuildForLabel(Blueprints.MEDIUM_HOLSTER);
-                    break;
-                case AttachmentSize.LARGE:
-                    holster = BlueprintListing.BuildForLabel(Blueprints.LARGE_HOLSTER);
-                    break;
-                default:
-                    throw new ArgumentException("BuildHolsterForWeapon can't handle size: not SMALL, MEDIUM, LARGE");
-            }
-            SlotAt(mech, location, holster);
-            holster.HandleEvent(new GameEvent_Slot(mech, holster, weapon));
-            return holster;
-        }
-
         public static Entity MountOntoArm(Entity mech, BodyPartLocation location, Entity mountable)
         {
             var armActuator = GetBodyPart(mech, location)
@@ -168,6 +123,7 @@ namespace Executor
             var mech = new Entity(label: label, typeLabel: MechTypeLabel)
                 .AddComponent(new Component_Buffable())
                 .AddComponent(new Component_ActionExecutor(Config.DefaultEntityAP))
+                .AddComponent(new Component_Inventory())
                 .AddComponent(new Component_Skeleton());
 
             if (player)
