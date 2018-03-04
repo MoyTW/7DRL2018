@@ -15,6 +15,12 @@ namespace Executor.Components
 
         public Component_Buffable() { }
 
+        // TODO: LOL
+        public void ForceAddActiveStatusEffect(StatusEffect effect)
+        {
+            this.applyQueue.Add(effect);
+        }
+
         protected override IImmutableSet<SubEntitiesSelector> _MatchingSelectors()
         {
             return ImmutableHashSet<SubEntitiesSelector>.Empty;

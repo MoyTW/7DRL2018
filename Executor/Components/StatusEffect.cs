@@ -8,14 +8,23 @@ namespace Executor.Components
     // TODO: Should have a IHandlesEvents or something
     abstract public class StatusEffect : Component
     {
-        public int Duration { get; private set; }
-        public bool Expired { get { return this.Duration <= 0; } }
+        private bool isTimed;
+        private int duration;
+        public bool Expired { get { return this.isTimed && this.duration <= 0; } }
 
         abstract public string EffectLabel { get; }
 
         public StatusEffect(int duration)
         {
-            this.Duration = duration;
+            if (duration > -1)
+            {
+                this.isTimed = true;
+                this.duration = duration;
+            }
+            else
+            {
+                this.isTimed = false;
+            }
         }
 
         abstract protected void _HandleEndTurn(GameEvent_EndTurn ev);
@@ -24,7 +33,10 @@ namespace Executor.Components
         {
             this._HandleEndTurn(ev);
 
-            this.Duration--;
+            if (this.isTimed)
+            {
+                this.duration--;
+            }
         }
 
         protected override GameEvent _HandleEvent(GameEvent ev)

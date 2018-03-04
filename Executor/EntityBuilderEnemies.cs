@@ -1,4 +1,5 @@
 ﻿using Executor.AI;
+using Executor.Components;
 using Executor.GameEvents;
 
 using RogueSharp.Random;
@@ -66,6 +67,10 @@ namespace Executor
             EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilderWeapons.BuildBaton());
             EntityBuilder.MountOntoArm(entity, BodyPartLocation.LEFT_ARM, EntityBuilder.BuildPhoneScanner());
 
+            var cse = new StatusEffect_DamageResistance(-1, DamageType.SLASHING, Enums.ResistStrength.MAJOR);
+            var buffable = entity.GetComponentOfType<Component_Buffable>();
+            buffable.ForceAddActiveStatusEffect(cse);
+
             return entity;
         }
 
@@ -84,6 +89,9 @@ namespace Executor
 
         public static Entity BuildLevel0Entity(IRandom rand, string designation)
         {
+            return EntityBuilderEnemies.BuildRentACopBaton(designation);
+
+            /*
             var selection = rand.Next(4);
             switch (selection)
             {
@@ -100,6 +108,7 @@ namespace Executor
                 default:
                     throw new InvalidOperationException();
             }
+            */
         }
 
         #endregion
@@ -219,6 +228,8 @@ namespace Executor
 
         public static Entity BuildLevel1Entity(IRandom rand, string designation)
         {
+            return BuildLevel0Entity(rand, designation);
+            /*
             var selection = rand.Next(6);
             switch (selection)
             {
@@ -239,6 +250,7 @@ namespace Executor
                 default:
                     throw new InvalidOperationException();
             }
+            */
         }
 
         #endregion
@@ -329,6 +341,9 @@ namespace Executor
 
         public static Entity BuildLevel2Entity(IRandom rand, string designation)
         {
+            return BuildLevel0Entity(rand, designation);
+
+            /*
             var selection = rand.Next(4);
             switch (selection)
             {
@@ -345,6 +360,7 @@ namespace Executor
                 default:
                     throw new InvalidOperationException();
             }
+            */
         }
 
         #endregion

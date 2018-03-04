@@ -91,10 +91,8 @@ namespace Executor.Components
         {
             if (ev.Target != this.Parent)
                 return;
-            
-            int weaponBaseDamage = ev.Attacker.TryGetAttribute(EntityAttributeType.DAMAGE, ev.Weapon).Value;
 
-            int damage = weaponBaseDamage; // Possible damage modifiers
+            int damage = ev.IncomingDamage;
 
             Entity subTargetEntity = this.bodyParts[ev.SubTarget];
 

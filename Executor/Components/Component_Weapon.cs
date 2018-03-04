@@ -11,10 +11,11 @@ namespace Executor.Components
     {
         public AttachmentSize Size { get; }
         public readonly Dictionary<EntityAttributeType, int> WeaponAttributes;
+        public DamageType DamageType { get; }
 
         // TODO: I would like to define a construct which can be read from a file to construct these!
         // Right now I'll just hard-code them all and feel bad about it.
-        public Component_Weapon(AttachmentSize size, int toHit, int maxRange, int damage, int refireTicks)
+        public Component_Weapon(AttachmentSize size, int toHit, int maxRange, int damage, int refireTicks, DamageType type)
             : base(EntityAttributeType.REFIRE_TICKS)
         {
             this.Size = size;
@@ -23,6 +24,7 @@ namespace Executor.Components
                 { EntityAttributeType.DAMAGE, damage },
                 { EntityAttributeType.REFIRE_TICKS, refireTicks },
             };
+            this.DamageType = type;
         }
 
         protected override IImmutableSet<SubEntitiesSelector> _MatchingSelectors()
