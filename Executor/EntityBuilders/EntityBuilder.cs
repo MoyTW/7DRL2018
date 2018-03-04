@@ -41,6 +41,11 @@ namespace Executor.EntityBuilders
                 .First();
         }
 
+        public static void AddToInventory(Entity mech, Entity item)
+        {
+            mech.HandleEvent(new GameEvent_AddToInventory(mech, item));
+        }
+
         public static void SlotAt(Entity mech, BodyPartLocation location, Entity slottable)
         {
             var bodyPart = GetBodyPart(mech, location);
@@ -150,6 +155,8 @@ namespace Executor.EntityBuilders
             {
                 FillLocationWith(mech, location, BuildArmorPart);
             }
+
+            AddToInventory(mech, EntityBuilder_Inventoriables.BuildIronskinPotion());
 
             return mech;
         }

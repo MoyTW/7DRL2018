@@ -77,13 +77,16 @@
     <Compile Include="Components\Component_Attachable.cs" />
     <Compile Include="Components\Component_Inventoriable.cs" />
     <Compile Include="Components\Component_Inventory.cs" />
+    <Compile Include="Components\Component_Usable.cs" />
     <Compile Include="Components\StatusEffect.cs" />
     <Compile Include="Components\StatusEffect_Blocking.cs" />
     <Compile Include="Components\StatusEffect_DamageResistance.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="DamageType.cs" />
+    <Compile Include="EntityBuilders\EntityBuilder_Inventoriables.cs" />
     <Compile Include="Enums\ResistLevel.cs" />
     <Compile Include="GameEvents\GameEvent_Activation.cs" />
+    <Compile Include="GameEvents\GameEvent_AddToInventory.cs" />
     <Compile Include="GameEvents\GameEvent_EndTurn.cs" />
     <Compile Include="GameEvents\GameEvent_ReceiveAttack.cs" />
     <Compile Include="Log.cs" />
