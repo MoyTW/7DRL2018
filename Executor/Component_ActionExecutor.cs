@@ -23,13 +23,6 @@ namespace Executor
             return ImmutableHashSet<SubEntitiesSelector>.Empty;
         }
 
-        private void HandleFocusEnd(GameEvent_FocusEnd ev)
-        {
-            if (this.Parent != ev.ExecutorEntity)
-                throw new InvalidOperationException("Why is a focus end being broadcast to the wrong entity?");
-            this.currentAP = 0;
-        }
-
         private void HandleCommand(GameEvent_Command ev)
         {
             if (this.Parent == ev.ExecutorEntity)
@@ -85,8 +78,6 @@ namespace Executor
         {
             if (ev is GameEvent_Delay)
                 this.HandleDelay((GameEvent_Delay)ev);
-            else if (ev is GameEvent_FocusEnd)
-                this.HandleFocusEnd((GameEvent_FocusEnd)ev);
             else if (ev is GameEvent_Command)
                 this.HandleCommand((GameEvent_Command)ev);
             else if (ev is GameEvent_Activation)

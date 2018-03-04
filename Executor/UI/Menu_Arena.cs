@@ -11,7 +11,6 @@ namespace Executor.UI
         private readonly Menu_Main parent;
         private readonly ArenaState arena;
         private readonly Menu_Targeting targetingMenu;
-        private readonly Menu_PlanFocus planFocusMenu;
         private readonly Menu_Examine examineMenu;
 
         private const int arenaConsoleWidth = 70;
@@ -21,10 +20,6 @@ namespace Executor.UI
         private const int infoConsoleWidth = 70;
         private const int infoConsoleHeight = 20;
         private RLConsole infoConsole;
-
-        private readonly int focusListWidth = 30;
-        private readonly int focusListHeight = 90;
-        private RLConsole focusListConsole;
 
         public const int statusWidth = 60;
         public const int statusHeight = 45;
@@ -39,38 +34,15 @@ namespace Executor.UI
             this.parent = parent;
             this.arena = arena;
             this.targetingMenu = new Menu_Targeting(this, Config.TargetingWindowX, Config.TargetingWindowY);
-            this.planFocusMenu = new Menu_PlanFocus(this, arena);
             this.examineMenu = new Menu_Examine(this, arena);
 
             arenaConsole = new RLConsole(Menu_Arena.arenaConsoleWidth, Menu_Arena.arenaConsoleHeight);
             this.infoConsole = new RLConsole(Menu_Arena.infoConsoleWidth, Menu_Arena.infoConsoleHeight);
-            this.focusListConsole = new RLConsole(this.focusListWidth, this.focusListHeight);
             status1Console = new RLConsole(Menu_Arena.statusWidth, Menu_Arena.statusHeight);
             this.logConsole = new RLConsole(Menu_Arena.statusWidth, Menu_Arena.statusHeight);
         }
 
         #region IDisplay Fns
-
-        private IDisplay HandleKeyPressedWhileInFocusMode(RLKeyPress keyPress)
-        {
-            if (keyPress == null)
-                return this;
-            switch (keyPress.Key)
-            {
-                case RLKey.Escape:
-                    return this.parent;
-                case RLKey.Space:
-                    this.arena.ResolveStub(this.planFocusMenu.LastStub());
-                    this.planFocusMenu.Reset();
-                    return this;
-                case RLKey.Enter:
-                case RLKey.KeypadEnter:
-                    this.arena.ResolveStub(this.planFocusMenu.PopStub());
-                    return this;
-                default:
-                    return this;
-            }
-        }
 
         public IDisplay OnRootConsoleUpdate(RLConsole console, RLKeyPress keyPress)
         {
@@ -105,10 +77,6 @@ namespace Executor.UI
                 this.targetingMenu.Reset();
                 return this;
             }
-            else if (this.planFocusMenu.InspectFocusCommands().Count() != 0)
-            {
-                return this.HandleKeyPressedWhileInFocusMode(keyPress);
-            }
             else if (keyPress != null)
                 return this.HandleKeyPressed(keyPress);
             else
@@ -128,22 +96,8 @@ namespace Executor.UI
             console.Print(normalX, normalY + 1, "+ Move: NumPad, HJKLYUBN, Arrows", RLColor.White);
             console.Print(normalX, normalY + 2, "+ Delay: Space", RLColor.White);
             console.Print(normalX, normalY + 3, "+ Attack: A, -> Move Inputs", RLColor.White);
-            console.Print(normalX, normalY + 4, "+ Plan Focus: F -> Focus Inputs", RLColor.White);
             console.Print(normalX, normalY + 5, "+ Examine: E -> Left/Right", RLColor.White);
             console.Print(normalX, normalY + 6, "+ Main Menu: Esc", RLColor.White);
-
-            int focusX = 36;
-            int focusY = 3;
-            console.Print(focusX, focusY, "Focus Planning Mode", RLColor.White);
-            console.Print(focusX, focusY + 1, "+ Actions: Same as Normal", RLColor.White);
-            console.Print(focusX, focusY + 2, "+ Deflect Bullets: D", RLColor.White);
-            console.Print(focusX, focusY + 3, "+ Undo: Backspace", RLColor.White);
-            console.Print(focusX, focusY + 4, "+ Execute: Enter", RLColor.White);
-            console.Print(focusX, focusY + 5, "+ Exit Planning: Esc", RLColor.White);
-            
-            console.Print(focusX, focusY + 7, "Focus Execution Mode", RLColor.White);
-            console.Print(focusX, focusY + 8, "+ Execute: Enter", RLColor.White);
-            console.Print(focusX, focusY + 9, "+ Exit Focus: Space", RLColor.White);
         }
 
         public void Blit(RLConsole console)
@@ -160,11 +114,6 @@ namespace Executor.UI
 
             this.DrawInfo(this.infoConsole);
             RLConsole.Blit(this.infoConsole, 0, 0, Menu_Arena.infoConsoleWidth, Menu_Arena.infoConsoleHeight, console, 0, Menu_Arena.arenaConsoleHeight);
-
-            this.focusListConsole.SetBackColor(0, 0, this.focusListWidth, this.focusListHeight, RLColor.LightMagenta);
-            this.DrawFocusList(this.focusListConsole);
-            RLConsole.Blit(this.focusListConsole, 0, 0, this.focusListWidth, this.focusListHeight, console,
-                Menu_Arena.arenaConsoleWidth + Menu_Arena.statusWidth, 0);
 
             Drawer_Mech.DrawMechStatus(this.examineMenu.ExaminedEntity, this.status1Console);
             RLConsole.Blit(this.status1Console, 0, 0, Menu_Arena.statusWidth, Menu_Arena.statusHeight, console,
@@ -203,9 +152,6 @@ namespace Executor.UI
                 case RLKey.A:
                     this.targetingMenu.Reset();
                     return this.targetingMenu;
-                case RLKey.F:
-                    this.planFocusMenu.ResetFocusPlan();
-                    return this.planFocusMenu;
                 case RLKey.Space:
                     var stub = new CommandStub_Delay(this.arena.Player.EntityID, 1);
                     this.arena.ResolveStub(stub);
@@ -259,73 +205,6 @@ namespace Executor.UI
             return this.arena.InspectMapEntities()
                 .Select(e => new Tuple<Entity,int>(e, e.TryGetTicksToLive(this.arena.CurrentTick)))
                 .OrderBy(t => t.Item2);
-        }
-
-        public void DrawFocusList(RLConsole console)
-        {
-            int line = 0;
-            console.Print(0, line,   "##############################", RLColor.Black);
-            console.Print(0, ++line, "#                            #", RLColor.Black);
-
-            line++;
-            console.Print(0, line, "#", RLColor.Black);
-            console.Print(8, line, "CURRENT TURN: " + this.arena.CurrentTick + "           ", RLColor.Black);
-            console.Print(29, line, "#", RLColor.Black);
-            
-            console.Print(0, ++line, "#                            #", RLColor.Black);
-            line++;
-            var playerFocus = this.arena.Player.GetComponentOfType<Component_FocusUser>();
-            if (playerFocus.InFocus)
-            {
-                var remainingAP = this.arena.Player.TryGetAttribute(EntityAttributeType.CURRENT_AP).Value;
-
-                console.Print(0, line,   "#       EXECUTING FOCUS      #", RLColor.Black);
-                console.Print(0, ++line, "#                            #", RLColor.Black);
-                line++;
-                console.Print(0, line, "#", RLColor.Black);
-                console.Print(3, line, "Turn: " + this.arena.CurrentTick + "           ", RLColor.Black);
-                console.Print(12, line, "Moves: " + playerFocus.CurrentFreeMoves + "         ", RLColor.Black);
-                console.Print(22, line, "AP: " + remainingAP + "           ", RLColor.Black);
-                console.Print(29, line, "#", RLColor.Black);
-            }
-            else if (this.planFocusMenu.InspectFocusCommands().Count() != 0)
-            {
-                console.Print(0, line,   "#       PLANNING FOCUS       #", RLColor.Black);
-                console.Print(0, ++line, "#                            #", RLColor.Black);
-                line++;
-                console.Print(0, line, "#", RLColor.Black);
-                console.Print(3, line, "Turn: " + this.planFocusMenu.EndTick + "           ", RLColor.Black);
-                console.Print(12, line, "Moves: " + this.planFocusMenu.RemainingFreeMoves + "         ", RLColor.Black);
-                console.Print(22, line, "AP: " + this.planFocusMenu.RemainingAP + "           ", RLColor.Black);
-                console.Print(29, line, "#", RLColor.Black);
-            }
-            else
-            {
-                console.Print(0, line,   "#      ACTING REGULARLY      #", RLColor.Black);
-                console.Print(0, ++line, "#                            #", RLColor.Black);
-                console.Print(0, ++line, "#          NO PLANS          #", RLColor.Black);
-            }
-            console.Print(0, ++line, "#                            #", RLColor.Black);
-            console.Print(0, ++line, "##############################", RLColor.Black);
-            console.Print(0, ++line, "+----------------------------+", RLColor.Black);
-            line++;
-
-            foreach (var stub in this.planFocusMenu.InspectFocusCommands())
-            {
-                console.Print(2, line, stub.ToString() + "                  ", RLColor.Black);
-                console.Print(0, line, "|", RLColor.Black);
-                console.Print(29, line, "|", RLColor.Black);
-                line++;
-                console.Print(0, line, "+----------------------------+", RLColor.Black);
-                line++;
-            }
-
-            // This is awkward. I'm not sure how to best do it better. Alas I am time-limited.
-            // I mean, it's not very efficient, but at this scale the inefficiency? Literally too small to notice.
-            for (int i = this.focusListHeight; i > line - 1; i--)
-            {
-                console.Print(0, i, "                              ", RLColor.Black);
-            }
         }
 
         public void DrawLog(RLConsole console)
@@ -409,15 +288,6 @@ namespace Executor.UI
             foreach (var cell in alertCells)
             {
                 console.SetBackColor(cell.X, cell.Y, RLColor.LightRed);
-            }
-
-            // Draw focus path
-            var paths = this.planFocusMenu.InspectFocusPath().ToList();
-            for (int i = 0; i < paths.Count; i++)
-            {
-                float v = (float)i / (float)paths.Count;
-                var fp = paths[i];
-                console.SetBackColor(fp.X, fp.Y, FadeColor(RLColor.LightGreen, v));
             }
 
             // Draw player
