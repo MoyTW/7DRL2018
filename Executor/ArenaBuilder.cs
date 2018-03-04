@@ -1,12 +1,13 @@
-﻿using RogueSharp;
+﻿using Executor.EntityBuilders;
+using Executor.Components;
+
+using RogueSharp;
 using RogueSharp.Random;
 
 using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
-
-using Executor.Components;
 
 namespace Executor
 {
@@ -98,7 +99,7 @@ namespace Executor
                 var numToAdd = placementRand.Next(dist.Min, dist.Max);
                 for (int i = 0; i < numToAdd; i++)
                 {
-                    mapEntities.Add(EntityBuilderEnemies.BuildRandomLevelledEntity(placementRand, d.ToString(), dist.EntityLevel));
+                    mapEntities.Add(EntityBuilder_Enemies.BuildRandomLevelledEntity(placementRand, d.ToString(), dist.EntityLevel));
                     d++;
                 }
             }

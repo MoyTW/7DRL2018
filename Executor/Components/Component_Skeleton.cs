@@ -1,4 +1,5 @@
-﻿using Executor.GameEvents;
+﻿using Executor.EntityBuilders;
+using Executor.GameEvents;
 using Executor.GameQueries;
 
 using RogueSharp.Random;

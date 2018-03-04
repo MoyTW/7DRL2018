@@ -101,7 +101,7 @@
     <Compile Include="Components\Component_Weapon.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityAttributeType.cs" />
-    <Compile Include="EntityBuilder.cs" />
+    <Compile Include="EntityBuilders\EntityBuilder.cs" />
     <Compile Include="GameEvents\GameEvent.cs" />
     <Compile Include="GameEvents\GameEvent_PrepareAttack.cs" />
     <Compile Include="GameEvents\GameEvent_Command.cs" />
@@ -147,8 +147,8 @@
     <Compile Include="UI\Menu_Examine.cs" />
     <Compile Include="AI\ActionClause_Attack.cs" />
     <Compile Include="AI\ActionClause_Approach.cs" />
-    <Compile Include="EntityBuilderEnemies.cs" />
-    <Compile Include="EntityBuilderWeapons.cs" />
+    <Compile Include="EntityBuilders\EntityBuilder_Enemies.cs" />
+    <Compile Include="EntityBuilders\EntityBuilder_Weapons.cs" />
     <Compile Include="AI\ActionClause_AvoidMelee.cs" />
     <Compile Include="AI\ActionClause_SeekMaxWeaponRange.cs" />
   </ItemGroup>
@@ -193,6 +193,7 @@
       <Install>false</Install>
     </BootstrapperPackage>
   </ItemGroup>
+  <ItemGroup />
   <ProjectExtensions>
     <MonoDevelop>
       <Properties>

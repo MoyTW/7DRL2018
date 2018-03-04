@@ -8,7 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Executor
+namespace Executor.EntityBuilders
 {
     public static class EntityBuilder
     {
@@ -144,7 +144,7 @@ namespace Executor
         {
             var mech = BuildNakedMech("You", true, null);
 
-            MountOntoArm(mech, BodyPartLocation.RIGHT_ARM, EntityBuilderWeapons.BuildHFBlade());
+            MountOntoArm(mech, BodyPartLocation.RIGHT_ARM, EntityBuilder_Weapons.BuildHFBlade());
 
             foreach (var location in EntityBuilder.MechLocations)
             {

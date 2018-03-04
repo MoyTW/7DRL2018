@@ -1,14 +1,13 @@
 ﻿using Executor.AI;
 using Executor.Components;
-using Executor.GameEvents;
 
 using RogueSharp.Random;
 using System;
 using System.Collections.Generic;
 
-namespace Executor
+namespace Executor.EntityBuilders
 {
-    public static class EntityBuilderEnemies
+    public static class EntityBuilder_Enemies
     {
 
         #region Level 0 Foes
@@ -22,7 +21,7 @@ namespace Executor
 
             var entity = EntityBuilder.BuildNakedMech("Rent-A-Cop " + designation, false, new Guidebook(clauses));
 
-            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilderWeapons.BuildPistol());
+            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilder_Weapons.BuildPistol());
             EntityBuilder.MountOntoArm(entity, BodyPartLocation.LEFT_ARM, EntityBuilder.BuildPhoneScanner());
 
             return entity;
@@ -37,7 +36,7 @@ namespace Executor
 
             var entity = EntityBuilder.BuildNakedMech("Rent-A-Cop " + designation, false, new Guidebook(clauses));
 
-            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilderWeapons.BuildPistol());
+            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilder_Weapons.BuildPistol());
             EntityBuilder.MountOntoArm(entity, BodyPartLocation.LEFT_ARM, EntityBuilder.BuildPhoneScanner());
 
             return entity;
@@ -50,7 +49,7 @@ namespace Executor
 
             var entity = EntityBuilder.BuildNakedMech("Rent-A-Cop " + designation, false, new Guidebook(clauses));
 
-            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilderWeapons.BuildPistol());
+            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilder_Weapons.BuildPistol());
             EntityBuilder.MountOntoArm(entity, BodyPartLocation.LEFT_ARM, EntityBuilder.BuildPhoneScanner());
 
             return entity;
@@ -64,7 +63,7 @@ namespace Executor
 
             var entity = EntityBuilder.BuildNakedMech("Rent-A-Cop " + designation, false, new Guidebook(clauses));
 
-            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilderWeapons.BuildBaton());
+            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilder_Weapons.BuildBaton());
             EntityBuilder.MountOntoArm(entity, BodyPartLocation.LEFT_ARM, EntityBuilder.BuildPhoneScanner());
 
             var cse = new StatusEffect_DamageResistance(-1, DamageType.SLASHING, Enums.ResistStrength.MAJOR);
@@ -81,7 +80,7 @@ namespace Executor
 
             var entity = EntityBuilder.BuildNakedMech("Rent-A-Cop " + designation, false, new Guidebook(clauses));
 
-            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilderWeapons.BuildBaton());
+            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilder_Weapons.BuildBaton());
             EntityBuilder.MountOntoArm(entity, BodyPartLocation.LEFT_ARM, EntityBuilder.BuildPhoneScanner());
 
             return entity;
@@ -89,7 +88,7 @@ namespace Executor
 
         public static Entity BuildLevel0Entity(IRandom rand, string designation)
         {
-            return EntityBuilderEnemies.BuildRentACopBaton(designation);
+            return EntityBuilder_Enemies.BuildRentACopBaton(designation);
 
             /*
             var selection = rand.Next(4);
@@ -124,7 +123,7 @@ namespace Executor
 
             var entity = EntityBuilder.BuildNakedMech("Policeman " + designation, false, new Guidebook(clauses));
 
-            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilderWeapons.BuildPistol());
+            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilder_Weapons.BuildPistol());
             EntityBuilder.MountOntoArm(entity, BodyPartLocation.LEFT_ARM, EntityBuilder.BuildHandheldScanner());
 
             return entity;
@@ -139,7 +138,7 @@ namespace Executor
 
             var entity = EntityBuilder.BuildNakedMech("Policeman " + designation, false, new Guidebook(clauses));
 
-            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilderWeapons.BuildShotgun());
+            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilder_Weapons.BuildShotgun());
             EntityBuilder.MountOntoArm(entity, BodyPartLocation.LEFT_ARM, EntityBuilder.BuildHandheldScanner());
 
             return entity;
@@ -154,7 +153,7 @@ namespace Executor
 
             var entity = EntityBuilder.BuildNakedMech("Policeman " + designation, false, new Guidebook(clauses));
 
-            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilderWeapons.BuildShotgun());
+            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilder_Weapons.BuildShotgun());
             EntityBuilder.MountOntoArm(entity, BodyPartLocation.LEFT_ARM, EntityBuilder.BuildHandheldScanner());
 
             return entity;
@@ -169,7 +168,7 @@ namespace Executor
 
             var entity = EntityBuilder.BuildNakedMech("Policeman " + designation, false, new Guidebook(clauses));
 
-            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilderWeapons.BuildRifle());
+            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilder_Weapons.BuildRifle());
             EntityBuilder.MountOntoArm(entity, BodyPartLocation.LEFT_ARM, EntityBuilder.BuildHandheldScanner());
 
             return entity;
@@ -184,7 +183,7 @@ namespace Executor
 
             var entity = EntityBuilder.BuildNakedMech("Policeman " + designation, false, new Guidebook(clauses));
 
-            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilderWeapons.BuildRifle());
+            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilder_Weapons.BuildRifle());
             EntityBuilder.MountOntoArm(entity, BodyPartLocation.LEFT_ARM, EntityBuilder.BuildHandheldScanner());
 
             return entity;
@@ -198,7 +197,7 @@ namespace Executor
 
             var entity = EntityBuilder.BuildNakedMech("Policeman " + designation, false, new Guidebook(clauses));
 
-            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilderWeapons.BuildBaton());
+            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilder_Weapons.BuildBaton());
             EntityBuilder.MountOntoArm(entity, BodyPartLocation.LEFT_ARM, EntityBuilder.BuildHandheldScanner());
 
             EntityBuilder.SlotAt(entity, BodyPartLocation.HEAD, EntityBuilder.BuildHelmet());
@@ -216,7 +215,7 @@ namespace Executor
 
             var entity = EntityBuilder.BuildNakedMech("Policeman " + designation, false, new Guidebook(clauses));
 
-            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilderWeapons.BuildPistol());
+            EntityBuilder.MountOntoArm(entity, BodyPartLocation.RIGHT_ARM, EntityBuilder_Weapons.BuildPistol());
             EntityBuilder.MountOntoArm(entity, BodyPartLocation.LEFT_ARM, EntityBuilder.BuildHandheldScanner());
 
             EntityBuilder.SlotAt(entity, BodyPartLocation.HEAD, EntityBuilder.BuildHelmet());
@@ -281,7 +280,7 @@ namespace Executor
             clauses.Add(new ActionClause_Attack());
             clauses.Add(new ActionClause_Approach());
 
-            var entity = BuildBaseSWAT(clauses, EntityBuilderWeapons.BuildAssaultRifle(), designation);
+            var entity = BuildBaseSWAT(clauses, EntityBuilder_Weapons.BuildAssaultRifle(), designation);
             
             return entity;
         }
@@ -293,7 +292,7 @@ namespace Executor
             clauses.Add(new ActionClause_Attack());
             clauses.Add(new ActionClause_Approach());
 
-            var entity = BuildBaseSWAT(clauses, EntityBuilderWeapons.BuildAssaultRifle(), designation);
+            var entity = BuildBaseSWAT(clauses, EntityBuilder_Weapons.BuildAssaultRifle(), designation);
 
             return entity;
         }
@@ -305,7 +304,7 @@ namespace Executor
             clauses.Add(new ActionClause_Attack());
             clauses.Add(new ActionClause_Approach());
 
-            var entity = BuildBaseSWAT(clauses, EntityBuilderWeapons.BuildCombatRifle(), designation);
+            var entity = BuildBaseSWAT(clauses, EntityBuilder_Weapons.BuildCombatRifle(), designation);
 
             return entity;
         }
@@ -316,7 +315,7 @@ namespace Executor
             clauses.Add(new ActionClause_Attack());
             clauses.Add(new ActionClause_Approach());
 
-            var entity = BuildBaseSWAT(clauses, EntityBuilderWeapons.HFBaton(), designation);
+            var entity = BuildBaseSWAT(clauses, EntityBuilder_Weapons.HFBaton(), designation);
 
             return entity;
         }
@@ -327,7 +326,7 @@ namespace Executor
             clauses.Add(new ActionClause_Attack());
             clauses.Add(new ActionClause_Approach());
 
-            var entity = BuildBaseSWAT(clauses, EntityBuilderWeapons.HFBaton(), designation);
+            var entity = BuildBaseSWAT(clauses, EntityBuilder_Weapons.HFBaton(), designation);
 
             EntityBuilder.SlotAt(entity, BodyPartLocation.TORSO, EntityBuilder.BuildArmorPart());
             EntityBuilder.SlotAt(entity, BodyPartLocation.LEFT_LEG, EntityBuilder.BuildArmorPart());
@@ -370,11 +369,11 @@ namespace Executor
             switch(level)
             {
                 case 0:
-                    return EntityBuilderEnemies.BuildLevel0Entity(rand, designation);
+                    return EntityBuilder_Enemies.BuildLevel0Entity(rand, designation);
                 case 1:
-                    return EntityBuilderEnemies.BuildLevel1Entity(rand, designation);
+                    return EntityBuilder_Enemies.BuildLevel1Entity(rand, designation);
                 case 2:
-                    return EntityBuilderEnemies.BuildLevel2Entity(rand, designation);
+                    return EntityBuilder_Enemies.BuildLevel2Entity(rand, designation);
                 default:
                     throw new InvalidOperationException();
             }
