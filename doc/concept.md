@@ -1,69 +1,91 @@
 # One-Sentence Summary
 
-Scout out enemy locations, lay out your plan of attack, and then execute your
-flawless plan and bring down your foes in an instant!
+Defend your domain from adventuring parties by skirmishing and harrying them
+through your multi-level dungeon.
 
 # Concept
 
-You need to plan, and plan well! Your character has two modes. The first mode is
-essentially a "normal" mode; you can move around, you can equip and unequip
-items, you can bump attack. In this mode you're stealthy, but weak - enemies can
-shoot you or rocket you and you won't have much chance to dodge them.
+The aim of this game is to give the player the feeling of being a powerful,
+singular hunter fighting a group of dangerous foes.
 
-When you're in the second mode, "focus" mode (I need to come up with a better
-name) you turn into a whirlwind of destruction. You can move multiple times a
-turn, deflect bullets, dodge rockets, and cut enemies to shreds as you zoom past
-them. The only catch is that you can't control your character directly in focus
-mode - instead, you lay out a plan when you enter focus mode which your
-character will execute.
+Gameplay targets:
 
-Entering focus mode has a certain time cost, during which you'll be
-vulnerable. Also, focus mode won't be so strict that you can't plan - you'll be
-able to have a certain number of 'instant' moves to reposition, and you can exit
-out of focus mode if you realize you've made a really bad plan.
+1. Reward planning and tailoring your approach towards your foes
+2. Allow minor victories and setbacks as part of a long engagement
+3. Reward judicious and well-timed usage of resources
 
-That's the most basic explanation. The game flow will be something like:
+# Proposals:
 
-+ Scout Area
-+ Discover Enemies And Observe Traits (you'll be able to tell if an enemy has
-  rockets, guns, grenades, whether they'll be liable to approach or run, etc,
-  etc)
-+ Plan
-+ Execute plan in Focus mode
-+ Possibly abort and run away to try again
-+ Repeat until mission complete
+## Extremely strong resistences, and common resist+ items/skills/spells (1)
 
-# Turns and Time
+To force the user to use different tools against different foes.
 
-Both in "normal" and "focus" mode, enemies and you will take turns in order,
-with turn order being super boring and standard (you go, each one of them goes,
-then you go, repeat).
+## Powerful items and spell slots (1, 3, 4)
 
-However, in focus, you will have the ability to execute an increased number of
-actions per turn.
+3 because consumables can be exhausted, so you can "trade" consumables favorably
+or unfavorably, and since they're powerful it's important!
 
-This actually boils down to the concept of AP! In normal mode, everything
-(moving, attacking, observing) takes one point of AP. In focus mode, you have a
-bunch more AP and optional abilities that aren't available to normal mode.
+## Temporary damage systems (2, 3)
 
-Spitballing at AP costs:
+I'm thinking something like PoE's Stamina/Health split, where if you can deplete
+Stamina you can get cause serious injury while still allowing future combats. It
+seems like a pretty good way to transform traditional systems into attritional
+systems.
 
-## Normal Mode: 1 AP/turn
+## Timed conditions (1, 2)
 
-+ Move: 1
-+ Observe: 1
-+ Attack: 1
+Could be anything from "Take damage while on the floor" to DD's light system,
+where you get stronger/weaker depending on the usage of those resources. The
+point of this would be to force engagements or action.
 
-## Focus Mode: 4 AP/Turn
+## Morale/Panic mechanics (1, 2)
 
-+ Move: First 2 moves free, 1 for rest
-+ Deflect Bullet: First 3 free, 1/3?
-+ Vault?: 2
-+ Cut Head?: 2
-+ Cut Limb/Torso?: 1
-+ Dodge Rockets: 1
+Allows you to "beat" them (scatter them) while still not actually yet beating
+them. A possible issue in that once they do break and scatter, that would almost
+definitely be a foregone conclusion from there.
 
-Don't know if grenades will have time to go in, but:
+## Free in-between wave respecs and wide variety of skills (1)
 
-+ Deflect Grenades: 1
-+ Throw Back Grenades: 2
+This is to encourage you to vary up your builds.
+
+# Systems
+
+## Your Dungeon
+
+Your dungeon is definitely a multi-level dungeon, with each different level
+having a different gimmick. Whether these gimmicks are user-chosen or fixed or
+random, I'm not sure, but each gimmick should be unique enough to open up
+gameplay opportunities.
+
+Possible gimmicks:
++ No spellcasting/reduced magic effectiveness
++ Constant damage of a specific type
++ Morale penalties
++ Straight stat penalties
++ Reduced LOS
++ Infinitely spawning popcorn
++ Elite guardians
+
+## Main Game Loop
+
++ Scrying Report <-------+
+|                        |
++ Preparation Phase      |
+|                        |
++ Combat                 |
+|                        |
++ Loot & Regeneration ---+
+
+### Scrying Report
+
+You should get a good idea of what would be sane to bring. Maybe not 100%
+information, but things like classes, weapon types, obvious items, and other
+things you should take into account.
+
+### Preparation Phase
+
+You get to respec here.
+
+## Adventurer Waves
+
+Adventurers attack in waves of 2-8 adventurers at a time.
