@@ -12,16 +12,16 @@ namespace Executor.Components
     class Component_Inventory : Component
     {
         private int maxItems;
-        private List<Entity> inventoriedEntities;
 
+        public List<Entity> InventoriedEntities { get; }
         public int MaxItems { get { return this.maxItems; } }
-        public int NumItemsInventoried { get { return this.inventoriedEntities.Count; } }
+        public int NumItemsInventoried { get { return this.InventoriedEntities.Count; } }
         public int RemainingInventory { get { return this.maxItems - this.NumItemsInventoried; } }
 
         public Component_Inventory(int maxItems=26)  // alphabet letters
         {
             this.maxItems = maxItems;
-            this.inventoriedEntities = new List<Entity>();
+            this.InventoriedEntities = new List<Entity>();
         }
 
         protected override IImmutableSet<SubEntitiesSelector> _MatchingSelectors()
@@ -33,12 +33,12 @@ namespace Executor.Components
         {
             if (ev.ExecutorEntity == this.Parent)
             {
-                if (this.inventoriedEntities.Contains(ev.EntityToInventory))
+                if (this.InventoriedEntities.Contains(ev.EntityToInventory))
                     throw new ArgumentException("Cannot inventory already inventoried item " + ev.EntityToInventory.ToString());
 
                 if (this.RemainingInventory > 0)
                 {
-                    this.inventoriedEntities.Add(ev.EntityToInventory);
+                    this.InventoriedEntities.Add(ev.EntityToInventory);
                     ev.Completed = true;
                 }
             }
@@ -51,7 +51,5 @@ namespace Executor.Components
 
             return ev;
         }
-
-        
     }
 }

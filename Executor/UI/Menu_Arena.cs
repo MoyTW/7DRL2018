@@ -12,6 +12,7 @@ namespace Executor.UI
     {
         private readonly Menu_Main parent;
         private readonly ArenaState arena;
+        private readonly Menu_Inventory inventoryMenu;
         private readonly Menu_Examine examineMenu;
 
         private const int arenaConsoleWidth = 70;
@@ -34,6 +35,7 @@ namespace Executor.UI
         {
             this.parent = parent;
             this.arena = arena;
+            this.inventoryMenu = new Menu_Inventory(this, arena, this.parent.Width / 2, this.parent.Height / 2);
             this.examineMenu = new Menu_Examine(this, arena);
 
             arenaConsole = new RLConsole(Menu_Arena.arenaConsoleWidth, Menu_Arena.arenaConsoleHeight);
@@ -129,6 +131,8 @@ namespace Executor.UI
 
             switch (keyPress.Key)
             {
+                case RLKey.I:
+                    return this.inventoryMenu;
                 case RLKey.Escape:
                     return this.parent;
                 case RLKey.E:
