@@ -141,11 +141,6 @@ namespace Executor.UI
             {
                 case RLKey.Escape:
                     return this.parent;
-                    /*
-                case RLKey.P:
-                    this.arena.PlayerDelayAction(DelayDuration.SINGLE_TICK);
-                    break;
-                    */
                 case RLKey.E:
                     this.examineMenu.Start();
                     return this.examineMenu;
