@@ -10,7 +10,6 @@ namespace Executor.UI
     {
         private readonly Menu_Main parent;
         private readonly ArenaState arena;
-        private readonly Menu_Targeting targetingMenu;
         private readonly Menu_Examine examineMenu;
 
         private const int arenaConsoleWidth = 70;
@@ -33,7 +32,6 @@ namespace Executor.UI
         {
             this.parent = parent;
             this.arena = arena;
-            this.targetingMenu = new Menu_Targeting(this, Config.TargetingWindowX, Config.TargetingWindowY);
             this.examineMenu = new Menu_Examine(this, arena);
 
             arenaConsole = new RLConsole(Menu_Arena.arenaConsoleWidth, Menu_Arena.arenaConsoleHeight);
@@ -68,15 +66,6 @@ namespace Executor.UI
                 this.arena.TryFindAndExecuteNextCommand();
                 return this;
             }   
-            else if (this.targetingMenu.CompletedTargeting)
-            {
-                var stub = new CommandStub_PrepareDirectionalAttack(this.arena.Player.EntityID, 
-                    this.targetingMenu.TargetedX, this.targetingMenu.TargetedY,
-                    (BodyPartLocation)this.targetingMenu.TargetedLocation);
-                this.arena.ResolveStub(stub);
-                this.targetingMenu.Reset();
-                return this;
-            }
             else if (keyPress != null)
                 return this.HandleKeyPressed(keyPress);
             else
@@ -95,7 +84,6 @@ namespace Executor.UI
             console.Print(normalX, normalY, "Normal Mode", RLColor.White);
             console.Print(normalX, normalY + 1, "+ Move: NumPad, HJKLYUBN, Arrows", RLColor.White);
             console.Print(normalX, normalY + 2, "+ Delay: Space", RLColor.White);
-            console.Print(normalX, normalY + 3, "+ Attack: A, -> Move Inputs", RLColor.White);
             console.Print(normalX, normalY + 5, "+ Examine: E -> Left/Right", RLColor.White);
             console.Print(normalX, normalY + 6, "+ Main Menu: Esc", RLColor.White);
         }
@@ -128,6 +116,7 @@ namespace Executor.UI
 
         private void TryPlayerMove(int dx, int dy)
         {
+            // TODO: Attack!
             var stub = new CommandStub_MoveSingle(this.arena.Player.EntityID, dx, dy);
             this.arena.ResolveStub(stub);
         }
@@ -144,9 +133,6 @@ namespace Executor.UI
                 case RLKey.E:
                     this.examineMenu.Start();
                     return this.examineMenu;
-                case RLKey.A:
-                    this.targetingMenu.Reset();
-                    return this.targetingMenu;
                 case RLKey.Space:
                     var stub = new CommandStub_Delay(this.arena.Player.EntityID, 1);
                     this.arena.ResolveStub(stub);

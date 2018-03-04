@@ -121,11 +121,9 @@
     <Compile Include="UI\Menu_MechDetails.cs" />
     <Compile Include="UI\IntegerSelectionField.cs" />
     <Compile Include="UI\Menu_Main.cs" />
-    <Compile Include="Component_Piloted.cs" />
     <Compile Include="Component_AttributeModifier.cs" />
     <Compile Include="Component_Skeleton.cs" />
     <Compile Include="UI\Menu_NextLevel.cs" />
-    <Compile Include="UI\Menu_Targeting.cs" />
     <Compile Include="GameEvent_Destroy.cs" />
     <Compile Include="GameEvent_ReceiveStatusEffect.cs" />
     <Compile Include="Component_Buffable.cs" />
@@ -139,7 +137,6 @@
     <Compile Include="AI\Condition.cs" />
     <Compile Include="AI\Condition_CanSeeEnemy.cs" />
     <Compile Include="AI\Condition_Distance.cs" />
-    <Compile Include="AI\Condition_Health.cs" />
     <Compile Include="AI\Guidebook.cs" />
     <Compile Include="AI\ActionClause.cs" />
     <Compile Include="UI\Menu_Examine.cs" />
