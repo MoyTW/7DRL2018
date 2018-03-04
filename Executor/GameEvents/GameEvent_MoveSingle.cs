@@ -37,6 +37,43 @@
         }
     }
 
+    public class CommandStub_MoveSingleOrPrepareAttack : CommandStub
+    {
+        public XDirection X { get; }
+        public YDirection Y { get; }
+
+        public CommandStub_MoveSingleOrPrepareAttack(string moverEID, int x, int y) : base(moverEID)
+        {
+            this.X = (XDirection)x;
+            this.Y = (YDirection)y;
+        }
+
+        public override GameEvent_Command ReifyStub(ArenaState arena)
+        {
+            var commandEntity = arena.ResolveEID(this.CommandEID);
+            var commandPosition = commandEntity.TryGetPosition();
+            var entityAtTargetPosition = arena.EntityAtPosition(commandPosition.X + (int)this.X,
+                commandPosition.Y + (int)this.Y);
+
+            if (entityAtTargetPosition != null)
+            {
+                // TODO: Don't always bump attack to torso
+                return new CommandStub_PrepareTargetedAttack(this.CommandEID, entityAtTargetPosition.EntityID, 
+                    entityAtTargetPosition.Label, BodyPartLocation.TORSO)
+                    .ReifyStub(arena);
+            }
+            else
+            {
+                return new GameEvent_MoveSingle(arena.CurrentTick, Config.ONE, commandEntity, this.X, this.Y, arena);
+            }
+        }
+
+        public override string ToString()
+        {
+            return string.Format("Move or attack {0}, {1}", X, Y);
+        }
+    }
+
     public class GameEvent_MoveSingle : GameEvent_Command
     {
         public XDirection X { get; }

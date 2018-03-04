@@ -118,8 +118,7 @@ namespace Executor.UI
 
         private void TryPlayerMove(int dx, int dy)
         {
-            // TODO: Attack!
-            var stub = new CommandStub_MoveSingle(this.arena.Player.EntityID, dx, dy);
+            var stub = new CommandStub_MoveSingleOrPrepareAttack(this.arena.Player.EntityID, dx, dy);
             this.arena.ResolveStub(stub);
         }
 
