@@ -69,7 +69,18 @@ namespace Executor.UI
             {
                 this.arena.TryFindAndExecuteNextCommand();
                 return this;
-            }   
+            }
+            else if (this.inventoryMenu.SelectedItem != null)
+            {
+                var selected = this.inventoryMenu.SelectedItem;
+                this.inventoryMenu.Reset();
+
+                var stub = new CommandStub_UseItem(this.arena.Player.EntityID, selected.EntityID,
+                    this.arena.Player.EntityID);
+                this.arena.ResolveStub(stub);
+
+                return this;
+            }
             else if (keyPress != null)
                 return this.HandleKeyPressed(keyPress);
             else

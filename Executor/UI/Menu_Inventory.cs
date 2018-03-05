@@ -20,6 +20,8 @@ namespace Executor.UI
         public const int inventoryHeight = 45;
         public readonly int centerX, centerY;
 
+        public Entity SelectedItem { get; private set; }
+
         public Menu_Inventory(IDisplay parent, ArenaState arena, int centerX, int centerY)
         {
             this.parent = parent;
@@ -30,6 +32,23 @@ namespace Executor.UI
             this.inventoryConsole = new RLConsole(inventoryWidth, inventoryHeight);
         }
 
+        public void Reset()
+        {
+            this.SelectedItem = null;
+        }
+
+        private Entity TryGetEntityInIndex(int idx)
+        {
+            var inventory = this.arena.Player.GetComponentOfType<Component_Inventory>();
+            if (idx < inventory.NumItemsInventoried)
+            {
+                return inventory.InventoriedEntities[idx];
+            } else
+            {
+                return null;
+            }
+        }
+
         private IDisplay HandleKeyPressed(RLKeyPress keyPress)
         {
             if (keyPress == null)
@@ -37,6 +56,34 @@ namespace Executor.UI
 
             switch (keyPress.Key)
             {
+                case RLKey.A:
+                case RLKey.B:
+                case RLKey.C:
+                case RLKey.D:
+                case RLKey.E:
+                case RLKey.F:
+                case RLKey.G:
+                case RLKey.H:
+                case RLKey.I:
+                case RLKey.J:
+                case RLKey.K:
+                case RLKey.L:
+                case RLKey.M:
+                case RLKey.N:
+                case RLKey.O:
+                case RLKey.P:
+                case RLKey.Q:
+                case RLKey.R:
+                case RLKey.S:
+                case RLKey.T:
+                case RLKey.U:
+                case RLKey.V:
+                case RLKey.W:
+                case RLKey.X:
+                case RLKey.Y:
+                case RLKey.Z:
+                    this.SelectedItem = TryGetEntityInIndex((int)keyPress.Key - 83);
+                    return this.parent;
                 case RLKey.Escape:
                     return this.parent;
                 default:

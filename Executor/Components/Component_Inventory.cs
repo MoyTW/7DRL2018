@@ -4,6 +4,7 @@ using Executor.GameQueries;
 using System;
 using System.Collections.Immutable;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Executor.Components
 {
@@ -29,6 +30,11 @@ namespace Executor.Components
             return ImmutableHashSet<SubEntitiesSelector>.Empty;
         }
 
+        public Entity FindByEid(string entityID)
+        {
+            return this.InventoriedEntities.Where(e => e.EntityID == entityID).FirstOrDefault();
+        }
+
         private void HandleAddToInventory(GameEvent_AddToInventory ev)
         {
             if (ev.ExecutorEntity == this.Parent)
@@ -50,6 +56,24 @@ namespace Executor.Components
                 this.HandleAddToInventory((GameEvent_AddToInventory)ev);
 
             return ev;
+        }
+
+        private void HandleQuerySubEntities(GameQuery_SubEntities q)
+        {
+            foreach (var inventoried in this.InventoriedEntities)
+            {
+                if (q.MatchesSelectors(inventoried))
+                    q.RegisterEntity(inventoried);
+                inventoried.HandleQuery(q);
+            }
+        }
+
+        protected override GameQuery _HandleQuery(GameQuery q)
+        {
+            if (q is GameQuery_SubEntities)
+                this.HandleQuerySubEntities((GameQuery_SubEntities)q);
+
+            return q;
         }
     }
 }

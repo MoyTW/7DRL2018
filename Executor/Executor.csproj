@@ -85,10 +85,12 @@
     <Compile Include="DamageType.cs" />
     <Compile Include="EntityBuilders\EntityBuilder_Inventoriables.cs" />
     <Compile Include="Enums\ResistLevel.cs" />
+    <Compile Include="GameEvents\CommandStub_UseItem.cs" />
     <Compile Include="GameEvents\GameEvent_Activation.cs" />
     <Compile Include="GameEvents\GameEvent_AddToInventory.cs" />
     <Compile Include="GameEvents\GameEvent_EndTurn.cs" />
     <Compile Include="GameEvents\GameEvent_ReceiveAttack.cs" />
+    <Compile Include="GameEvents\GameEvent_UseItem.cs" />
     <Compile Include="Log.cs" />
     <Compile Include="Components\Component.cs" />
     <Compile Include="Components\Component_AI.cs" />
