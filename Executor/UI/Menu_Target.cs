@@ -13,6 +13,7 @@ namespace Executor.UI
         private IDisplay cancelParent;
         private ArenaState arena;
 
+        public int Range { get; private set; }
         public int X { get; private set; }
         public int Y { get; private set; }
         public bool Targeting { get; private set; }
@@ -37,10 +38,11 @@ namespace Executor.UI
             this.cancelParent = cancelParent;
         }
 
-        public void Start()
+        public void Start(int range)
         {
             this.Reset();
             this.Targeting = true;
+            this.Range = range;
         }
 
         public void Reset()

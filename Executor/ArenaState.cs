@@ -6,6 +6,7 @@ using RogueSharp;
 
 using System;
 using System.Collections.Generic;
+using System.Collections.Immutable;
 using System.Linq;
 
 namespace Executor
@@ -68,6 +69,29 @@ namespace Executor
                     return false;
             }
             return this.ArenaMap.IsWalkable(x, y);
+        }
+
+        public bool InBounds(int x, int y)
+        {
+            return !(x < 0 || y < 0 || x >= this.ArenaMap.Width || y >= this.ArenaMap.Height);
+        }
+
+        public List<Cell> CellsInRadius(int centerX, int centerY, int radius, bool requiresWalkable=true)
+        {
+            List<Cell> acc = new List<Cell>();
+            for (int x = centerX - radius; x <= centerX + radius; ++x)
+            {
+                for (int y = centerY - radius; y <= centerY + radius; y++)
+                {
+                    if (this.InBounds(x, y) &&
+                        DistanceBetweenPositions(x, y, centerX, centerY) <= radius
+                        && (!requiresWalkable || this.ArenaMap.IsWalkable(x, y)))
+                    {
+                        acc.Add(this.ArenaMap.GetCell(x, y));
+                    }
+                }
+            }
+            return acc;
         }
 
         public Path ShortestPath(Cell source, Cell destination)

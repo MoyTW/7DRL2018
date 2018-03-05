@@ -54,31 +54,11 @@ namespace Executor.Components
             var detectRadius = this.Parent.TryGetAttribute(EntityAttributeType.DETECTION_RADIUS).Value;
             var myPosition = this.Parent.TryGetPosition();
 
-            for (int x = -scanRadius; x <= scanRadius; ++x)
-            {
-                for (int y = -scanRadius; y <= scanRadius; ++y)
-                {
-                    var d = (int)Math.Floor(Math.Sqrt(x * x + y * y));
-                    int mx = myPosition.X + x;
-                    int my = myPosition.Y + y;
-                    Cell cell = null;
-                    if (mx >= 0 && my >= 0 && mx < arena.ArenaMap.Width && my < arena.ArenaMap.Height)
-                    {
-                        cell = arena.ArenaMap.GetCell(myPosition.X + x, myPosition.Y + y);
-                    }
+            if (!this.Alerted)
+                info.AlertCells = arena.CellsInRadius(myPosition.X, myPosition.Y, detectRadius);
+            if (!this.Scanned)
+                info.ScanCells = arena.CellsInRadius(myPosition.X, myPosition.Y, scanRadius);
 
-                    if (cell != null && d <= detectRadius && !this.Alerted)
-                    {
-                        if (cell.IsWalkable)
-                            info.AlertCells.Add(cell);
-                    }
-                    else if (!this.Scanned && cell != null && d <= scanRadius)
-                    {
-                        if (cell.IsWalkable)
-                            info.ScanCells.Add(cell);
-                    }
-                }
-            }
             return info;
         }
 

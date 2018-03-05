@@ -17,7 +17,7 @@ namespace Executor.EntityBuilders
             return new Entity(label: "Suicide pill")
                 .AddComponent(new Component_Inventoriable())
                 .AddComponent(new Usable_ApplyAttack(9999, DamageType.DARK))
-                .AddComponent(new Component_Usable(0));
+                .AddComponent(new Component_Usable(3));
         }
 
         public static Entity BuildIronskinPotion()
@@ -27,7 +27,7 @@ namespace Executor.EntityBuilders
                 .AddComponent(new Usable_ApplyStatusEffect(new StatusEffect_DamageResistance(3, DamageType.SLASHING, Enums.ResistStrength.MAJOR)))
                 .AddComponent(new Usable_ApplyStatusEffect(new StatusEffect_DamageResistance(3, DamageType.PIERCING, Enums.ResistStrength.MAJOR)))
                 .AddComponent(new Usable_ApplyStatusEffect(new StatusEffect_DamageResistance(3, DamageType.CRUSHING, Enums.ResistStrength.MAJOR)))
-                .AddComponent(new Component_Usable(0));
+                .AddComponent(new Component_Usable(5));
         }
     }
 }

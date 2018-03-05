@@ -88,7 +88,8 @@ namespace Executor.UI
                 case RLKey.Y:
                 case RLKey.Z:
                     this.SelectedItem = TryGetEntityInIndex((int)keyPress.Key - 83);
-                    this.targetMenu.Start();
+                    var range = this.SelectedItem.GetComponentOfType<Component_Usable>().TargetRange;
+                    this.targetMenu.Start(range);
                     return this.targetMenu;
                 case RLKey.Escape:
                     return this.parent;

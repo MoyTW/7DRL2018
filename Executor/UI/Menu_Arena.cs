@@ -265,6 +265,7 @@ namespace Executor.UI
                 }
             }
 
+            // Draw enemies, alert + scan radii
             List<RogueSharp.Cell> alertCells = new List<RogueSharp.Cell>();
             List<RogueSharp.Cell> scanCells = new List<RogueSharp.Cell>();
             foreach (var e in arena.InspectMapEntities().Where(e => e != arena.Player))
@@ -307,7 +308,18 @@ namespace Executor.UI
             // Highlight targeting
             if (this.targetMenu.Targeting)
             {
-                console.SetBackColor(this.targetMenu.X, this.targetMenu.Y, RLColor.Yellow);
+                var playerPosition = arena.Player.TryGetPosition();
+                // TODO: Artemis is crying
+                var cellsInRange = arena.CellsInRadius(playerPosition.X, playerPosition.Y, 
+                    this.inventoryMenu.SelectedItem.GetComponentOfType<Component_Usable>().TargetRange);
+                foreach (RogueSharp.Cell cell in cellsInRange) {
+                    if (cell.IsInFov && cell.IsWalkable)
+                    {
+                        console.SetBackColor(cell.X, cell.Y, RLColor.LightGreen);
+                    }
+                }
+
+                console.SetBackColor(this.targetMenu.X, this.targetMenu.Y, RLColor.Green);
             }
 
             // Draw commands
