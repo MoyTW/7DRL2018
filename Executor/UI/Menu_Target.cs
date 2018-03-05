@@ -62,8 +62,15 @@ namespace Executor.UI
 
         private void MoveCursor(int dx, int dy)
         {
-            this.X += dx;
-            this.Y += dy;
+            var cell = this.arena.ArenaMap.GetCell(this.X + dx, this.Y + dy);
+            var playerPos = this.arena.Player.TryGetPosition();
+
+            if (ArenaState.DistanceBetweenPositions(playerPos.X, playerPos.Y, cell.X, cell.Y) <= this.Range &&
+                cell.IsInFov && cell.IsWalkable)
+            {
+                this.X += dx;
+                this.Y += dy;
+            }
         }
 
         private IDisplay HandleKeyPressed(RLKeyPress keyPress)
