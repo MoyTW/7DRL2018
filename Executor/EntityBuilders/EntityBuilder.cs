@@ -169,10 +169,10 @@ namespace Executor.EntityBuilders
             AddToInventory(mech, EntityBuilder_Inventoriables.BuildIronskinPotion());
             AddToInventory(mech, EntityBuilder_Inventoriables.BuildIronskinPotion());
             AddToInventory(mech, EntityBuilder_Inventoriables.BuildIronskinPotion());
-            AddToInventory(mech, EntityBuilder_Inventoriables.BuildIronskinPotion());
-            AddToInventory(mech, EntityBuilder_Inventoriables.BuildIronskinPotion());
-            AddToInventory(mech, EntityBuilder_Inventoriables.BuildIronskinPotion());
-            AddToInventory(mech, EntityBuilder_Inventoriables.BuildIronskinPotion());
+            AddToInventory(mech, EntityBuilder_Inventoriables.BuildSuicidePotion());
+            AddToInventory(mech, EntityBuilder_Inventoriables.BuildSuicidePotion());
+            AddToInventory(mech, EntityBuilder_Inventoriables.BuildSuicidePotion());
+            AddToInventory(mech, EntityBuilder_Inventoriables.BuildSuicidePotion());
             AddToInventory(mech, EntityBuilder_Inventoriables.BuildIronskinPotion());
             AddToInventory(mech, EntityBuilder_Inventoriables.BuildIronskinPotion());
             AddToInventory(mech, EntityBuilder_Inventoriables.BuildIronskinPotion());

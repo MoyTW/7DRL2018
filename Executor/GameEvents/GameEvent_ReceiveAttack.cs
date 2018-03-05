@@ -9,20 +9,11 @@ namespace Executor.GameEvents
     class GameEvent_ReceiveAttack : GameEvent
     {
         private GameEvent_PrepareAttack preparedAttack;
-
-        private Entity Weapon { get { return this.preparedAttack.ExecutorEntity; } }
         private List<Tuple<int, String>> modifiers = new List<Tuple<int, String>>();
 
-        public Entity Attacker { get { return this.preparedAttack.CommandEntity; } }
-        public Entity Target { get { return this.preparedAttack.Target; } }
-        public BodyPartLocation SubTarget { get { return this.preparedAttack.SubTarget; } }
-
-        public DamageType DamageType { get { return this.Weapon.GetComponentOfType<Component_Weapon>().DamageType; } }
-        // TODO: The below is super janky.
-        // What's happening is this:
-        // The "PrepareAttack" is only a "I attack X with Y weapon". This means that all the resolution of modifiers never touches the PrepareAttack event. So !?!?
-        // then we get waaaay down into the ReceiveAttack and run back and try and sum up all the modifiers with this Query against DAMAGE
-        // What *should* happen is that the PrepareAttack is modified as it passes through the attacker and then "checkpoints" before flipping over to the defender.
+        public Entity Target { get; }
+        public BodyPartLocation SubTarget { get; }
+        public DamageType DamageType { get; }
         public int BaseIncomingDamage { get; }
 
         public int IncomingDamage {
@@ -39,7 +30,24 @@ namespace Executor.GameEvents
         public GameEvent_ReceiveAttack(GameEvent_PrepareAttack preparedAttack)
         {
             this.preparedAttack = preparedAttack;
-            this.BaseIncomingDamage = this.Attacker.TryGetAttribute(EntityAttributeType.DAMAGE, this.preparedAttack.ExecutorEntity).Value;
+
+            this.Target = preparedAttack.Target;
+            this.SubTarget = preparedAttack.SubTarget;
+            this.DamageType = preparedAttack.ExecutorEntity.GetComponentOfType<Component_Weapon>().DamageType;
+            // TODO: The below is super janky.
+            // What's happening is this:
+            // The "PrepareAttack" is only a "I attack X with Y weapon". This means that all the resolution of modifiers never touches the PrepareAttack event. So !?!?
+            // then we get waaaay down into the ReceiveAttack and run back and try and sum up all the modifiers with this Query against DAMAGE
+            // What *should* happen is that the PrepareAttack is modified as it passes through the attacker and then "checkpoints" before flipping over to the defender.
+            this.BaseIncomingDamage = preparedAttack.CommandEntity.TryGetAttribute(EntityAttributeType.DAMAGE, preparedAttack.ExecutorEntity).Value;
+        }
+
+        public GameEvent_ReceiveAttack(Entity target, BodyPartLocation subTarget, DamageType damageType, int damage)
+        {
+            this.Target = target;
+            this.SubTarget = subTarget;
+            this.DamageType = damageType;
+            this.BaseIncomingDamage = damage;
         }
 
         public void ModifyIncomingDamage(int modifier, String explanation)
@@ -50,7 +58,10 @@ namespace Executor.GameEvents
         public void RegisterAttackResults(string logMessage)
         {
             this.Completed = true;
-            this.preparedAttack.RegisterResult(logMessage);
+            if (this.preparedAttack != null)
+            {
+                this.preparedAttack.RegisterResult(logMessage);
+            }
         }
     }
 }

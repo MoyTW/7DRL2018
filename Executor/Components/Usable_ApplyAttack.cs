@@ -7,13 +7,15 @@ using System.Collections.Immutable;
 namespace Executor.Components
 {
     [Serializable()]
-    class Component_Usable : Component
+    class Usable_ApplyAttack : Component
     {
-        public int TargetRange { get; }
+        public int BaseDamage { get; }
+        public DamageType DamageType { get; }
 
-        public Component_Usable(int targetRange)
+        public Usable_ApplyAttack(int baseDamage, DamageType damageType)
         {
-            this.TargetRange = targetRange;
+            this.BaseDamage = baseDamage;
+            this.DamageType = damageType;
         }
 
         protected override IImmutableSet<SubEntitiesSelector> _MatchingSelectors()
@@ -25,7 +27,8 @@ namespace Executor.Components
         {
             if (ev.ExecutorEntity == this.Parent)
             {
-                ev.Completed = true;
+                var attack = new GameEvent_ReceiveAttack(ev.Target, BodyPartLocation.TORSO, this.DamageType, this.BaseDamage);
+                ev.Target.HandleEvent(attack);
             }
         }
 
