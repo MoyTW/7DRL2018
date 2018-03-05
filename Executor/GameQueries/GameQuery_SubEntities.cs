@@ -18,7 +18,8 @@ namespace Executor.GameQueries
         ATTACH_POINT,
         ATTACHABLE,
         SLOTTABLE,
-        EQUIPPED
+        EQUIPPED,
+        USABLE
     }
 
     // This is definitely astronauting the heck out of my problem.

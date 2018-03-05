@@ -7,8 +7,15 @@ using System.Collections.Immutable;
 namespace Executor.Components
 {
     [Serializable()]
-    class Component_Usable : Component
+    class Usable_ApplyStatusEffect : Component
     {
+        public StatusEffect EffectToApply { get; }
+
+        public Usable_ApplyStatusEffect(StatusEffect effectToApply)
+        {
+            this.EffectToApply = effectToApply;
+        }
+
         protected override IImmutableSet<SubEntitiesSelector> _MatchingSelectors()
         {
             return ImmutableHashSet<SubEntitiesSelector>.Empty.Add(SubEntitiesSelector.USABLE);
@@ -18,7 +25,9 @@ namespace Executor.Components
         {
             if (ev.ExecutorEntity == this.Parent)
             {
-                ev.Completed = true;
+                var applyEvent = new GameEvent_ReceiveStatusEffect(ev.CommandTick, ev.APCost, ev.Target, ev.Item,
+                    this.EffectToApply);
+                ev.Target.HandleEvent(applyEvent);
             }
         }
 

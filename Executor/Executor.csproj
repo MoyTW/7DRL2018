@@ -81,6 +81,7 @@
     <Compile Include="Components\StatusEffect.cs" />
     <Compile Include="Components\StatusEffect_Blocking.cs" />
     <Compile Include="Components\StatusEffect_DamageResistance.cs" />
+    <Compile Include="Components\Usable_ApplyStatusEffect.cs" />
     <Compile Include="Config.cs" />
     <Compile Include="DamageType.cs" />
     <Compile Include="EntityBuilders\EntityBuilder_Inventoriables.cs" />

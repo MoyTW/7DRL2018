@@ -49,13 +49,13 @@ namespace Executor.GameEvents
             }
         }
 
-        public GameEvent_ReceiveStatusEffect(int commandTick, int APCost, Entity commandEntity, 
-            StatusEffect effect) : this(commandTick, APCost, commandEntity, commandEntity, effect)
+        public GameEvent_ReceiveStatusEffect(int commandTick, int APCost, Entity targetEntity, 
+            StatusEffect effect) : this(commandTick, APCost, targetEntity, targetEntity, effect)
         { }
 
-        public GameEvent_ReceiveStatusEffect(int commandTick, int APCost, Entity commandEntity, Entity executorEntity,
+        public GameEvent_ReceiveStatusEffect(int commandTick, int APCost, Entity targetEntity, Entity executorEntity,
             StatusEffect effect)
-            : base(commandTick, APCost, commandEntity, executorEntity)
+            : base(commandTick, APCost, targetEntity, executorEntity)
         {
             this.Effect = effect;
         }

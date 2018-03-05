@@ -8,15 +8,6 @@ using System.Threading.Tasks;
 
 namespace Executor.EntityBuilders
 {
-    /*
-    private static Entity BuildWeapon(string label, AttachmentSize size, int maxRange, int damage,
-            int refireTicks, DamageType type)
-    {
-        return new Entity(label: label, typeLabel: "Weapon")
-            .AddComponent(new Component_Attachable(size))
-            .AddComponent(new Component_Weapon(size, Config.ZERO, maxRange, damage, refireTicks, type))
-            .AddComponent(new Component_Attacker());
-    }*/
     public static class EntityBuilder_Inventoriables
     {
         public static Entity BuildSuicidePotion()
@@ -31,8 +22,10 @@ namespace Executor.EntityBuilders
         {
             return new Entity(label: "Ironskin potion")
                 .AddComponent(new Component_Inventoriable())
+                .AddComponent(new Usable_ApplyStatusEffect(new StatusEffect_DamageResistance(3, DamageType.SLASHING, Enums.ResistStrength.MAJOR)))
+                .AddComponent(new Usable_ApplyStatusEffect(new StatusEffect_DamageResistance(3, DamageType.PIERCING, Enums.ResistStrength.MAJOR)))
+                .AddComponent(new Usable_ApplyStatusEffect(new StatusEffect_DamageResistance(3, DamageType.CRUSHING, Enums.ResistStrength.MAJOR)))
                 .AddComponent(new Component_Usable());
-            // AddComponent(new Effect_AddBuff())
         }
     }
 }
