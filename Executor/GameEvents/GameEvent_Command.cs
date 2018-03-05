@@ -40,7 +40,10 @@ namespace Executor.GameEvents
             set
             {
                 base.Completed = value;
-                this.CommandEntity.HandleEvent(new GameEvent_Activation(this));
+                if (this.APCost > Config.ZERO)
+                {
+                    this.CommandEntity.HandleEvent(new GameEvent_Activation(this));
+                }
             }
         }
 

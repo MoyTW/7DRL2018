@@ -159,6 +159,7 @@
     <Compile Include="EntityBuilders\EntityBuilder_Weapons.cs" />
     <Compile Include="AI\ActionClause_AvoidMelee.cs" />
     <Compile Include="AI\ActionClause_SeekMaxWeaponRange.cs" />
+    <Compile Include="UI\Menu_Target.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <ItemGroup>

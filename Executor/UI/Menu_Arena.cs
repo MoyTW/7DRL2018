@@ -12,8 +12,9 @@ namespace Executor.UI
     {
         private readonly Menu_Main parent;
         private readonly ArenaState arena;
-        private readonly Menu_Inventory inventoryMenu;
         private readonly Menu_Examine examineMenu;
+        private readonly Menu_Target targetMenu;
+        private readonly Menu_Inventory inventoryMenu;
 
         private const int arenaConsoleWidth = 70;
         private const int arenaConsoleHeight = 70;
@@ -35,8 +36,10 @@ namespace Executor.UI
         {
             this.parent = parent;
             this.arena = arena;
-            this.inventoryMenu = new Menu_Inventory(this, arena, this.parent.Width / 2, this.parent.Height / 2);
             this.examineMenu = new Menu_Examine(this, arena);
+            this.targetMenu = new Menu_Target(this, arena);
+            this.inventoryMenu = new Menu_Inventory(this, targetMenu, arena, this.parent.Width / 2, this.parent.Height / 2);
+            this.targetMenu.Init(this.inventoryMenu);
 
             arenaConsole = new RLConsole(Menu_Arena.arenaConsoleWidth, Menu_Arena.arenaConsoleHeight);
             this.infoConsole = new RLConsole(Menu_Arena.infoConsoleWidth, Menu_Arena.infoConsoleHeight);
@@ -70,13 +73,14 @@ namespace Executor.UI
                 this.arena.TryFindAndExecuteNextCommand();
                 return this;
             }
-            else if (this.inventoryMenu.SelectedItem != null)
+            // TODO: logic here is !?!?
+            else if (this.inventoryMenu.SelectedItem != null && this.targetMenu.Targeted && this.targetMenu.TargetedEntity != null)
             {
                 var selected = this.inventoryMenu.SelectedItem;
+                var target = this.targetMenu.TargetedEntity;
                 this.inventoryMenu.Reset();
 
-                var stub = new CommandStub_UseItem(this.arena.Player.EntityID, selected.EntityID,
-                    this.arena.Player.EntityID);
+                var stub = new CommandStub_UseItem(this.arena.Player.EntityID, selected.EntityID, target.EntityID);
                 this.arena.ResolveStub(stub);
 
                 return this;
@@ -118,7 +122,10 @@ namespace Executor.UI
             this.DrawInfo(this.infoConsole);
             RLConsole.Blit(this.infoConsole, 0, 0, Menu_Arena.infoConsoleWidth, Menu_Arena.infoConsoleHeight, console, 0, Menu_Arena.arenaConsoleHeight);
 
-            Drawer_Mech.DrawMechStatus(this.examineMenu.ExaminedEntity, this.status1Console);
+            if (this.targetMenu.Targeting && this.targetMenu.TargetedEntity != null)
+                Drawer_Mech.DrawMechStatus(this.targetMenu.TargetedEntity, this.status1Console);
+            else
+                Drawer_Mech.DrawMechStatus(this.examineMenu.ExaminedEntity, this.status1Console);
             RLConsole.Blit(this.status1Console, 0, 0, Menu_Arena.statusWidth, Menu_Arena.statusHeight, console,
                 Menu_Arena.arenaConsoleWidth, 0);
 
@@ -295,6 +302,12 @@ namespace Executor.UI
             {
                 var examinedPostion = this.examineMenu.ExaminedEntity.TryGetPosition();
                 console.SetBackColor(examinedPostion.X, examinedPostion.Y, RLColor.Yellow);
+            }
+
+            // Highlight targeting
+            if (this.targetMenu.Targeting)
+            {
+                console.SetBackColor(this.targetMenu.X, this.targetMenu.Y, RLColor.Yellow);
             }
 
             // Draw commands

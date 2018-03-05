@@ -25,7 +25,7 @@ namespace Executor.Components
         {
             if (ev.ExecutorEntity == this.Parent)
             {
-                var applyEvent = new GameEvent_ReceiveStatusEffect(ev.CommandTick, ev.APCost, ev.Target, ev.Item,
+                var applyEvent = new GameEvent_ReceiveStatusEffect(ev.CommandTick, Config.ZERO, ev.Target, ev.Item,
                     this.EffectToApply);
                 ev.Target.HandleEvent(applyEvent);
             }
