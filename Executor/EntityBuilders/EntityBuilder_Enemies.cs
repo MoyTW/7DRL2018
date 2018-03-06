@@ -1,5 +1,6 @@
 ﻿using Executor.AI;
 using Executor.Components;
+using Executor.Enums;
 
 using RogueSharp.Random;
 using System;

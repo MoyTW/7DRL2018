@@ -1,4 +1,5 @@
-﻿using Executor.GameQueries;
+﻿using Executor.Enums;
+using Executor.GameQueries;
 
 using System;
 using System.Linq;

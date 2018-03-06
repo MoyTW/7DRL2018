@@ -1,4 +1,6 @@
-﻿namespace Executor.GameEvents
+﻿using Executor.Enums;
+
+namespace Executor.GameEvents
 {
     public enum XDirection
     {

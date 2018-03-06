@@ -1,4 +1,5 @@
 ﻿using Executor.Components;
+using Executor.Enums;
 using Executor.GameQueries;
 
 using RLNET;

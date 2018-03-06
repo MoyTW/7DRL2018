@@ -1,4 +1,4 @@
-﻿namespace Executor
+﻿namespace Executor.Enums
 {
     // Kinda just throwing these out there they aren't final/exhaustive/whatever
     public enum DamageType

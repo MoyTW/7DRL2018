@@ -2,6 +2,7 @@
 
 using Executor.AI;
 using Executor.Components;
+using Executor.Enums;
 using Executor.GameEvents;
 
 using System;

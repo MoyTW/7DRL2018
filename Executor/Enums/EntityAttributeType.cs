@@ -1,4 +1,4 @@
-﻿namespace Executor
+﻿namespace Executor.Enums
 {
     public enum EntityAttributeType
     {

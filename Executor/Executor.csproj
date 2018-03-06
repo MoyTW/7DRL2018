@@ -69,7 +69,7 @@
     <Compile Include="AI\SingleClause.cs" />
     <Compile Include="FloorState.cs" />
     <Compile Include="FloorBuilder.cs" />
-    <Compile Include="BodyPartLocation.cs" />
+    <Compile Include="Enums\BodyPartLocation.cs" />
     <Compile Include="Blueprint.cs" />
     <Compile Include="BlueprintListing.cs" />
     <Compile Include="Components\Component_ActionExecutor.cs" />
@@ -84,7 +84,7 @@
     <Compile Include="Components\Usable_ApplyAttack.cs" />
     <Compile Include="Components\Usable_ApplyStatusEffect.cs" />
     <Compile Include="Config.cs" />
-    <Compile Include="DamageType.cs" />
+    <Compile Include="Enums\DamageType.cs" />
     <Compile Include="EntityBuilders\EntityBuilder_Inventoriables.cs" />
     <Compile Include="Enums\ResistLevel.cs" />
     <Compile Include="GameEvents\CommandStub_UseItem.cs" />
@@ -107,7 +107,7 @@
     <Compile Include="Components\Component_SlottedStructure.cs" />
     <Compile Include="Components\Component_Weapon.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="EntityAttributeType.cs" />
+    <Compile Include="Enums\EntityAttributeType.cs" />
     <Compile Include="EntityBuilders\EntityBuilder.cs" />
     <Compile Include="GameEvents\GameEvent.cs" />
     <Compile Include="GameEvents\GameEvent_PrepareAttack.cs" />

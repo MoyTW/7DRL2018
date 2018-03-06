@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Executor.Enums;
+
+using System;
 using Executor;
 using System.Collections.Generic;
 using NUnit.Framework;
