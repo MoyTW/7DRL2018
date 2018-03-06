@@ -1,4 +1,5 @@
 ﻿using Executor.Components;
+using Executor.Dungeon;
 using Executor.Enums;
 using Executor.GameEvents;
 using Executor.GameQueries;
@@ -10,7 +11,7 @@ using System.Collections.Generic;
 using System.Collections.Immutable;
 using System.Linq;
 
-namespace Executor
+namespace Executor.Dungeon
 {
     public class FloorState
     {

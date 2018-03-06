@@ -1,4 +1,5 @@
 ﻿using Executor.Enums;
+using Executor.Dungeon;
 
 namespace Executor.GameEvents
 {

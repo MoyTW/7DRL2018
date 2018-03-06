@@ -1,5 +1,4 @@
-﻿using System;
-
+﻿using Executor.Dungeon;
 using Executor.Components;
 
 namespace Executor.GameEvents

@@ -67,11 +67,11 @@
     <Compile Include="AI\ActionClause_KeepMediumRange.cs" />
     <Compile Include="AI\ActionClause_Flee.cs" />
     <Compile Include="AI\SingleClause.cs" />
-    <Compile Include="FloorState.cs" />
-    <Compile Include="FloorBuilder.cs" />
+    <Compile Include="Dungeon\FloorState.cs" />
+    <Compile Include="Dungeon\FloorBuilder.cs" />
     <Compile Include="Enums\BodyPartLocation.cs" />
-    <Compile Include="Blueprint.cs" />
-    <Compile Include="BlueprintListing.cs" />
+    <Compile Include="EntityBuilders\Blueprint.cs" />
+    <Compile Include="EntityBuilders\BlueprintListing.cs" />
     <Compile Include="Components\Component_ActionExecutor.cs" />
     <Compile Include="Components\Component_AttachPoint.cs" />
     <Compile Include="Components\Component_Attachable.cs" />

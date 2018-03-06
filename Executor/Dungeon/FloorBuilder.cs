@@ -10,7 +10,7 @@ using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Executor
+namespace Executor.Dungeon
 {
     public static class FloorBuilder
     {

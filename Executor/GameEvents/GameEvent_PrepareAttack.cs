@@ -1,5 +1,6 @@
 ﻿using Executor.Components;
 using Executor.Enums;
+using Executor.Dungeon;
 using Executor.GameQueries;
 
 using RogueSharp;

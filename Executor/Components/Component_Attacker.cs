@@ -1,4 +1,5 @@
 ﻿using Executor.Enums;
+using Executor.Dungeon;
 using Executor.GameEvents;
 using Executor.GameQueries;
 
