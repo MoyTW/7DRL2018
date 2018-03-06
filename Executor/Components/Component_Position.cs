@@ -29,7 +29,7 @@ namespace Executor.Components
 
         private void HandleMove(GameEvent_MoveSingle ev)
         {
-            if (ev.GameArena.IsWalkableAndOpen(this.X + (int)ev.X, this.Y + (int)ev.Y))
+            if (ev.CurrentFloor.IsWalkableAndOpen(this.X + (int)ev.X, this.Y + (int)ev.Y))
             {
                 this.X += (int)ev.X;
                 this.Y += (int)ev.Y;

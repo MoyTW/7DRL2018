@@ -18,15 +18,15 @@ namespace Executor.AI
 
         public override CommandStub GenerateCommand(GameQuery_Command commandQuery)
         {
-            Entity target = commandQuery.ArenaState.Player;
+            Entity target = commandQuery.FloorState.Player;
 
             // TODO: Wow this is awkward!?
             var commandPos = commandQuery.CommandEntity.TryGetPosition();
-            var commandCell = commandQuery.ArenaState.ArenaMap.GetCell(commandPos.X, commandPos.Y);
+            var commandCell = commandQuery.FloorState.FloorMap.GetCell(commandPos.X, commandPos.Y);
             var targetPos = target.TryGetPosition();
-            var targetCell = commandQuery.ArenaState.ArenaMap.GetCell(targetPos.X, targetPos.Y);
+            var targetCell = commandQuery.FloorState.FloorMap.GetCell(targetPos.X, targetPos.Y);
 
-            var shortestPath = commandQuery.ArenaState.ShortestPath(commandCell, targetCell);
+            var shortestPath = commandQuery.FloorState.ShortestPath(commandCell, targetCell);
             if (shortestPath == null)
                 return null;
 
@@ -38,10 +38,10 @@ namespace Executor.AI
             {
                 for (int y = commandPos.Y - 1; y < commandPos.Y + 2; y++)
                 {
-                    if (commandQuery.ArenaState.ArenaMap.IsWalkable(x, y) && !(x == targetPos.X && y == targetPos.Y))
+                    if (commandQuery.FloorState.FloorMap.IsWalkable(x, y) && !(x == targetPos.X && y == targetPos.Y))
                     {
-                        var candidateCell = commandQuery.ArenaState.ArenaMap.GetCell(x, y);
-                        var path = commandQuery.ArenaState.ShortestPath(candidateCell, targetCell);
+                        var candidateCell = commandQuery.FloorState.FloorMap.GetCell(x, y);
+                        var path = commandQuery.FloorState.ShortestPath(candidateCell, targetCell);
                         if (path == null)
                             return null;
                         if (path.Length > currDist)

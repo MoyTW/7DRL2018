@@ -14,7 +14,7 @@ namespace Executor.UI
     {
         private readonly IDisplay parent;
         private readonly Menu_Target targetMenu;
-        private ArenaState arena;
+        private FloorState arena;
         private RLConsole inventoryConsole;
 
         public const int inventoryWidth = 60;
@@ -24,7 +24,7 @@ namespace Executor.UI
         public Entity SelectedItem { get; private set; }
         public Entity SelectedTarget { get; private set; }
 
-        public Menu_Inventory(IDisplay parent, Menu_Target targetMenu, ArenaState arena, int centerX, int centerY)
+        public Menu_Inventory(IDisplay parent, Menu_Target targetMenu, FloorState arena, int centerX, int centerY)
         {
             this.parent = parent;
             this.targetMenu = targetMenu;
@@ -145,7 +145,7 @@ namespace Executor.UI
                 this.inventoryConsole.SetBackColor(0, 0, inventoryWidth, inventoryHeight, RLColor.White);
 
                 this.DrawInventoryMenu(this.inventoryConsole);
-                RLConsole.Blit(this.inventoryConsole, 0, 0, Menu_Arena.statusWidth, Menu_Arena.statusHeight, console,
+                RLConsole.Blit(this.inventoryConsole, 0, 0, Menu_Floor.statusWidth, Menu_Floor.statusHeight, console,
                     this.centerX - Menu_Inventory.inventoryWidth / 2, this.centerY - Menu_Inventory.inventoryHeight / 2);
             //}
         }

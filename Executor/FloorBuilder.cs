@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Executor
 {
-    public static class ArenaBuilder
+    public static class FloorBuilder
     {
         public struct Distribution
         {
@@ -69,11 +69,11 @@ namespace Executor
         private static ConcurrentDictionary<string, Tuple<IMap, PathFinder>> seedsToMaps =
             new ConcurrentDictionary<string, Tuple<IMap, PathFinder>>(Config.NumThreads(), Config.NumMaps());
 
-        public static ArenaState TestArena(Entity baseMech1, Entity baseMech2)
+        public static FloorState TestArena(Entity baseMech1, Entity baseMech2)
         {
             var arenaMap = Map.Create(new RogueSharp.MapCreation.BorderOnlyMapCreationStrategy<Map>(15, 15));
             var mapEntities = new List<Entity>() { baseMech1, baseMech2 };
-            ArenaState arena = new ArenaState(mapEntities, "test", arenaMap, new PathFinder(arenaMap), 0);
+            FloorState arena = new FloorState(mapEntities, "test", arenaMap, new PathFinder(arenaMap), 0);
             arena.PlaceEntityNear(baseMech1, 5, 5);
             arena.PlaceEntityNear(baseMech2, 10, 10);
 
@@ -84,13 +84,13 @@ namespace Executor
         {
             var scanRange = aiEntity.TryGetAttribute(EntityAttributeType.SCAN_REQUIRED_RADIUS).Value;
             var playerPos = player.TryGetPosition();
-            var dist = ArenaState.DistanceBetweenPositions(playerPos.X, playerPos.Y, possiblePosition.X, possiblePosition.Y);
+            var dist = FloorState.DistanceBetweenPositions(playerPos.X, playerPos.Y, possiblePosition.X, possiblePosition.Y);
             return dist <= scanRange;
         }
 
-        public static ArenaState BuildArena(int width, int height, string mapID, Entity player, int level)
+        public static FloorState BuildFloor(int width, int height, string mapID, Entity player, int level)
         {
-            var distributions = ArenaBuilder.levelDefinitions[level];
+            var distributions = FloorBuilder.levelDefinitions[level];
             List<Entity> mapEntities = new List<Entity>() { player };
             var placementRand = new DotNetRandom(Int32.Parse(mapID));
             int d = 0;
@@ -103,10 +103,10 @@ namespace Executor
                     d++;
                 }
             }
-            return ArenaBuilder.BuildArena(width, height, mapID, mapEntities, level);
+            return FloorBuilder.BuildArena(width, height, mapID, mapEntities, level);
         }
 
-        private static ArenaState BuildArena(int width, int height, string mapID, IEnumerable<Entity> entities, int level)
+        private static FloorState BuildArena(int width, int height, string mapID, IEnumerable<Entity> entities, int level)
         {
             if (!seedsToMaps.ContainsKey(mapID))
             {
@@ -121,9 +121,9 @@ namespace Executor
             {
                 mapEntities.Add(e.DeepCopy());
             }
-            ArenaState arena = new ArenaState(mapEntities, mapID, seedsToMaps[mapID].Item1, seedsToMaps[mapID].Item2, level);
+            FloorState arena = new FloorState(mapEntities, mapID, seedsToMaps[mapID].Item1, seedsToMaps[mapID].Item2, level);
 
-            var openCells = arena.ArenaMap.GetAllCells().Where(c => c.IsWalkable).ToList();
+            var openCells = arena.FloorMap.GetAllCells().Where(c => c.IsWalkable).ToList();
             var placementRand = new DotNetRandom(Int32.Parse(mapID));
             foreach (var e in mapEntities)
             {
@@ -132,7 +132,7 @@ namespace Executor
                     var cell = openCells[placementRand.Next(openCells.Count - 1)];
 
                     Component_AI ai = e.GetComponentOfType<Component_AI>();
-                    if (ai != null && !ArenaBuilder.InScanRangeOfPlayer(arena.Player, e, cell))
+                    if (ai != null && !FloorBuilder.InScanRangeOfPlayer(arena.Player, e, cell))
                     {
                         arena.PlaceEntityNear(e, cell.X, cell.Y);
                         ai.DeterminePatrolPath(arena, placementRand);

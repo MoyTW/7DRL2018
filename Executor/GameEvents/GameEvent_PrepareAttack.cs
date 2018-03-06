@@ -23,9 +23,9 @@ namespace Executor.GameEvents
             this.SubTarget = subTarget;
         }
 
-        public override GameEvent_Command ReifyStub(ArenaState arena)
+        public override GameEvent_Command ReifyStub(FloorState floor)
         {
-            var attackerEntity = arena.ResolveEID(this.AttackerEID);
+            var attackerEntity = floor.ResolveEID(this.AttackerEID);
             var equippedWeapon = attackerEntity.GetComponentOfType<Component_Skeleton>()
                 .InspectBodyPart(BodyPartLocation.RIGHT_ARM)
                 .TryGetSubEntities(SubEntitiesSelector.WEAPON)
@@ -33,14 +33,14 @@ namespace Executor.GameEvents
 
             // TODO: Don't require exact square
             var attackerPosition = attackerEntity.TryGetPosition();
-            var targetEntity = arena.EntityAtPosition(attackerPosition.X + this.x, attackerPosition.Y + this.y);
+            var targetEntity = floor.EntityAtPosition(attackerPosition.X + this.x, attackerPosition.Y + this.y);
             if (targetEntity != null)
             {
-                return new GameEvent_PrepareAttack(arena.CurrentTick, Config.ONE, attackerEntity, targetEntity,
-                    equippedWeapon, arena.ArenaMap, this.SubTarget);
+                return new GameEvent_PrepareAttack(floor.CurrentTick, Config.ONE, attackerEntity, targetEntity,
+                    equippedWeapon, floor.FloorMap, this.SubTarget);
             }
             else
-                return new GameEvent_Delay(arena.CurrentTick, Config.ONE, attackerEntity);
+                return new GameEvent_Delay(floor.CurrentTick, Config.ONE, attackerEntity);
         }
     }
 
@@ -60,17 +60,17 @@ namespace Executor.GameEvents
             this.SubTarget = subTarget;
         }
 
-        public override GameEvent_Command ReifyStub(ArenaState arena)
+        public override GameEvent_Command ReifyStub(FloorState floor)
         {
             // TODO: Equipped items are *not* "Whatever is held in right right arm"
-            var attackerEntity = arena.ResolveEID(this.AttackerEID);
+            var attackerEntity = floor.ResolveEID(this.AttackerEID);
             var equippedWeapon = attackerEntity.GetComponentOfType<Component_Skeleton>()
                     .InspectBodyPart(BodyPartLocation.RIGHT_ARM)
                     .TryGetSubEntities(SubEntitiesSelector.WEAPON)
                     .FirstOrDefault();
 
-            return new GameEvent_PrepareAttack(arena.CurrentTick, Config.ONE, attackerEntity,
-                arena.ResolveEID(this.TargetEID), equippedWeapon, arena.ArenaMap, this.SubTarget);
+            return new GameEvent_PrepareAttack(floor.CurrentTick, Config.ONE, attackerEntity,
+                floor.ResolveEID(this.TargetEID), equippedWeapon, floor.FloorMap, this.SubTarget);
         }
 
         public override string ToString()

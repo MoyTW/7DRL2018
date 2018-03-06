@@ -14,7 +14,7 @@ namespace Executor.GameEvents
             this.CommandEID = commandEID;
         }
 
-        abstract public GameEvent_Command ReifyStub(ArenaState arena);
+        abstract public GameEvent_Command ReifyStub(FloorState arena);
     }
 
     public abstract class GameEvent_Command : GameEvent

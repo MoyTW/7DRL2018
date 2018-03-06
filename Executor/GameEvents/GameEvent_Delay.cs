@@ -15,7 +15,7 @@ namespace Executor.GameEvents
             this.APCost = APCost;
         }
 
-        public override GameEvent_Command ReifyStub(ArenaState arena)
+        public override GameEvent_Command ReifyStub(FloorState arena)
         {
             return new GameEvent_Delay(arena.CurrentTick, this.APCost, arena.ResolveEID(this.CommandEID));
         }

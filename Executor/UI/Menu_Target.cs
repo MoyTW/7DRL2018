@@ -11,7 +11,7 @@ namespace Executor.UI
     {
         private IDisplay confirmParent;
         private IDisplay cancelParent;
-        private ArenaState arena;
+        private FloorState floor;
 
         public int Range { get; private set; }
         public int X { get; private set; }
@@ -22,14 +22,14 @@ namespace Executor.UI
         public Entity TargetedEntity {
             get
             {
-                return arena.EntityAtPosition(this.X, this.Y);
+                return floor.EntityAtPosition(this.X, this.Y);
             }
         }
 
-        public Menu_Target(IDisplay confirmParent, ArenaState arena)
+        public Menu_Target(IDisplay confirmParent, FloorState floor)
         {
             this.confirmParent = confirmParent;
-            this.arena = arena;
+            this.floor = floor;
             this.Reset();
         }
         // TODO: FFFF
@@ -49,7 +49,7 @@ namespace Executor.UI
         {
             this.Targeting = false;
             this.Targeted = false;
-            var position = arena.Player.TryGetPosition();
+            var position = floor.Player.TryGetPosition();
             this.X = position.X;
             this.Y = position.Y;
         }
@@ -62,10 +62,10 @@ namespace Executor.UI
 
         private void MoveCursor(int dx, int dy)
         {
-            var cell = this.arena.ArenaMap.GetCell(this.X + dx, this.Y + dy);
-            var playerPos = this.arena.Player.TryGetPosition();
+            var cell = this.floor.FloorMap.GetCell(this.X + dx, this.Y + dy);
+            var playerPos = this.floor.Player.TryGetPosition();
 
-            if (ArenaState.DistanceBetweenPositions(playerPos.X, playerPos.Y, cell.X, cell.Y) <= this.Range &&
+            if (FloorState.DistanceBetweenPositions(playerPos.X, playerPos.Y, cell.X, cell.Y) <= this.Range &&
                 cell.IsInFov && cell.IsWalkable)
             {
                 this.X += dx;

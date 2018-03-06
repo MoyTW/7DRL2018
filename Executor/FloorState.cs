@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace Executor
 {
-    public class ArenaState
+    public class FloorState
     {
         private int currentTick;
         private List<GameEvent_Command> executedCommands = new List<GameEvent_Command>();
@@ -31,9 +31,9 @@ namespace Executor
         public int CurrentTick { get { return this.currentTick; } }
         public Entity Player { get; }
         public string MapID { get; }
-        public IMap ArenaMap { get; }
-        private PathFinder ArenaPathFinder { get; }
-        public List<String> ArenaLog { get; }
+        public IMap FloorMap { get; }
+        private PathFinder FloorPathFinder { get; }
+        public List<String> FloorLog { get; }
         public bool PlayerWon
         {
             get
@@ -59,7 +59,7 @@ namespace Executor
 
         public bool IsWalkableAndOpen(int x, int y)
         {
-            if (x < 0 || y < 0 || x >= this.ArenaMap.Width || y >= this.ArenaMap.Height)
+            if (x < 0 || y < 0 || x >= this.FloorMap.Width || y >= this.FloorMap.Height)
                 return false;
 
             foreach (var en in mapEntities)
@@ -68,12 +68,12 @@ namespace Executor
                 if (position != null && position.BlocksMovement && position.X == x && position.Y == y)
                     return false;
             }
-            return this.ArenaMap.IsWalkable(x, y);
+            return this.FloorMap.IsWalkable(x, y);
         }
 
         public bool InBounds(int x, int y)
         {
-            return !(x < 0 || y < 0 || x >= this.ArenaMap.Width || y >= this.ArenaMap.Height);
+            return !(x < 0 || y < 0 || x >= this.FloorMap.Width || y >= this.FloorMap.Height);
         }
 
         public List<Cell> CellsInRadius(int centerX, int centerY, int radius, bool requiresWalkable=true)
@@ -85,9 +85,9 @@ namespace Executor
                 {
                     if (this.InBounds(x, y) &&
                         DistanceBetweenPositions(x, y, centerX, centerY) <= radius
-                        && (!requiresWalkable || this.ArenaMap.IsWalkable(x, y)))
+                        && (!requiresWalkable || this.FloorMap.IsWalkable(x, y)))
                     {
-                        acc.Add(this.ArenaMap.GetCell(x, y));
+                        acc.Add(this.FloorMap.GetCell(x, y));
                     }
                 }
             }
@@ -98,7 +98,7 @@ namespace Executor
         {
             try
             {
-                return this.ArenaPathFinder.ShortestPath(source, destination);
+                return this.FloorPathFinder.ShortestPath(source, destination);
             } catch (ArgumentOutOfRangeException ex)
             {
                 Log.ErrorLine(ex.ToString());
@@ -111,7 +111,7 @@ namespace Executor
             var aPos = a.TryGetPosition();
             var bPos = b.TryGetPosition();
 
-            return ArenaState.DistanceBetweenPositions(aPos.X, aPos.Y, bPos.X, bPos.Y);
+            return FloorState.DistanceBetweenPositions(aPos.X, aPos.Y, bPos.X, bPos.Y);
         }
 
         public static int DistanceBetweenPositions(int x0, int y0, int x1, int y1)
@@ -138,7 +138,7 @@ namespace Executor
             return null;
         }
 
-        public ArenaState(IEnumerable<Entity> mapEntities, string mapID, IMap arenaMap, PathFinder arenaPathFinder, int level)
+        public FloorState(IEnumerable<Entity> mapEntities, string mapID, IMap arenaMap, PathFinder arenaPathFinder, int level)
         {
             this.currentTick = 0;
 
@@ -154,23 +154,23 @@ namespace Executor
                 throw new ArgumentException("Can't initialize Arena: Could not find player!");
 
             this.MapID = mapID;
-            this.ArenaMap = arenaMap;
-            this.ArenaPathFinder = arenaPathFinder;
-            this.ArenaLog = new List<String>();
+            this.FloorMap = arenaMap;
+            this.FloorPathFinder = arenaPathFinder;
+            this.FloorLog = new List<String>();
 
             this.Level = level;
 
             ForwardToNextAction();
         }
 
-        public ArenaState DeepCopy()
+        public FloorState DeepCopy()
         {
             List<Entity> copyList = new List<Entity>();
             foreach (var e in this.mapEntities)
             {
                 copyList.Add(e.DeepCopy());
             }
-            return new ArenaState(copyList, this.MapID, this.ArenaMap.Clone(), this.ArenaPathFinder, this.Level);
+            return new FloorState(copyList, this.MapID, this.FloorMap.Clone(), this.FloorPathFinder, this.Level);
         }
 
         // Only call this if you're using the arena as a copy!
@@ -191,7 +191,7 @@ namespace Executor
             {
                 entity.GetComponentOfType<Component_AI>().Alerted = true;
             }
-            this.ArenaLog.Add("Your cloak was disrupted! All enemies are now on ALERT!");
+            this.FloorLog.Add("Your cloak was disrupted! All enemies are now on ALERT!");
         }
 
         private void ForwardToNextAction()
@@ -273,7 +273,7 @@ namespace Executor
 
         public IEnumerable<Cell> WalkableCells()
         {
-            return this.ArenaMap.GetAllCells().Where(c => c.IsWalkable).ToList();
+            return this.FloorMap.GetAllCells().Where(c => c.IsWalkable).ToList();
         }
 
         public bool PlaceEntityNear(Entity en, int x, int y)
@@ -325,7 +325,7 @@ namespace Executor
             {
                 gameEvent.CommandEntity.HandleEvent(gameEvent);
                 if (gameEvent.ShouldLog)
-                    this.ArenaLog.Add(gameEvent.LogMessage);
+                    this.FloorLog.Add(gameEvent.LogMessage);
                 this.executedCommands.Add(gameEvent);
             }
             else if (gameEvent != null)
@@ -342,11 +342,11 @@ namespace Executor
                 foreach (var ai in this.mapEntities.Where(e => e.HasComponentOfType<Component_AI>()))
                 {
                     if (!ai.GetComponentOfType<Component_AI>().Scanned &&
-                        ArenaState.DistanceBetweenEntities(this.Player, ai) <=
+                        FloorState.DistanceBetweenEntities(this.Player, ai) <=
                         ai.TryGetAttribute(EntityAttributeType.SCAN_REQUIRED_RADIUS).Value)
                     {
                         ai.GetComponentOfType<Component_AI>().Scanned = true;
-                        this.ArenaLog.Add("Scanned " + ai.Label + "!");
+                        this.FloorLog.Add("Scanned " + ai.Label + "!");
                     }
                 }
             }

@@ -6,7 +6,7 @@ namespace Executor.UI
     class Menu_Examine : IDisplay
     {
         private readonly IDisplay parent;
-        private ArenaState arena;
+        private FloorState floor;
         private int entityIndex;
 
         public bool Examining { get; private set; }
@@ -19,15 +19,15 @@ namespace Executor.UI
         public Entity ExaminedEntity {
             get
             {
-                var mapEntities = arena.InspectMapEntities();
+                var mapEntities = floor.InspectMapEntities();
                 return mapEntities[Menu_Examine.modSO(this.entityIndex, mapEntities.Count)]; 
             }
         }
 
-        public Menu_Examine(IDisplay parent, ArenaState arena)
+        public Menu_Examine(IDisplay parent, FloorState floor)
         {
             this.parent = parent;
-            this.arena = arena;
+            this.floor = floor;
             this.Reset();
         }
 
@@ -40,7 +40,7 @@ namespace Executor.UI
         public void Reset()
         {
             this.Examining = false;
-            this.entityIndex = arena.InspectMapEntities().IndexOf(arena.Player);
+            this.entityIndex = floor.InspectMapEntities().IndexOf(floor.Player);
         }
 
         private IDisplay HandleKeyPressed(RLKeyPress keyPress)

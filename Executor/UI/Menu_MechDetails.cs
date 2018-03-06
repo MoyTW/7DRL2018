@@ -27,8 +27,8 @@ namespace Executor.UI
             if (!mech.HasComponentOfType<Component_Skeleton>())
                 throw new ArgumentException("Entity " + mech + " passed into Menu_ArenaEquipment is not a mech!");
 
-            this.statusConsole = new RLConsole(Menu_Arena.statusWidth, Menu_Arena.statusHeight);
-            this.statusConsole.SetBackColor(0, 0, Menu_Arena.statusWidth, Menu_Arena.statusHeight,
+            this.statusConsole = new RLConsole(Menu_Floor.statusWidth, Menu_Floor.statusHeight);
+            this.statusConsole.SetBackColor(0, 0, Menu_Floor.statusWidth, Menu_Floor.statusHeight,
                 RLColor.LightBlue);
             this.weaponSelection = null;
 
@@ -219,11 +219,11 @@ namespace Executor.UI
         public void Blit(RLConsole console)
         {
             Drawer_Mech.DrawMechStatus(this.mech, this.statusConsole);
-            RLConsole.Blit(this.statusConsole, 0, 0, Menu_Arena.statusWidth, Menu_Arena.statusHeight, console, 0, 0);
+            RLConsole.Blit(this.statusConsole, 0, 0, Menu_Floor.statusWidth, Menu_Floor.statusHeight, console, 0, 0);
 
-            this.DrawSelection(console, 12, Menu_Arena.statusHeight + 1);
-            this.DrawWeaponsListing(console, 1, Menu_Arena.statusHeight + 9);
-            this.DrawMountsListing(console, 22, Menu_Arena.statusHeight + 9);
+            this.DrawSelection(console, 12, Menu_Floor.statusHeight + 1);
+            this.DrawWeaponsListing(console, 1, Menu_Floor.statusHeight + 9);
+            this.DrawMountsListing(console, 22, Menu_Floor.statusHeight + 9);
         }
     }
 }

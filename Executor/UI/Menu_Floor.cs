@@ -8,10 +8,10 @@ using System.Linq;
 
 namespace Executor.UI
 {
-    class Menu_Arena : IDisplay
+    class Menu_Floor : IDisplay
     {
         private readonly Menu_Main parent;
-        private readonly ArenaState arena;
+        private readonly FloorState arena;
         private readonly Menu_Examine examineMenu;
         private readonly Menu_Target targetMenu;
         private readonly Menu_Inventory inventoryMenu;
@@ -32,7 +32,7 @@ namespace Executor.UI
 
         public bool MatchEnded { get { return this.arena.PlayerLost || this.arena.PlayerWon; } }
 
-        public Menu_Arena(Menu_Main parent, ArenaState arena)
+        public Menu_Floor(Menu_Main parent, FloorState arena)
         {
             this.parent = parent;
             this.arena = arena;
@@ -41,10 +41,10 @@ namespace Executor.UI
             this.inventoryMenu = new Menu_Inventory(this, targetMenu, arena, this.parent.Width / 2, this.parent.Height / 2);
             this.targetMenu.Init(this.inventoryMenu);
 
-            arenaConsole = new RLConsole(Menu_Arena.arenaConsoleWidth, Menu_Arena.arenaConsoleHeight);
-            this.infoConsole = new RLConsole(Menu_Arena.infoConsoleWidth, Menu_Arena.infoConsoleHeight);
-            status1Console = new RLConsole(Menu_Arena.statusWidth, Menu_Arena.statusHeight);
-            this.logConsole = new RLConsole(Menu_Arena.statusWidth, Menu_Arena.statusHeight);
+            arenaConsole = new RLConsole(Menu_Floor.arenaConsoleWidth, Menu_Floor.arenaConsoleHeight);
+            this.infoConsole = new RLConsole(Menu_Floor.infoConsoleWidth, Menu_Floor.infoConsoleHeight);
+            status1Console = new RLConsole(Menu_Floor.statusWidth, Menu_Floor.statusHeight);
+            this.logConsole = new RLConsole(Menu_Floor.statusWidth, Menu_Floor.statusHeight);
         }
 
         #region IDisplay Fns
@@ -52,13 +52,13 @@ namespace Executor.UI
         public IDisplay OnRootConsoleUpdate(RLConsole console, RLKeyPress keyPress)
         {
             // Drawing sets
-            this.arenaConsole.SetBackColor(0, 0, Menu_Arena.arenaConsoleWidth, Menu_Arena.arenaConsoleHeight, RLColor.Black);
+            this.arenaConsole.SetBackColor(0, 0, Menu_Floor.arenaConsoleWidth, Menu_Floor.arenaConsoleHeight, RLColor.Black);
             this.arenaConsole.Print(1, 1, "Arena", RLColor.White);
 
-            this.infoConsole.SetBackColor(0, 0, Menu_Arena.infoConsoleWidth, Menu_Arena.infoConsoleHeight, RLColor.Black);
+            this.infoConsole.SetBackColor(0, 0, Menu_Floor.infoConsoleWidth, Menu_Floor.infoConsoleHeight, RLColor.Black);
 
-            this.status1Console.SetBackColor(0, 0, Menu_Arena.statusWidth, Menu_Arena.statusHeight, RLColor.LightBlue);
-            this.logConsole.SetBackColor(0, 0, Menu_Arena.statusWidth, Menu_Arena.statusHeight, RLColor.Black);
+            this.status1Console.SetBackColor(0, 0, Menu_Floor.statusWidth, Menu_Floor.statusHeight, RLColor.LightBlue);
+            this.logConsole.SetBackColor(0, 0, Menu_Floor.statusWidth, Menu_Floor.statusHeight, RLColor.Black);
 
             // Logic
             if (this.arena.PlayerLost)
@@ -109,29 +109,29 @@ namespace Executor.UI
 
         public void Blit(RLConsole console)
         {
-            this.arenaConsole.SetBackColor(0, 0, Menu_Arena.arenaConsoleWidth, Menu_Arena.arenaConsoleHeight, RLColor.Black);
+            this.arenaConsole.SetBackColor(0, 0, Menu_Floor.arenaConsoleWidth, Menu_Floor.arenaConsoleHeight, RLColor.Black);
             this.arenaConsole.Print(1, 1, "Arena", RLColor.White);
 
-            this.infoConsole.SetBackColor(0, 0, Menu_Arena.infoConsoleWidth, Menu_Arena.infoConsoleHeight, RLColor.Black);
+            this.infoConsole.SetBackColor(0, 0, Menu_Floor.infoConsoleWidth, Menu_Floor.infoConsoleHeight, RLColor.Black);
 
-            this.status1Console.SetBackColor(0, 0, Menu_Arena.statusWidth, Menu_Arena.statusHeight, RLColor.LightBlue);
+            this.status1Console.SetBackColor(0, 0, Menu_Floor.statusWidth, Menu_Floor.statusHeight, RLColor.LightBlue);
 
             this.DrawArena(this.arenaConsole);
-            RLConsole.Blit(this.arenaConsole, 0, 0, Menu_Arena.arenaConsoleWidth, Menu_Arena.arenaConsoleHeight, console, 0, 0);
+            RLConsole.Blit(this.arenaConsole, 0, 0, Menu_Floor.arenaConsoleWidth, Menu_Floor.arenaConsoleHeight, console, 0, 0);
 
             this.DrawInfo(this.infoConsole);
-            RLConsole.Blit(this.infoConsole, 0, 0, Menu_Arena.infoConsoleWidth, Menu_Arena.infoConsoleHeight, console, 0, Menu_Arena.arenaConsoleHeight);
+            RLConsole.Blit(this.infoConsole, 0, 0, Menu_Floor.infoConsoleWidth, Menu_Floor.infoConsoleHeight, console, 0, Menu_Floor.arenaConsoleHeight);
 
             if (this.targetMenu.Targeting && this.targetMenu.TargetedEntity != null)
                 Drawer_Mech.DrawMechStatus(this.targetMenu.TargetedEntity, this.status1Console);
             else
                 Drawer_Mech.DrawMechStatus(this.examineMenu.ExaminedEntity, this.status1Console);
-            RLConsole.Blit(this.status1Console, 0, 0, Menu_Arena.statusWidth, Menu_Arena.statusHeight, console,
-                Menu_Arena.arenaConsoleWidth, 0);
+            RLConsole.Blit(this.status1Console, 0, 0, Menu_Floor.statusWidth, Menu_Floor.statusHeight, console,
+                Menu_Floor.arenaConsoleWidth, 0);
 
             this.DrawLog(this.logConsole);
-            RLConsole.Blit(this.logConsole, 0, 0, Menu_Arena.statusWidth, Menu_Arena.statusHeight, console,
-                Menu_Arena.arenaConsoleWidth, Menu_Arena.statusHeight);
+            RLConsole.Blit(this.logConsole, 0, 0, Menu_Floor.statusWidth, Menu_Floor.statusHeight, console,
+                Menu_Floor.arenaConsoleWidth, Menu_Floor.statusHeight);
         }
 
         #endregion
@@ -213,7 +213,7 @@ namespace Executor.UI
 
         public void DrawLog(RLConsole console)
         {
-            var log = this.arena.ArenaLog;
+            var log = this.arena.FloorLog;
             int i = log.Count - 1;
             for (int line = console.Height - 1; line > 0; line--)
             {
@@ -234,14 +234,14 @@ namespace Executor.UI
         {
             // Use RogueSharp to calculate the current field-of-view for the player
             var position = arena.Player.TryGetPosition();
-            arena.ArenaMap.ComputeFov(position.X, position.Y, 50, true);
+            arena.FloorMap.ComputeFov(position.X, position.Y, 50, true);
 
-            foreach (var cell in arena.ArenaMap.GetAllCells())
+            foreach (var cell in arena.FloorMap.GetAllCells())
             {
                 // When a Cell is in the field-of-view set it to a brighter color
                 if (cell.IsInFov)
                 {
-                    arena.ArenaMap.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true);
+                    arena.FloorMap.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true);
                     if (cell.IsWalkable)
                     {
                         console.Set(cell.X, cell.Y, RLColor.Gray, null, '.');
@@ -330,7 +330,7 @@ namespace Executor.UI
                     var cmd = (GameEvent_PrepareAttack)command;
                     var attackerPos = cmd.CommandEntity.TryGetPosition();
                     var targetPos = cmd.Target.TryGetPosition();
-                    var lineCells = this.arena.ArenaMap.GetCellsAlongLine(attackerPos.X, attackerPos.Y, targetPos.X,
+                    var lineCells = this.arena.FloorMap.GetCellsAlongLine(attackerPos.X, attackerPos.Y, targetPos.X,
                                     targetPos.Y);
                     foreach (var cell in lineCells)
                     {

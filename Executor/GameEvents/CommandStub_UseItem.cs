@@ -21,7 +21,7 @@ namespace Executor.GameEvents
             this.TargetEID = targetEID;
         }
 
-        public override GameEvent_Command ReifyStub(ArenaState arena)
+        public override GameEvent_Command ReifyStub(FloorState arena)
         {
             var user = arena.ResolveEID(this.UserEID);
             var item = user.GetComponentOfType<Component_Inventory>().FindByEid(this.ItemEID);

@@ -25,10 +25,10 @@
             this.Y = (YDirection)y;
         }
 
-        public override GameEvent_Command ReifyStub(ArenaState arena)
+        public override GameEvent_Command ReifyStub(FloorState floor)
         {
-            return new GameEvent_MoveSingle(arena.CurrentTick, Config.ONE, arena.ResolveEID(this.CommandEID), this.X,
-                this.Y, arena);
+            return new GameEvent_MoveSingle(floor.CurrentTick, Config.ONE, floor.ResolveEID(this.CommandEID), this.X,
+                this.Y, floor);
         }
 
         public override string ToString()
@@ -48,11 +48,11 @@
             this.Y = (YDirection)y;
         }
 
-        public override GameEvent_Command ReifyStub(ArenaState arena)
+        public override GameEvent_Command ReifyStub(FloorState floor)
         {
-            var commandEntity = arena.ResolveEID(this.CommandEID);
+            var commandEntity = floor.ResolveEID(this.CommandEID);
             var commandPosition = commandEntity.TryGetPosition();
-            var entityAtTargetPosition = arena.EntityAtPosition(commandPosition.X + (int)this.X,
+            var entityAtTargetPosition = floor.EntityAtPosition(commandPosition.X + (int)this.X,
                 commandPosition.Y + (int)this.Y);
 
             if (entityAtTargetPosition != null)
@@ -60,11 +60,11 @@
                 // TODO: Don't always bump attack to torso
                 return new CommandStub_PrepareTargetedAttack(this.CommandEID, entityAtTargetPosition.EntityID, 
                     entityAtTargetPosition.Label, BodyPartLocation.TORSO)
-                    .ReifyStub(arena);
+                    .ReifyStub(floor);
             }
             else
             {
-                return new GameEvent_MoveSingle(arena.CurrentTick, Config.ONE, commandEntity, this.X, this.Y, arena);
+                return new GameEvent_MoveSingle(floor.CurrentTick, Config.ONE, commandEntity, this.X, this.Y, floor);
             }
         }
 
@@ -78,7 +78,7 @@
     {
         public XDirection X { get; }
         public YDirection Y { get; }
-        public ArenaState GameArena { get; }
+        public FloorState CurrentFloor { get; }
 
         public override bool ShouldLog { get { return false; } }
         protected override string _LogMessage
@@ -89,12 +89,12 @@
             }
         }
 
-        public GameEvent_MoveSingle(int commandTick, int APCost, Entity mover, XDirection x, YDirection y, ArenaState gameArena)
+        public GameEvent_MoveSingle(int commandTick, int APCost, Entity mover, XDirection x, YDirection y, FloorState currentFloor)
             : base(commandTick, APCost, mover)
         {
             this.X = x;
             this.Y = y;
-            this.GameArena = gameArena;
+            this.CurrentFloor = currentFloor;
         }
     }
 }

@@ -13,8 +13,8 @@ namespace Executor
 
         public const int DefaultEntityAP = 1;
 
-        public static int ArenaWidth { get { return 70; } }
-        public static int ArenaHeight { get { return 70; } }
+        public static int FloorWidth { get { return 70; } }
+        public static int FloorHeight { get { return 70; } }
 
         public static int TargetingWindowX { get { return 50; } }
         public static int TargetingWindowY { get { return 23; } }

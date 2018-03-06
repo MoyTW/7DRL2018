@@ -65,7 +65,7 @@ namespace Executor.AI
         public override bool IsMet(GameQuery_Command commandQuery)
         {
             // TODO: This is gonna show up in a lot of conditions, and looks pretty janky.
-            Entity target = commandQuery.ArenaState.Player;
+            Entity target = commandQuery.FloorState.Player;
 
             // TODO: Smooth out this int? business!
             // It's an int? because some conditions (asking for WEAPON_RANGE on something which has no range, like a
@@ -74,7 +74,7 @@ namespace Executor.AI
             if (optionDistance == null)
                 return true;
 
-            int currDist = ArenaState.DistanceBetweenEntities(target, commandQuery.CommandEntity);
+            int currDist = FloorState.DistanceBetweenEntities(target, commandQuery.CommandEntity);
 
             switch (this.Operator)
             {

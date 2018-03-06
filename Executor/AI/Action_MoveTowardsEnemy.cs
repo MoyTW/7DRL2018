@@ -22,10 +22,10 @@ namespace Executor.AI
         {
             // TODO: Wow this is awkward!?
             var commandPos = commandQuery.CommandEntity.TryGetPosition();
-            var commandCell = commandQuery.ArenaState.ArenaMap.GetCell(commandPos.X, commandPos.Y);
-            var targetCell = commandQuery.ArenaState.ArenaMap.GetCell(targetPos.X, targetPos.Y);
+            var commandCell = commandQuery.FloorState.FloorMap.GetCell(commandPos.X, commandPos.Y);
+            var targetCell = commandQuery.FloorState.FloorMap.GetCell(targetPos.X, targetPos.Y);
 
-            return commandQuery.ArenaState.ShortestPath(commandCell, targetCell);
+            return commandQuery.FloorState.ShortestPath(commandCell, targetCell);
         }
 
         private CommandStub MoveEventForPath(GameQuery_Command commandQuery, RogueSharp.Path path)
@@ -58,7 +58,7 @@ namespace Executor.AI
 
         public override CommandStub GenerateCommand(GameQuery_Command commandQuery)
         {
-            Entity target = commandQuery.ArenaState.Player;
+            Entity target = commandQuery.FloorState.Player;
             var targetPos = target.TryGetPosition();
 
             if (this.lastPath == null || !this.EnemyOnPath(targetPos))

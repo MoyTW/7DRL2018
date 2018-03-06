@@ -22,7 +22,7 @@ namespace Executor.Components
                 // If it's out of range, then the attack misses
                 int weaponRange = ev.ExecutorEntity.TryGetAttribute(EntityAttributeType.MAX_RANGE, ev.ExecutorEntity)
                     .Value;
-                int distance = ArenaState.DistanceBetweenEntities(ev.Target, ev.CommandEntity);
+                int distance = FloorState.DistanceBetweenEntities(ev.Target, ev.CommandEntity);
                 if (distance > weaponRange)
                 {
                     ev.RegisterResult("MISS (out of range)");

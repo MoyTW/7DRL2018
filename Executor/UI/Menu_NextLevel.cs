@@ -26,10 +26,10 @@ namespace Executor.UI
                 RogueSharp.Random.IRandom iRand = new RogueSharp.Random.DotNetRandom();
 
                 // TODO: ADD A BONUS HERE THAT CARRIES OVER
-                var arena = ArenaBuilder.BuildArena(Config.ArenaWidth, Config.ArenaHeight, iRand.Next(Int16.MaxValue).ToString(),
+                var arena = FloorBuilder.BuildFloor(Config.FloorWidth, Config.FloorHeight, iRand.Next(Int16.MaxValue).ToString(),
                     EntityBuilder.BuildPlayerEntity(), this.nextLevel);
-                var arenaMenu = new Menu_Arena(this.mainMenu, arena);
-                this.mainMenu.SetArena(arenaMenu);
+                var arenaMenu = new Menu_Floor(this.mainMenu, arena);
+                this.mainMenu.SetFloor(arenaMenu);
                 return arenaMenu;
             }
             else if (keyPress != null)

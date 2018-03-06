@@ -23,7 +23,7 @@ namespace Executor.GameEvents
             this.APCost = APCost;
         }
 
-        public override GameEvent_Command ReifyStub(ArenaState arena)
+        public override GameEvent_Command ReifyStub(FloorState arena)
         {
             return new GameEvent_ReceiveStatusEffect(arena.CurrentTick, this.APCost, arena.ResolveEID(this.TargetEID),
                 arena.ResolveEID(this.CasterEID), this.StatusEffect);

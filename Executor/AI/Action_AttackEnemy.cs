@@ -17,7 +17,7 @@ namespace Executor.AI
 
         public override CommandStub GenerateCommand(GameQuery_Command commandQuery)
         {
-            Entity target = commandQuery.ArenaState.Player;    
+            Entity target = commandQuery.FloorState.Player;    
             return new CommandStub_PrepareTargetedAttack(commandQuery.CommandEntity.EntityID, target.EntityID,
                 target.Label, BodyPartLocation.TORSO);
         }

@@ -7,7 +7,7 @@ namespace Executor.UI
 {
     class Menu_Main : IDisplay
     {
-        private Menu_Arena arenaMenu;
+        private Menu_Floor floorMenu;
 
         private Random rand;
         public int Width { get; }
@@ -21,20 +21,20 @@ namespace Executor.UI
             this.Height = height;
         }
 
-        public void SetArena(Menu_Arena arenaMenu)
+        public void SetFloor(Menu_Floor floorMenu)
         {
-            this.arenaMenu = arenaMenu;
+            this.floorMenu = floorMenu;
         }
 
-        private Menu_Arena NewArenaMenu(int seed=1)
+        private Menu_Floor NewFloorMenu(int seed=1)
         {
             RogueSharp.Random.IRandom iRand = new RogueSharp.Random.DotNetRandom(seed);
 
             var player = EntityBuilder.BuildPlayerEntity();
-            var arena = ArenaBuilder.BuildArena(Config.ArenaWidth, Config.ArenaHeight, iRand.Next(Int16.MaxValue).ToString(),
+            var floor = FloorBuilder.BuildFloor(Config.FloorWidth, Config.FloorHeight, iRand.Next(Int16.MaxValue).ToString(),
                 player, 0);
-            this.arenaMenu = new Menu_Arena(this, arena);
-            return this.arenaMenu;
+            this.floorMenu = new Menu_Floor(this, floor);
+            return this.floorMenu;
         }
 
         // Put each case into own fn, this is just exceptionally unwieldy!
@@ -49,12 +49,12 @@ namespace Executor.UI
                     Log.ToggleDebugLog();
                     return this;
                 case RLKey.N:
-                    return this.NewArenaMenu(rand.Next());
+                    return this.NewFloorMenu(rand.Next());
                 case RLKey.M:
-                    return this.NewArenaMenu();
+                    return this.NewFloorMenu();
                 case RLKey.R:
-                    if (this.arenaMenu != null && !this.arenaMenu.MatchEnded)
-                        return this.arenaMenu;
+                    if (this.floorMenu != null && !this.floorMenu.MatchEnded)
+                        return this.floorMenu;
                     else
                     {
                         Log.InfoLine("Cannot re-spectate - no arena!");
@@ -85,7 +85,7 @@ namespace Executor.UI
             console.Print(baseX - 4, baseY + 1, "              By MTW", RLColor.White);
 
             console.Print(baseX - 4, baseY + 3, "Options", RLColor.White);
-            console.Print(baseX - 2, baseY + 4, "N) Play New Arena", RLColor.White);
+            console.Print(baseX - 2, baseY + 4, "N) Play New Dungeon", RLColor.White);
             console.Print(baseX - 2, baseY + 5, "R) Return To Game", RLColor.White);
             console.Print(baseX - 2, baseY + 6, "Esc) Quit", RLColor.White);
         }

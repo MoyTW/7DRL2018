@@ -36,9 +36,9 @@ namespace Executor.Components
             return ImmutableHashSet<SubEntitiesSelector>.Empty;
         }
 
-        private Cell PositionToCell(GameQuery_Position pos, ArenaState arena)
+        private Cell PositionToCell(GameQuery_Position pos, FloorState floor)
         {
-            return arena.ArenaMap.GetCell(pos.X, pos.Y);
+            return floor.FloorMap.GetCell(pos.X, pos.Y);
         }
 
         public class CellInfo
@@ -47,7 +47,7 @@ namespace Executor.Components
             public List<Cell> ScanCells = new List<Cell>();
         }
 
-        public CellInfo AlertCells(ArenaState arena)
+        public CellInfo AlertCells(FloorState floor)
         {
             var info = new CellInfo();
             var scanRadius = this.Parent.TryGetAttribute(EntityAttributeType.SCAN_REQUIRED_RADIUS).Value;
@@ -55,9 +55,9 @@ namespace Executor.Components
             var myPosition = this.Parent.TryGetPosition();
 
             if (!this.Alerted)
-                info.AlertCells = arena.CellsInRadius(myPosition.X, myPosition.Y, detectRadius);
+                info.AlertCells = floor.CellsInRadius(myPosition.X, myPosition.Y, detectRadius);
             if (!this.Scanned)
-                info.ScanCells = arena.CellsInRadius(myPosition.X, myPosition.Y, scanRadius);
+                info.ScanCells = floor.CellsInRadius(myPosition.X, myPosition.Y, scanRadius);
 
             return info;
         }
@@ -76,12 +76,12 @@ namespace Executor.Components
                 nextCell.Y - commandPos.Y);
         }
 
-        public void DeterminePatrolPath(ArenaState state, IRandom rand)
+        public void DeterminePatrolPath(FloorState state, IRandom rand)
         {
             this.PatrolStart = this.Parent.TryGetPosition();
             var cells = state.WalkableCells();
             Cell cell = rand.RandomElement(cells);
-            while (Config.MinPatrolDistance < ArenaState.DistanceBetweenPositions(this.PatrolStart.X,
+            while (Config.MinPatrolDistance < FloorState.DistanceBetweenPositions(this.PatrolStart.X,
                 this.PatrolStart.Y, cell.X, cell.Y))
             {
                 cell = rand.RandomElement(cells);
@@ -97,10 +97,10 @@ namespace Executor.Components
             {
                 this.activeBook.TryRegisterCommand(q);
             }
-            else if (ArenaState.DistanceBetweenEntities(this.Parent, q.ArenaState.Player) <=
+            else if (FloorState.DistanceBetweenEntities(this.Parent, q.FloorState.Player) <=
                     this.Parent.TryGetAttribute(EntityAttributeType.DETECTION_RADIUS).Value)
             {
-                q.ArenaState.AlertAllAIs();
+                q.FloorState.AlertAllAIs();
             }
             else
             {
@@ -110,16 +110,16 @@ namespace Executor.Components
                 else if (myPos.X == this.PatrolEnd.X && myPos.Y == this.PatrolEnd.Y)
                     this.OnReturnLeg = true;
 
-                Cell myCell = q.ArenaState.ArenaMap.GetCell(myPos.X, myPos.Y);
+                Cell myCell = q.FloorState.FloorMap.GetCell(myPos.X, myPos.Y);
                 Path patrolPath;
                 if (!this.OnReturnLeg)
                 {
-                    patrolPath = q.ArenaState.ShortestPath(myCell, this.PositionToCell(this.PatrolEnd, q.ArenaState));
+                    patrolPath = q.FloorState.ShortestPath(myCell, this.PositionToCell(this.PatrolEnd, q.FloorState));
                 }
                 else
                 {
-                    patrolPath = q.ArenaState.ShortestPath(myCell, 
-                        this.PositionToCell(this.PatrolStart, q.ArenaState));
+                    patrolPath = q.FloorState.ShortestPath(myCell, 
+                        this.PositionToCell(this.PatrolStart, q.FloorState));
                 }
                 if (patrolPath != null)
                     q.RegisterCommand(this.MoveEventForPath(q, patrolPath));

@@ -7,14 +7,14 @@ namespace Executor.GameQueries
     public class GameQuery_Command : GameQuery
     {
         public Entity CommandEntity { get; }
-        public ArenaState ArenaState { get; }
+        public FloorState FloorState { get; }
 
         public CommandStub Command { get; private set; }
 
-        public GameQuery_Command(Entity commandEntity, ArenaState arenaState)
+        public GameQuery_Command(Entity commandEntity, FloorState floorState)
         {
             this.CommandEntity = commandEntity;
-            this.ArenaState = arenaState;
+            this.FloorState = floorState;
         }
 
         public void RegisterCommand(CommandStub stub)

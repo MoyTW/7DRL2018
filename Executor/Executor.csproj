@@ -67,8 +67,8 @@
     <Compile Include="AI\ActionClause_KeepMediumRange.cs" />
     <Compile Include="AI\ActionClause_Flee.cs" />
     <Compile Include="AI\SingleClause.cs" />
-    <Compile Include="ArenaState.cs" />
-    <Compile Include="ArenaBuilder.cs" />
+    <Compile Include="FloorState.cs" />
+    <Compile Include="FloorBuilder.cs" />
     <Compile Include="BodyPartLocation.cs" />
     <Compile Include="Blueprint.cs" />
     <Compile Include="BlueprintListing.cs" />
@@ -129,7 +129,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RS_Extensions.cs" />
     <Compile Include="UI\Drawer_Mech.cs" />
-    <Compile Include="UI\Menu_Arena.cs" />
+    <Compile Include="UI\Menu_Floor.cs" />
     <Compile Include="UI\IDisplay.cs" />
     <Compile Include="UI\Menu_Death.cs" />
     <Compile Include="UI\Menu_Inventory.cs" />
