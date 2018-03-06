@@ -3,6 +3,7 @@ using Executor.EntityBuilders;
 
 using RLNET;
 using System;
+using System.Collections.Generic;
 
 namespace Executor.UI
 {
@@ -32,9 +33,14 @@ namespace Executor.UI
             RogueSharp.Random.IRandom iRand = new RogueSharp.Random.DotNetRandom(seed);
 
             var player = EntityBuilder.BuildPlayerEntity();
-            var floor = FloorBuilder.BuildFloor(Config.FloorWidth, Config.FloorHeight, iRand.Next(Int16.MaxValue).ToString(),
-                player, 0);
-            this.floorMenu = new Menu_Floor(this, floor);
+            var floorsList = new List<FloorState>();
+
+            floorsList.Add(FloorBuilder.BuildFloor(Config.FloorWidth, Config.FloorHeight, iRand.Next(Int16.MaxValue).ToString(), 0, player));
+            floorsList.Add(FloorBuilder.BuildFloor(Config.FloorWidth, Config.FloorHeight, iRand.Next(Int16.MaxValue).ToString(), 1));
+            floorsList.Add(FloorBuilder.BuildFloor(Config.FloorWidth, Config.FloorHeight, iRand.Next(Int16.MaxValue).ToString(), 2));
+
+            var dungeon = new DungeonState(floorsList, player);
+            this.floorMenu = new Menu_Floor(this, dungeon);
             return this.floorMenu;
         }
 

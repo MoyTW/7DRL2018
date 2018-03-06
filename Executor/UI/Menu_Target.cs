@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 
 namespace Executor.UI
 {
-    class Menu_Target : IDisplay
+    class Menu_Target : IFloorDisplay
     {
-        private IDisplay confirmParent;
+        private IFloorDisplay confirmParent;
         private IDisplay cancelParent;
-        private FloorState floor;
+
+        public FloorState Floor { get { return this.confirmParent.Floor; } }
 
         public int Range { get; private set; }
         public int X { get; private set; }
@@ -24,14 +25,13 @@ namespace Executor.UI
         public Entity TargetedEntity {
             get
             {
-                return floor.EntityAtPosition(this.X, this.Y);
+                return this.Floor.EntityAtPosition(this.X, this.Y);
             }
         }
 
-        public Menu_Target(IDisplay confirmParent, FloorState floor)
+        public Menu_Target(IFloorDisplay confirmParent)
         {
             this.confirmParent = confirmParent;
-            this.floor = floor;
             this.Reset();
         }
         // TODO: FFFF
@@ -51,7 +51,7 @@ namespace Executor.UI
         {
             this.Targeting = false;
             this.Targeted = false;
-            var position = floor.Player.TryGetPosition();
+            var position = this.Floor.Player.TryGetPosition();
             this.X = position.X;
             this.Y = position.Y;
         }
@@ -64,8 +64,8 @@ namespace Executor.UI
 
         private void MoveCursor(int dx, int dy)
         {
-            var cell = this.floor.FloorMap.GetCell(this.X + dx, this.Y + dy);
-            var playerPos = this.floor.Player.TryGetPosition();
+            var cell = this.Floor.FloorMap.GetCell(this.X + dx, this.Y + dy);
+            var playerPos = this.Floor.Player.TryGetPosition();
 
             if (FloorState.DistanceBetweenPositions(playerPos.X, playerPos.Y, cell.X, cell.Y) <= this.Range &&
                 cell.IsInFov && cell.IsWalkable)

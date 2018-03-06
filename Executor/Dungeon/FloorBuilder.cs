@@ -83,13 +83,38 @@ namespace Executor.Dungeon
 
         private static bool InScanRangeOfPlayer(Entity player, Entity aiEntity, Cell possiblePosition)
         {
-            var scanRange = aiEntity.TryGetAttribute(EntityAttributeType.SCAN_REQUIRED_RADIUS).Value;
-            var playerPos = player.TryGetPosition();
-            var dist = FloorState.DistanceBetweenPositions(playerPos.X, playerPos.Y, possiblePosition.X, possiblePosition.Y);
-            return dist <= scanRange;
+            if (player != null)
+            {
+                var scanRange = aiEntity.TryGetAttribute(EntityAttributeType.SCAN_REQUIRED_RADIUS).Value;
+                var playerPos = player.TryGetPosition();
+                var dist = FloorState.DistanceBetweenPositions(playerPos.X, playerPos.Y, possiblePosition.X, possiblePosition.Y);
+                return dist <= scanRange;
+            }
+            else
+            {
+                return false;
+            }
         }
 
-        public static FloorState BuildFloor(int width, int height, string mapID, Entity player, int level)
+        public static FloorState BuildFloor(int width, int height, string mapID, int level)
+        {
+            var distributions = FloorBuilder.levelDefinitions[level];
+            List<Entity> mapEntities = new List<Entity>();
+            var placementRand = new DotNetRandom(Int32.Parse(mapID));
+            int d = 0;
+            foreach (var dist in distributions)
+            {
+                var numToAdd = placementRand.Next(dist.Min, dist.Max);
+                for (int i = 0; i < numToAdd; i++)
+                {
+                    mapEntities.Add(EntityBuilder_Enemies.BuildRandomLevelledEntity(placementRand, d.ToString(), dist.EntityLevel));
+                    d++;
+                }
+            }
+            return FloorBuilder.BuildArena(width, height, mapID, mapEntities, level);
+        }
+
+        public static FloorState BuildFloor(int width, int height, string mapID, int level, Entity player)
         {
             var distributions = FloorBuilder.levelDefinitions[level];
             List<Entity> mapEntities = new List<Entity>() { player };

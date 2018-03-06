@@ -9,10 +9,10 @@ using System.Linq;
 
 namespace Executor.UI
 {
-    class Menu_Floor : IDisplay
+    class Menu_Floor : IFloorDisplay
     {
         private readonly Menu_Main parent;
-        private readonly FloorState arena;
+        private readonly DungeonState dungeon;
         private readonly Menu_Examine examineMenu;
         private readonly Menu_Target targetMenu;
         private readonly Menu_Inventory inventoryMenu;
@@ -30,16 +30,17 @@ namespace Executor.UI
         private RLConsole status1Console;
         private RLConsole logConsole;
 
+        public FloorState Floor { get { return this.dungeon.PlayerFloor; } }
 
-        public bool MatchEnded { get { return this.arena.PlayerLost || this.arena.PlayerWon; } }
+        public bool MatchEnded { get { return this.dungeon.PlayerLost || this.dungeon.PlayerWon; } }
 
-        public Menu_Floor(Menu_Main parent, FloorState arena)
+        public Menu_Floor(Menu_Main parent, DungeonState dungeon)
         {
             this.parent = parent;
-            this.arena = arena;
-            this.examineMenu = new Menu_Examine(this, arena);
-            this.targetMenu = new Menu_Target(this, arena);
-            this.inventoryMenu = new Menu_Inventory(this, targetMenu, arena, this.parent.Width / 2, this.parent.Height / 2);
+            this.dungeon = dungeon;
+            this.examineMenu = new Menu_Examine(this);
+            this.targetMenu = new Menu_Target(this);
+            this.inventoryMenu = new Menu_Inventory(this, targetMenu, this.parent.Width / 2, this.parent.Height / 2);
             this.targetMenu.Init(this.inventoryMenu);
 
             arenaConsole = new RLConsole(Menu_Floor.arenaConsoleWidth, Menu_Floor.arenaConsoleHeight);
@@ -62,16 +63,16 @@ namespace Executor.UI
             this.logConsole.SetBackColor(0, 0, Menu_Floor.statusWidth, Menu_Floor.statusHeight, RLColor.Black);
 
             // Logic
-            if (this.arena.PlayerLost)
-                return new Menu_Death(this.parent, this.arena.Level);
-            else if (this.arena.PlayerWon)
+            if (this.dungeon.PlayerLost)
+                return new Menu_Death(this.parent, this.Floor.Level);
+            else if (this.dungeon.PlayerWon)
             {
-                return new Menu_NextLevel(this.parent, this.arena.Player, this.arena.Level + 1);
+                return new Menu_NextLevel(this.parent, this, this.Floor.Level + 1);
             }
 
-            if (!this.arena.ShouldWaitForPlayerInput)
+            if (!this.Floor.ShouldWaitForPlayerInput)
             {
-                this.arena.TryFindAndExecuteNextCommand();
+                this.Floor.TryFindAndExecuteNextCommand();
                 return this;
             }
             // TODO: logic here is !?!?
@@ -81,8 +82,8 @@ namespace Executor.UI
                 var target = this.targetMenu.TargetedEntity;
                 this.inventoryMenu.Reset();
 
-                var stub = new CommandStub_UseItem(this.arena.Player.EntityID, selected.EntityID, target.EntityID);
-                this.arena.ResolveStub(stub);
+                var stub = new CommandStub_UseItem(this.Floor.Player.EntityID, selected.EntityID, target.EntityID);
+                this.Floor.ResolveStub(stub);
 
                 return this;
             }
@@ -90,7 +91,7 @@ namespace Executor.UI
                 return this.HandleKeyPressed(keyPress);
             else
             {
-                this.arena.TryFindAndExecuteNextCommand();
+                this.Floor.TryFindAndExecuteNextCommand();
                 return this;
             }
         }
@@ -139,8 +140,8 @@ namespace Executor.UI
 
         private void TryPlayerMove(int dx, int dy)
         {
-            var stub = new CommandStub_MoveSingleOrPrepareAttack(this.arena.Player.EntityID, dx, dy);
-            this.arena.ResolveStub(stub);
+            var stub = new CommandStub_MoveSingleOrPrepareAttack(this.Floor.Player.EntityID, dx, dy);
+            this.Floor.ResolveStub(stub);
         }
 
         private IDisplay HandleKeyPressed(RLKeyPress keyPress)
@@ -158,8 +159,8 @@ namespace Executor.UI
                     this.examineMenu.Start();
                     return this.examineMenu;
                 case RLKey.Space:
-                    var stub = new CommandStub_Delay(this.arena.Player.EntityID, 1);
-                    this.arena.ResolveStub(stub);
+                    var stub = new CommandStub_Delay(this.Floor.Player.EntityID, 1);
+                    this.Floor.ResolveStub(stub);
                     break;
                 case RLKey.Keypad1:
                 case RLKey.B:
@@ -207,14 +208,14 @@ namespace Executor.UI
 
         private IEnumerable<Tuple<Entity,int>> ArenaTimeTrackers()
         {
-            return this.arena.InspectMapEntities()
-                .Select(e => new Tuple<Entity,int>(e, e.TryGetTicksToLive(this.arena.CurrentTick)))
+            return this.Floor.InspectMapEntities()
+                .Select(e => new Tuple<Entity,int>(e, e.TryGetTicksToLive(this.Floor.CurrentTick)))
                 .OrderBy(t => t.Item2);
         }
 
         public void DrawLog(RLConsole console)
         {
-            var log = this.arena.FloorLog;
+            var log = this.Floor.FloorLog;
             int i = log.Count - 1;
             for (int line = console.Height - 1; line > 0; line--)
             {
@@ -234,15 +235,15 @@ namespace Executor.UI
         public void DrawArena(RLConsole console)
         {
             // Use RogueSharp to calculate the current field-of-view for the player
-            var position = arena.Player.TryGetPosition();
-            arena.FloorMap.ComputeFov(position.X, position.Y, 50, true);
+            var position = Floor.Player.TryGetPosition();
+            Floor.FloorMap.ComputeFov(position.X, position.Y, 50, true);
 
-            foreach (var cell in arena.FloorMap.GetAllCells())
+            foreach (var cell in Floor.FloorMap.GetAllCells())
             {
                 // When a Cell is in the field-of-view set it to a brighter color
                 if (cell.IsInFov)
                 {
-                    arena.FloorMap.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true);
+                    Floor.FloorMap.SetCellProperties(cell.X, cell.Y, cell.IsTransparent, cell.IsWalkable, true);
                     if (cell.IsWalkable)
                     {
                         console.Set(cell.X, cell.Y, RLColor.Gray, null, '.');
@@ -269,7 +270,7 @@ namespace Executor.UI
             // Draw enemies, alert + scan radii
             List<RogueSharp.Cell> alertCells = new List<RogueSharp.Cell>();
             List<RogueSharp.Cell> scanCells = new List<RogueSharp.Cell>();
-            foreach (var e in arena.InspectMapEntities().Where(e => e != arena.Player))
+            foreach (var e in Floor.InspectMapEntities().Where(e => e != Floor.Player))
             {
                 var entityPosition = e.TryGetPosition();
                 if (e.TryGetDestroyed())
@@ -281,7 +282,7 @@ namespace Executor.UI
                     var componentAI = e.GetComponentOfType<Component_AI>();
                     if (componentAI != null)
                     {
-                        var infoCells = componentAI.AlertCells(this.arena);
+                        var infoCells = componentAI.AlertCells(this.Floor);
                         scanCells.AddRange(infoCells.ScanCells);
                         alertCells.AddRange(infoCells.AlertCells);
                     }
@@ -309,9 +310,9 @@ namespace Executor.UI
             // Highlight targeting
             if (this.targetMenu.Targeting)
             {
-                var playerPosition = arena.Player.TryGetPosition();
+                var playerPosition = Floor.Player.TryGetPosition();
                 // TODO: Artemis is crying
-                var cellsInRange = arena.CellsInRadius(playerPosition.X, playerPosition.Y, 
+                var cellsInRange = Floor.CellsInRadius(playerPosition.X, playerPosition.Y, 
                     this.inventoryMenu.SelectedItem.GetComponentOfType<Component_Usable>().TargetRange);
                 foreach (RogueSharp.Cell cell in cellsInRange) {
                     if (cell.IsInFov && cell.IsWalkable)
@@ -324,14 +325,14 @@ namespace Executor.UI
             }
 
             // Draw commands
-            foreach (var command in arena.ExecutedCommands)
+            foreach (var command in Floor.ExecutedCommands)
             {
                 if (command is GameEvent_PrepareAttack)
                 {
                     var cmd = (GameEvent_PrepareAttack)command;
                     var attackerPos = cmd.CommandEntity.TryGetPosition();
                     var targetPos = cmd.Target.TryGetPosition();
-                    var lineCells = this.arena.FloorMap.GetCellsAlongLine(attackerPos.X, attackerPos.Y, targetPos.X,
+                    var lineCells = this.Floor.FloorMap.GetCellsAlongLine(attackerPos.X, attackerPos.Y, targetPos.X,
                                     targetPos.Y);
                     foreach (var cell in lineCells)
                     {
@@ -339,7 +340,7 @@ namespace Executor.UI
                     }
                 }
             }
-            arena.ClearExecutedCommands();
+            Floor.ClearExecutedCommands();
         }
     }
 

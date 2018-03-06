@@ -9,29 +9,23 @@ namespace Executor.UI
     class Menu_NextLevel : IDisplay
     {
         private Menu_Main mainMenu;
-        private Entity player;
-        private int nextLevel;
+        private Menu_Floor floorMenu;
+        private int nextWave;
 
-        public Menu_NextLevel(Menu_Main mainMenu, Entity player, int nextLevel)
+        public Menu_NextLevel(Menu_Main mainMenu, Menu_Floor floorMenu, int nextWave)
         {
             this.mainMenu = mainMenu;
-            this.player = player;
-            this.nextLevel = nextLevel;
+            this.floorMenu = floorMenu;
+            this.nextWave = nextWave;
         }
-
 
         public IDisplay OnRootConsoleUpdate(RLConsole console, RLKeyPress keyPress)
         {
-            if (keyPress != null && this.nextLevel < 10)
+            if (keyPress != null)
             {
                 RogueSharp.Random.IRandom iRand = new RogueSharp.Random.DotNetRandom();
 
-                // TODO: ADD A BONUS HERE THAT CARRIES OVER
-                var arena = FloorBuilder.BuildFloor(Config.FloorWidth, Config.FloorHeight, iRand.Next(Int16.MaxValue).ToString(),
-                    EntityBuilder.BuildPlayerEntity(), this.nextLevel);
-                var arenaMenu = new Menu_Floor(this.mainMenu, arena);
-                this.mainMenu.SetFloor(arenaMenu);
-                return arenaMenu;
+                return this.floorMenu;
             }
             else if (keyPress != null)
                 return this.mainMenu;
@@ -41,11 +35,11 @@ namespace Executor.UI
 
         public void Blit(RLConsole console)
         {
-            if (this.nextLevel < 10)
+            if (this.nextWave< 10)
             {
                 console.SetBackColor(0, 0, console.Width, console.Height, RLColor.Black);
                 console.Print(console.Width / 2 - 19, console.Height / 2 - 1, "You have progressed to the next arena!", RLColor.White);
-                console.Print(console.Width / 2 - 10, console.Height / 2 + 1, "The next level is " + this.nextLevel, RLColor.White);
+                console.Print(console.Width / 2 - 10, console.Height / 2 + 1, "The next level is " + this.nextWave, RLColor.White);
             }
             else
             {

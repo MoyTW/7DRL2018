@@ -5,12 +5,12 @@ using System;
 
 namespace Executor.UI
 {
-    class Menu_Examine : IDisplay
+    class Menu_Examine : IFloorDisplay
     {
-        private readonly IDisplay parent;
-        private FloorState floor;
+        private readonly IFloorDisplay parent;
         private int entityIndex;
 
+        public FloorState Floor { get { return this.parent.Floor; } }
         public bool Examining { get; private set; }
 
         // http://stackoverflow.com/questions/1082917/mod-of-negative-number-is-melting-my-brain
@@ -21,15 +21,14 @@ namespace Executor.UI
         public Entity ExaminedEntity {
             get
             {
-                var mapEntities = floor.InspectMapEntities();
+                var mapEntities = this.Floor.InspectMapEntities();
                 return mapEntities[Menu_Examine.modSO(this.entityIndex, mapEntities.Count)]; 
             }
         }
 
-        public Menu_Examine(IDisplay parent, FloorState floor)
+        public Menu_Examine(IFloorDisplay parent)
         {
             this.parent = parent;
-            this.floor = floor;
             this.Reset();
         }
 
@@ -42,7 +41,7 @@ namespace Executor.UI
         public void Reset()
         {
             this.Examining = false;
-            this.entityIndex = floor.InspectMapEntities().IndexOf(floor.Player);
+            this.entityIndex = this.Floor.InspectMapEntities().IndexOf(this.Floor.Player);
         }
 
         private IDisplay HandleKeyPressed(RLKeyPress keyPress)

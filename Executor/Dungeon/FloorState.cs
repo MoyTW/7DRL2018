@@ -36,19 +36,12 @@ namespace Executor.Dungeon
         public IMap FloorMap { get; }
         private PathFinder FloorPathFinder { get; }
         public List<String> FloorLog { get; }
-        public bool PlayerWon
+        public bool HasAIPresent
         {
             get
             {
-                return !this.mapEntities.Where(e => e.HasComponentOfType<Component_AI>())
+                return this.mapEntities.Where(e => e.HasComponentOfType<Component_AI>())
                     .Any(e => !e.TryGetDestroyed());
-            }
-        }
-        public bool PlayerLost
-        {
-            get
-            {
-                return this.Player.TryGetDestroyed();
             }
         }
 
@@ -151,9 +144,6 @@ namespace Executor.Dungeon
                     this.Player = e;
                 this.mapEntities.Add(e);
             }
-
-            if (this.Player == null)
-                throw new ArgumentException("Can't initialize Arena: Could not find player!");
 
             this.MapID = mapID;
             this.FloorMap = arenaMap;

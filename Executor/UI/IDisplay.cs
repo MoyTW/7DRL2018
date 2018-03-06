@@ -1,4 +1,5 @@
-﻿using RLNET;
+﻿using Executor.Dungeon;
+using RLNET;
 
 namespace Executor.UI
 {
@@ -6,5 +7,10 @@ namespace Executor.UI
     {
         IDisplay OnRootConsoleUpdate(RLConsole console, RLKeyPress keyPress);
         void Blit(RLConsole console);
+    }
+
+    interface IFloorDisplay : IDisplay
+    {
+        FloorState Floor { get; }
     }
 }

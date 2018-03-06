@@ -11,25 +11,24 @@ using System.Threading.Tasks;
 
 namespace Executor.UI
 {
-    class Menu_Inventory : IDisplay
+    class Menu_Inventory : IFloorDisplay
     {
-        private readonly IDisplay parent;
+        private readonly IFloorDisplay parent;
         private readonly Menu_Target targetMenu;
-        private FloorState arena;
         private RLConsole inventoryConsole;
 
         public const int inventoryWidth = 60;
         public const int inventoryHeight = 45;
         public readonly int centerX, centerY;
 
+        public FloorState Floor { get { return this.parent.Floor; } }
         public Entity SelectedItem { get; private set; }
         public Entity SelectedTarget { get; private set; }
 
-        public Menu_Inventory(IDisplay parent, Menu_Target targetMenu, FloorState arena, int centerX, int centerY)
+        public Menu_Inventory(IFloorDisplay parent, Menu_Target targetMenu, int centerX, int centerY)
         {
             this.parent = parent;
             this.targetMenu = targetMenu;
-            this.arena = arena;
             this.centerX = centerX;
             this.centerY = centerY;
 
@@ -45,7 +44,7 @@ namespace Executor.UI
 
         private Entity TryGetEntityInIndex(int idx)
         {
-            var inventory = this.arena.Player.GetComponentOfType<Component_Inventory>();
+            var inventory = this.Floor.Player.GetComponentOfType<Component_Inventory>();
             if (idx < inventory.NumItemsInventoried)
             {
                 return inventory.InventoriedEntities[idx];
@@ -118,7 +117,7 @@ namespace Executor.UI
             int currentX = 4;
             int currentY = 4;
 
-            var inventory = this.arena.Player.GetComponentOfType<Component_Inventory>();
+            var inventory = this.Floor.Player.GetComponentOfType<Component_Inventory>();
 
             int idx = 0;
             foreach (var entity in inventory.InventoriedEntities)
