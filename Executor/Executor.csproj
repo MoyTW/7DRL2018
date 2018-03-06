@@ -67,6 +67,7 @@
     <Compile Include="AI\ActionClause_KeepMediumRange.cs" />
     <Compile Include="AI\ActionClause_Flee.cs" />
     <Compile Include="AI\SingleClause.cs" />
+    <Compile Include="Dungeon\DungeonState.cs" />
     <Compile Include="Dungeon\FloorState.cs" />
     <Compile Include="Dungeon\FloorBuilder.cs" />
     <Compile Include="Enums\BodyPartLocation.cs" />
