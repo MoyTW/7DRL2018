@@ -89,7 +89,7 @@ namespace Executor.Components
                 cell = rand.RandomElement(cells);
             }
             var endPos = new GameQuery_Position();
-            endPos.RegisterPosition(cell.X, cell.Y, false);
+            endPos.RegisterPosition(cell.X, cell.Y, state.Level, false);
             this.PatrolEnd = endPos;
         }
 
@@ -99,7 +99,8 @@ namespace Executor.Components
             {
                 this.activeBook.TryRegisterCommand(q);
             }
-            else if (FloorState.DistanceBetweenEntities(this.Parent, q.FloorState.Player) <=
+            else if (q.FloorState.Player != null &&
+                FloorState.DistanceBetweenEntities(this.Parent, q.FloorState.Player) <=
                     this.Parent.TryGetAttribute(EntityAttributeType.DETECTION_RADIUS).Value)
             {
                 q.FloorState.AlertAllAIs();

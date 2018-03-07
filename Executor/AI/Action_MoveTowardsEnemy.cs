@@ -22,10 +22,18 @@ namespace Executor.AI
         {
             // TODO: Wow this is awkward!?
             var commandPos = commandQuery.CommandEntity.TryGetPosition();
-            var commandCell = commandQuery.FloorState.FloorMap.GetCell(commandPos.X, commandPos.Y);
-            var targetCell = commandQuery.FloorState.FloorMap.GetCell(targetPos.X, targetPos.Y);
 
-            return commandQuery.FloorState.ShortestPath(commandCell, targetCell);
+            if (commandPos.Z == targetPos.Z)
+            {
+                var commandCell = commandQuery.FloorState.FloorMap.GetCell(commandPos.X, commandPos.Y);
+                var targetCell = commandQuery.FloorState.FloorMap.GetCell(targetPos.X, targetPos.Y);
+
+                return commandQuery.FloorState.ShortestPath(commandCell, targetCell);
+            }
+            else
+            {
+                return null;
+            }
         }
 
         private CommandStub MoveEventForPath(GameQuery_Command commandQuery, RogueSharp.Path path)

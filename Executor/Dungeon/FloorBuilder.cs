@@ -70,17 +70,6 @@ namespace Executor.Dungeon
         private static ConcurrentDictionary<string, Tuple<IMap, PathFinder>> seedsToMaps =
             new ConcurrentDictionary<string, Tuple<IMap, PathFinder>>(Config.NumThreads(), Config.NumMaps());
 
-        public static FloorState TestArena(Entity baseMech1, Entity baseMech2)
-        {
-            var arenaMap = Map.Create(new RogueSharp.MapCreation.BorderOnlyMapCreationStrategy<Map>(15, 15));
-            var mapEntities = new List<Entity>() { baseMech1, baseMech2 };
-            FloorState arena = new FloorState(mapEntities, "test", arenaMap, new PathFinder(arenaMap), 0);
-            arena.PlaceEntityNear(baseMech1, 5, 5);
-            arena.PlaceEntityNear(baseMech2, 10, 10);
-
-            return arena;
-        }
-
         private static bool InScanRangeOfPlayer(Entity player, Entity aiEntity, Cell possiblePosition)
         {
             if (player != null)
@@ -96,7 +85,7 @@ namespace Executor.Dungeon
             }
         }
 
-        public static FloorState BuildFloor(int width, int height, string mapID, int level)
+        public static FloorState BuildFloor(DungeonState dungeon, int width, int height, string mapID, int level)
         {
             var distributions = FloorBuilder.levelDefinitions[level];
             List<Entity> mapEntities = new List<Entity>();
@@ -111,13 +100,16 @@ namespace Executor.Dungeon
                     d++;
                 }
             }
-            return FloorBuilder.BuildArena(width, height, mapID, mapEntities, level);
+            return FloorBuilder.BuildArena(dungeon, width, height, mapID, mapEntities, level);
         }
 
-        public static FloorState BuildFloor(int width, int height, string mapID, int level, Entity player)
+        public static FloorState BuildFloor(DungeonState dungeon, int width, int height, string mapID, int level, Entity player)
         {
             var distributions = FloorBuilder.levelDefinitions[level];
-            List<Entity> mapEntities = new List<Entity>() { player };
+            List<Entity> mapEntities = new List<Entity>();
+
+            mapEntities.Add(player);
+
             var placementRand = new DotNetRandom(Int32.Parse(mapID));
             int d = 0;
             foreach (var dist in distributions)
@@ -129,10 +121,10 @@ namespace Executor.Dungeon
                     d++;
                 }
             }
-            return FloorBuilder.BuildArena(width, height, mapID, mapEntities, level);
+            return FloorBuilder.BuildArena(dungeon, width, height, mapID, mapEntities, level);
         }
 
-        private static FloorState BuildArena(int width, int height, string mapID, IEnumerable<Entity> entities, int level)
+        private static FloorState BuildArena(DungeonState dungeon, int width, int height, string mapID, IEnumerable<Entity> entities, int level)
         {
             if (!seedsToMaps.ContainsKey(mapID))
             {
@@ -145,11 +137,11 @@ namespace Executor.Dungeon
             var mapEntities = new List<Entity>();
             foreach (var e in entities)
             {
-                mapEntities.Add(e.DeepCopy());
+                mapEntities.Add(e);
             }
-            FloorState arena = new FloorState(mapEntities, mapID, seedsToMaps[mapID].Item1, seedsToMaps[mapID].Item2, level);
+            FloorState floorState = new FloorState(dungeon, mapEntities, mapID, seedsToMaps[mapID].Item1, seedsToMaps[mapID].Item2, level);
 
-            var openCells = arena.FloorMap.GetAllCells().Where(c => c.IsWalkable).ToList();
+            var openCells = floorState.FloorMap.GetAllCells().Where(c => c.IsWalkable).ToList();
             var placementRand = new DotNetRandom(Int32.Parse(mapID));
             foreach (var e in mapEntities)
             {
@@ -158,17 +150,17 @@ namespace Executor.Dungeon
                     var cell = openCells[placementRand.Next(openCells.Count - 1)];
 
                     Component_AI ai = e.GetComponentOfType<Component_AI>();
-                    if (ai != null && !FloorBuilder.InScanRangeOfPlayer(arena.Player, e, cell))
+                    if (ai != null && !FloorBuilder.InScanRangeOfPlayer(floorState.Player, e, cell))
                     {
-                        arena.PlaceEntityNear(e, cell.X, cell.Y);
-                        ai.DeterminePatrolPath(arena, placementRand);
+                        floorState.PlaceEntityNear(e, cell.X, cell.Y);
+                        ai.DeterminePatrolPath(floorState, placementRand);
                     }
                     else if (ai == null)
-                        arena.PlaceEntityNear(e, cell.X, cell.Y);
+                        floorState.PlaceEntityNear(e, cell.X, cell.Y);
                 }
             }
 
-            return arena;
+            return floorState;
         }
     }
 }

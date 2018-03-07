@@ -57,7 +57,7 @@ namespace Executor.Components
 
         private void HandleQueryPosition(GameQuery_Position q)
         {
-            q.RegisterPosition(this.X, this.Y, this.BlocksMovement);
+            q.RegisterPosition(this.X, this.Y, this.Z, this.BlocksMovement);
         }
 
         protected override GameQuery _HandleQuery(GameQuery q)

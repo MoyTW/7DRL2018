@@ -19,19 +19,13 @@ namespace Executor.Dungeon
         
         // TODO: lol at exposing literally everything
         public int Level { get; }
-        public Entity Player { get; }
+        public Entity Player { get { return this.dungeon.Player; } }
         public string MapID { get; }
         public IMap FloorMap { get; }
         private PathFinder FloorPathFinder { get; }
 
         private DungeonState dungeon;
         public int CurrentTick { get { return this.dungeon.CurrentTick; } }
-
-        // TODO ALERT UGH
-        public void Init(DungeonState dungeon)
-        {
-            this.dungeon = dungeon;
-        }
         
         public bool HasAIPresent
         {
@@ -123,13 +117,12 @@ namespace Executor.Dungeon
             return null;
         }
 
-        public FloorState(IEnumerable<Entity> mapEntities, string mapID, IMap arenaMap, PathFinder arenaPathFinder, int level)
+        public FloorState(DungeonState dungeon, IEnumerable<Entity> mapEntities, string mapID, IMap arenaMap, PathFinder arenaPathFinder, int level)
         {
+            this.dungeon = dungeon;
             this.mapEntities = new List<Entity>();
             foreach (Entity e in mapEntities)
             {
-                if (e.HasComponentOfType<Component_Player>())
-                    this.Player = e;
                 this.mapEntities.Add(e);
             }
 
@@ -140,7 +133,7 @@ namespace Executor.Dungeon
             this.Level = level;
         }
 
-        public FloorState DeepCopy()
+        /*public FloorState DeepCopy()
         {
             List<Entity> copyList = new List<Entity>();
             foreach (var e in this.mapEntities)
@@ -148,7 +141,7 @@ namespace Executor.Dungeon
                 copyList.Add(e.DeepCopy());
             }
             return new FloorState(copyList, this.MapID, this.FloorMap.Clone(), this.FloorPathFinder, this.Level);
-        }
+        }*/
 
         // Only call this if you're using the arena as a copy!
         public void RemoveAllAIEntities()

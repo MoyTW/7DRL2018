@@ -48,20 +48,28 @@ namespace Executor.Dungeon
         public void ClearExecutedCommands() { this.executedCommands.Clear(); }
 
 
-        public DungeonState(List<FloorState> floors, Entity player)
+        public DungeonState(Entity player)
         {
             this.currentTick = 0;
 
-            this.floors = floors;
+            this.floors = new List<FloorState>();
             this.Player = player;
 
             this.DungeonLog = new List<String>();
+        }
 
-            foreach(FloorState floor in floors)
+        public void AddFloor(FloorState floor)
+        {
+            this.floors.Add(floor);
+            if (this.floors[floor.Level] != floor)
             {
-                floor.Init(this);
+                throw new NotImplementedException("can't have multiple of same floor");
             }
+        }
 
+        // TODO: LOL
+        public void FinalizeConstruction()
+        {
             ForwardToNextAction();
         }
 
@@ -105,8 +113,9 @@ namespace Executor.Dungeon
             if (this.ShouldWaitForPlayerInput)
                 return;
 
+            var nextCommandEntityFloor = this.nextCommandEntity.TryGetPosition().Z;
             var queryCommand = this.nextCommandEntity.HandleQuery(
-                new GameQuery_Command(this.nextCommandEntity, this.PlayerFloor));
+                new GameQuery_Command(this.nextCommandEntity, this.floors[nextCommandEntityFloor]));
             if (!queryCommand.Completed)
             {
                 Log.ErrorLine("Failed to register AI command for " + this.nextCommandEntity);
@@ -124,7 +133,9 @@ namespace Executor.Dungeon
         // TODO: Whoops, I designed the stubs badly. I should swap the resolution function to the stub classes.
         public void ResolveStub(CommandStub stub)
         {
-            var gameEvent = stub.ReifyStub(this.PlayerFloor); // TODO: LOL you should resolve against the floor it's on!
+            var cmdPos = this.ResolveEID(stub.CommandEID).GetComponentOfType<Component_Position>();
+
+            var gameEvent = stub.ReifyStub(this.floors[cmdPos.Z]); // TODO: LOL you should resolve against the floor it's on!
 
             if (gameEvent != null && gameEvent.CommandEntity == this.nextCommandEntity)
             {
