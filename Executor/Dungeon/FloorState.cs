@@ -15,40 +15,30 @@ namespace Executor.Dungeon
 {
     public class FloorState
     {
-        private int currentTick;
-        private List<GameEvent_Command> executedCommands = new List<GameEvent_Command>();
-
         private List<Entity> mapEntities;
-
-        // Turn state
-        private Entity nextCommandEntity;
-
-        public Entity NextCommandEntity { get { return this.nextCommandEntity; } }
-        public IEnumerable<GameEvent_Command> ExecutedCommands { get { return this.executedCommands; } }
-
-        public void ClearExecutedCommands() { this.executedCommands.Clear(); }
-
+        
         // TODO: lol at exposing literally everything
         public int Level { get; }
-        public int CurrentTick { get { return this.currentTick; } }
         public Entity Player { get; }
         public string MapID { get; }
         public IMap FloorMap { get; }
         private PathFinder FloorPathFinder { get; }
-        public List<String> FloorLog { get; }
+
+        private DungeonState dungeon;
+        public int CurrentTick { get { return this.dungeon.CurrentTick; } }
+
+        // TODO ALERT UGH
+        public void Init(DungeonState dungeon)
+        {
+            this.dungeon = dungeon;
+        }
+        
         public bool HasAIPresent
         {
             get
             {
                 return this.mapEntities.Where(e => e.HasComponentOfType<Component_AI>())
                     .Any(e => !e.TryGetDestroyed());
-            }
-        }
-
-        public bool ShouldWaitForPlayerInput {
-            get
-            {
-                return !this.Player.HasComponentOfType<Component_AI>() && this.nextCommandEntity == this.Player;
             }
         }
 
@@ -135,8 +125,6 @@ namespace Executor.Dungeon
 
         public FloorState(IEnumerable<Entity> mapEntities, string mapID, IMap arenaMap, PathFinder arenaPathFinder, int level)
         {
-            this.currentTick = 0;
-
             this.mapEntities = new List<Entity>();
             foreach (Entity e in mapEntities)
             {
@@ -148,11 +136,8 @@ namespace Executor.Dungeon
             this.MapID = mapID;
             this.FloorMap = arenaMap;
             this.FloorPathFinder = arenaPathFinder;
-            this.FloorLog = new List<String>();
 
             this.Level = level;
-
-            ForwardToNextAction();
         }
 
         public FloorState DeepCopy()
@@ -183,27 +168,10 @@ namespace Executor.Dungeon
             {
                 entity.GetComponentOfType<Component_AI>().Alerted = true;
             }
-            this.FloorLog.Add("Your cloak was disrupted! All enemies are now on ALERT!");
+            //this.FloorLog.Add("Your cloak was disrupted! All enemies are now on ALERT!");
         }
 
-        private void ForwardToNextAction()
-        {
-            int leastTTL = 9999;
-            Entity next = null;
 
-            foreach (var entity in this.mapEntities.Where(e => !e.TryGetDestroyed()))
-            {
-                var nextTTL = entity.HandleQuery(new GameQuery_TicksToLive(this.CurrentTick)).TicksToLive;
-                if (nextTTL < leastTTL)
-                {
-                    leastTTL = nextTTL;
-                    next = entity;
-                }
-            }
-
-            this.nextCommandEntity = next;
-            this.currentTick += leastTTL;
-        }
 
         public Tuple<int, int> EmptyCellNear(int x, int y)
         {
@@ -286,63 +254,10 @@ namespace Executor.Dungeon
 
         #endregion
 
-        public void TryFindAndExecuteNextCommand()
-        {
-            // If it's the player's turn we must wait on input!
-            if (this.ShouldWaitForPlayerInput)
-                return;
-
-            var queryCommand = this.nextCommandEntity.HandleQuery(
-                new GameQuery_Command(this.nextCommandEntity, this));
-            if (!queryCommand.Completed)
-            {
-                Log.ErrorLine("Failed to register AI command for " + this.nextCommandEntity);
-                var remainingAP = this.nextCommandEntity.TryGetAttribute(EntityAttributeType.CURRENT_AP).Value;
-                queryCommand.RegisterCommand(new CommandStub_Delay(this.nextCommandEntity.EntityID, remainingAP));
-            }
-            this.ResolveStub(queryCommand.Command);
-        }
-
+        // TODO: REMOVE?
         public Entity ResolveEID(string eid)
         {
             return this.mapEntities.Where(e => e.EntityID == eid).First();
-        }
-
-        // TODO: Whoops, I designed the stubs badly. I should swap the resolution function to the stub classes.
-        public void ResolveStub(CommandStub stub)
-        {
-            var gameEvent = stub.ReifyStub(this);
-                
-            if (gameEvent != null && gameEvent.CommandEntity == this.nextCommandEntity)
-            {
-                gameEvent.CommandEntity.HandleEvent(gameEvent);
-                if (gameEvent.ShouldLog)
-                    this.FloorLog.Add(gameEvent.LogMessage);
-                this.executedCommands.Add(gameEvent);
-            }
-            else if (gameEvent != null)
-            {
-                Log.ErrorLine("Can't resolve stub " + stub + " against entity " + gameEvent.CommandEntity +
-                    " as next Entity is " + this.nextCommandEntity);
-            }
-            else
-                throw new NullReferenceException("Stub " + stub + " reified to null; instead, return a delay!");
-
-            // Hacky
-            if (this.nextCommandEntity == this.Player)
-            {
-                foreach (var ai in this.mapEntities.Where(e => e.HasComponentOfType<Component_AI>()))
-                {
-                    if (!ai.GetComponentOfType<Component_AI>().Scanned &&
-                        FloorState.DistanceBetweenEntities(this.Player, ai) <=
-                        ai.TryGetAttribute(EntityAttributeType.SCAN_REQUIRED_RADIUS).Value)
-                    {
-                        ai.GetComponentOfType<Component_AI>().Scanned = true;
-                        this.FloorLog.Add("Scanned " + ai.Label + "!");
-                    }
-                }
-            }
-            this.ForwardToNextAction();
         }
     }
 }

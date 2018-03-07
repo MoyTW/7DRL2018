@@ -70,9 +70,9 @@ namespace Executor.UI
                 return new Menu_NextLevel(this.parent, this, this.Floor.Level + 1);
             }
 
-            if (!this.Floor.ShouldWaitForPlayerInput)
+            if (!this.dungeon.ShouldWaitForPlayerInput)
             {
-                this.Floor.TryFindAndExecuteNextCommand();
+                this.dungeon.TryFindAndExecuteNextCommand();
                 return this;
             }
             // TODO: logic here is !?!?
@@ -83,7 +83,7 @@ namespace Executor.UI
                 this.inventoryMenu.Reset();
 
                 var stub = new CommandStub_UseItem(this.Floor.Player.EntityID, selected.EntityID, target.EntityID);
-                this.Floor.ResolveStub(stub);
+                this.dungeon.ResolveStub(stub);
 
                 return this;
             }
@@ -91,7 +91,7 @@ namespace Executor.UI
                 return this.HandleKeyPressed(keyPress);
             else
             {
-                this.Floor.TryFindAndExecuteNextCommand();
+                this.dungeon.TryFindAndExecuteNextCommand();
                 return this;
             }
         }
@@ -141,7 +141,7 @@ namespace Executor.UI
         private void TryPlayerMove(int dx, int dy)
         {
             var stub = new CommandStub_MoveSingleOrPrepareAttack(this.Floor.Player.EntityID, dx, dy);
-            this.Floor.ResolveStub(stub);
+            this.dungeon.ResolveStub(stub);
         }
 
         private IDisplay HandleKeyPressed(RLKeyPress keyPress)
@@ -160,7 +160,7 @@ namespace Executor.UI
                     return this.examineMenu;
                 case RLKey.Space:
                     var stub = new CommandStub_Delay(this.Floor.Player.EntityID, 1);
-                    this.Floor.ResolveStub(stub);
+                    this.dungeon.ResolveStub(stub);
                     break;
                 case RLKey.Keypad1:
                 case RLKey.B:
@@ -209,13 +209,13 @@ namespace Executor.UI
         private IEnumerable<Tuple<Entity,int>> ArenaTimeTrackers()
         {
             return this.Floor.InspectMapEntities()
-                .Select(e => new Tuple<Entity,int>(e, e.TryGetTicksToLive(this.Floor.CurrentTick)))
+                .Select(e => new Tuple<Entity,int>(e, e.TryGetTicksToLive(this.dungeon.CurrentTick)))
                 .OrderBy(t => t.Item2);
         }
 
         public void DrawLog(RLConsole console)
         {
-            var log = this.Floor.FloorLog;
+            var log = this.dungeon.DungeonLog;
             int i = log.Count - 1;
             for (int line = console.Height - 1; line > 0; line--)
             {
@@ -325,7 +325,7 @@ namespace Executor.UI
             }
 
             // Draw commands
-            foreach (var command in Floor.ExecutedCommands)
+            foreach (var command in dungeon.ExecutedCommands)
             {
                 if (command is GameEvent_PrepareAttack)
                 {
@@ -340,7 +340,7 @@ namespace Executor.UI
                     }
                 }
             }
-            Floor.ClearExecutedCommands();
+            dungeon.ClearExecutedCommands();
         }
     }
 
