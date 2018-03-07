@@ -72,7 +72,10 @@ namespace Executor.UI
 
             if (!this.dungeon.ShouldWaitForPlayerInput)
             {
-                this.dungeon.TryFindAndExecuteNextCommand();
+                while (!this.dungeon.ShouldWaitForPlayerInput)
+                {
+                    this.dungeon.TryFindAndExecuteNextCommand();
+                }
                 return this;
             }
             // TODO: logic here is !?!?

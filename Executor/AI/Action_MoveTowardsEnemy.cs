@@ -69,6 +69,12 @@ namespace Executor.AI
             Entity target = commandQuery.FloorState.Player;
             var targetPos = target.TryGetPosition();
 
+            // TODO: Lol wtf
+            if (commandQuery.CommandEntity.TryGetPosition().Z != targetPos.Z)
+            {
+                return new CommandStub_Delay(commandQuery.CommandEntity.EntityID, Config.ONE);
+            }
+
             if (this.lastPath == null || !this.EnemyOnPath(targetPos))
                 this.lastPath = Action_MoveTowardsEnemy.GeneratePath(commandQuery, targetPos);
             return this.MoveEventForPath(commandQuery, this.lastPath);
