@@ -279,7 +279,7 @@ namespace Executor.Dungeon
             {
                 if (!this.mapEntities.Contains(en))
                     this.mapEntities.Add(en);
-                en.AddComponent(new Component_Position(emptyCell.Item1, emptyCell.Item2, true));
+                en.AddComponent(new Component_Position(emptyCell.Item1, emptyCell.Item2, this.Level, true));
                 return true;
             }
         }

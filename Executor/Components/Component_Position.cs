@@ -11,13 +11,16 @@ namespace Executor.Components
     {
         public int X { get; private set; }
         public int Y { get; private set; }
+        // Z-axes corresponds to dungeon floors, with 0 at the bottom
+        public int Z { get; private set; }
         public bool BlocksMovement { get; private set; }
         public bool BlocksMovementWhenDestroyed { get; }
 
-        public Component_Position(int x, int y, bool blocksMovement, bool blocksMovementWhenDestroyed=false)
+        public Component_Position(int x, int y, int z, bool blocksMovement, bool blocksMovementWhenDestroyed=false)
         {
             this.X = x;
             this.Y = y;
+            this.Z = z;
             this.BlocksMovement = blocksMovement;
             this.BlocksMovementWhenDestroyed = blocksMovementWhenDestroyed;
         }
