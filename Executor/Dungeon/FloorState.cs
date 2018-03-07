@@ -90,6 +90,11 @@ namespace Executor.Dungeon
             var aPos = a.TryGetPosition();
             var bPos = b.TryGetPosition();
 
+            if (aPos.Z != bPos.Z)
+            {
+                return Int16.MaxValue;
+            }
+
             return FloorState.DistanceBetweenPositions(aPos.X, aPos.Y, bPos.X, bPos.Y);
         }
 
