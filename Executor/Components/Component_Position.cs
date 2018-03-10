@@ -40,6 +40,17 @@ namespace Executor.Components
             ev.Completed = true;
         }
 
+        private void HandleTeleport(GameEvent_Teleport ev)
+        {
+            if (ev.DestinationFloor.IsWalkableAndOpen(ev.X, ev.Y))
+            {
+                this.X = ev.X;
+                this.Y = ev.Y;
+                this.Z = ev.Z;
+            }
+            ev.Completed = true;
+        }
+
         private void HandleDestroy(GameEvent_Destroy ev)
         {
             this.BlocksMovement = this.BlocksMovementWhenDestroyed;
@@ -49,6 +60,8 @@ namespace Executor.Components
         {
             if (ev is GameEvent_MoveSingle)
                 this.HandleMove((GameEvent_MoveSingle)ev);
+            if (ev is GameEvent_Teleport)
+                this.HandleTeleport((GameEvent_Teleport)ev);
             if (ev is GameEvent_Destroy)
                 this.HandleDestroy((GameEvent_Destroy)ev);
 
